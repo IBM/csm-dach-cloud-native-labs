@@ -31,7 +31,7 @@ Enable custom ssh port through SELinux + firewall
 ```
 dnf install -y policycoreutils-python-utils
 semanage port -a -t ssh_port_t -p tcp 5000
-firewall-cmd --add-port=2021/tcp --permanent
+firewall-cmd --add-port=5000/tcp --permanent
 firewall-cmd --reload
 systemctl reload sshd
 ```
