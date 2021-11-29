@@ -2,8 +2,9 @@
 #
 # Run this script with root privileges. Report bugs at: https://github.com/IBM/csm-dach-cloud-native-labs/issues
 #
-# Choose how many users you want
+# Choose how many users you want and their password
 NUMBER_USERS=10
+PASSWORD=superSecure
 #
 # Install podman
 yum install -y podman
@@ -22,5 +23,5 @@ chown root:devUsers /usr/bin/oc
 for NUM in $(seq 1 $NUMBER_USERS)
 	do
 	useradd -G devUsers user$NUM
-	echo user${NUM}:superSecure | chpasswd
+	echo user${NUM}:${PASSWORD} | chpasswd
 	done
