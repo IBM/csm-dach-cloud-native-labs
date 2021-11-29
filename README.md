@@ -1,6 +1,8 @@
 # csm-dach-cloud-native-labs
 Workshops to teach the basics of containerization and OpenShift.
 
+_Based on: https://github.com/ibm-garage-dach/cloud-native-bootcamp-ocp311_
+
 _Proposal_
 
 Day 1:
