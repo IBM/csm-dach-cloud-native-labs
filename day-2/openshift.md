@@ -1,4 +1,4 @@
-## Working with OpenShift 4.x
+## Working with OpenShift 4.7
 
 After you learnt about containers, images and podman, in this lab you are going to work with OpenShift. 
 
@@ -11,7 +11,7 @@ After you learnt about containers, images and podman, in this lab you are going 
 
 _Kubernetes is a portable, extensible, open-source platform for managing containerized workloads and services._
 
-_OpenShift_ is a Kubernetes distribution (...)
+_OpenShift is a Kubernetes distribution._
 
 ### 1. Command Line Interface
 
@@ -32,7 +32,7 @@ commands for managing a cluster under the 'adm' subcommand.
 
 ### 2. Create a new project
 
-_In Kubernetes, a Namespace provices a mechanism to scope resources in a cluster.In OpenShift, a Project is a Kubernetes Namespace with additional annotations._
+_In Kubernetes, a Namespace provices a mechanism to scope resources in a cluster. In OpenShift, a Project is a Kubernetes Namespace with additional annotations._
 
 In OpenShift, all resources are grouped into projects.
 
@@ -40,7 +40,7 @@ __Demonstration__: create a project using the OpenShift web console
 
 __Exercise__: create your project using the oc CLI
 
-Create your project 
+Create your namespace/project:
 ```
 eramon:~$ oc new-project user1
 Now using project "user1" on server "https://c115-e.eu-de.containers.cloud.ibm.com:32297".
@@ -65,6 +65,7 @@ The project you just created has a * next to its name. That means that's the cur
 ### 3. Create a new application from an existing image
 
 Now you have your own namespace/project, deploy your first application on OpenShift. 
+
 There are three ways to create a new application in OpenShift:
 
  * From an image
@@ -77,19 +78,30 @@ __Demonstration__: how to create an application from the OpenShift Web Console
 
 __Exercise__: create your application using the CLI
 
-In this lab, we are going to use an image from the RedHat registry. 
-
-In the first lab featuring podman, we used images from the public registry dockerhub. The featured image in this lab is registry.redhat.io/rhscl/httpd-24-rhel7, which is a HTTP 2.4 Server.
+In the first two labs - containers, images, podman and custom images - we used images from the public registry dockerhub. In this lab, we are going to use an image from a RedHat registry.
 
 Let's see how the command looks like:
 ```
-eramon:~$ oc new-app --name myapache registry.redhat.io/rhscl/httpd-24-rhel7
---> Found container image a8d6d7d (11 days old) from registry.redhat.io for "registry.redhat.io/rhscl/httpd-24-rhel7"
+eramon:~$ oc new-app --name myhttpd registry.access.redhat.com/rhscl/httpd-24-rhel7
+
+--> Found container image a8d6d7d (11 days old) from registry.access.redhat.com for "registry.access.redhat.com/rhscl/httpd-24-rhel7"
 
     Apache httpd 2.4 
     ---------------- 
     Apache httpd 2.4 available as container, is a powerful, efficient, and extensible web server. Apache supports a variety of features, many implemented as compiled modules which extend the core functionality. These can range from server-side programming language support to authentication schemes. Virtual hosting allows one Apache installation to serve many different Web sites.
-...
+
+    Tags: builder, httpd, httpd24
+
+    * An image stream tag will be created as "myhttpd:latest" that will track this image
+
+--> Creating resources ...
+    imagestream.image.openshift.io "myhttpd" created
+    deployment.apps "myhttpd" created
+    service "myhttpd" created
+--> Success
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/myhttpd' 
+    Run 'oc status' to view your app.
 ```
 
 It's actually quite simple:
@@ -100,23 +112,18 @@ It's actually quite simple:
 Let's see what happened:
 ```
 eramon:~$ oc get all
-NAME                           READY   STATUS    RESTARTS   AGE
-pod/myapache-d44679678-vt684   1/1     Running   0          9m21s
-pod/myhttpd-7b57d6978d-ntwzf   1/1     Running   0          37s
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/myhttpd-c95cb9dd7-zdznk   1/1     Running   0          37s
 
-NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
-service/myapache   ClusterIP   172.30.147.242   <none>        8080/TCP,8443/TCP   9m21s
-service/myhttpd    ClusterIP   172.30.20.237    <none>        8080/TCP,8443/TCP   39s
+NAME              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+service/myhttpd   ClusterIP   172.21.197.158   <none>        8080/TCP,8443/TCP   38s
 
-NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/myapache   1/1     1            1           9m22s
-deployment.apps/myhttpd    1/1     1            1           39s
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/myhttpd   1/1     1            1           38s
 
-NAME                                  DESIRED   CURRENT   READY   AGE
-replicaset.apps/myapache-595cfc959b   0         0         0       9m22s
-replicaset.apps/myapache-d44679678    1         1         1       9m22s
-replicaset.apps/myhttpd-758c858d48    0         0         0       39s
-replicaset.apps/myhttpd-7b57d6978d    1         1         1       38s
+NAME                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/myhttpd-758c858d48   0         0         0       38s
+replicaset.apps/myhttpd-c95cb9dd7    1         1         1       37s
 ...
 ```
 Following resources have been created:
@@ -134,16 +141,16 @@ _A Service serves as an internal load balancer. It identifies a set of replicate
 
 If we want to see the details of the deployment, we can do it like this:
 ```
-eramon:~$ oc describe deployment myapache
+eramon:~$ oc describe deployment myhttpd
 ```
 
 Or alternatively, we can see the declarative form of the deployment in yaml format:
 ```
-eramon:~$ oc get deployment -o yaml
+eramon:~$ oc get deployment myhttpd -o yaml
 ```
 
 We can find among other information:
-- The docker image used: registry.redhat.io/rhscl/httpd-24-rhel7
+- The docker image used: _registry.access.redhat.com/rhscl/httpd-24-rhel7_ 
 - The number of replicas: in this example 1
 
 ### 4. Add a route
@@ -158,35 +165,18 @@ __Exercise:__ create the route using the CLI
 
 Create the route exposing the service:
 ```
-eramon:~$ oc expose svc/myapache
-route.route.openshift.io/myapache exposed
+eramon:~$ oc expose service myhttpd
+route.route.openshift.io/myhttpd exposed
 ```
 
 Find out the URL to access the service externally:
 ```
-eramon:~$ oc describe route myapache
-Name:			myapache
-Namespace:		eva-ramon-ibm-dev
-Created:		20 seconds ago
-Labels:			app=myapache
-			app.kubernetes.io/component=myapache
-			app.kubernetes.io/instance=myapache
-Annotations:		openshift.io/host.generated=true
-Requested Host:		myapache-eva-ramon-ibm-dev.apps.sandbox.x8i5.p1.openshiftapps.com
-			   exposed on router default (host router-default.apps.sandbox.x8i5.p1.openshiftapps.com) 20 seconds ago
-Path:			<none>
-TLS Termination:	<none>
-Insecure Policy:	<none>
-Endpoint Port:		8080-tcp
-
-Service:	myapache
-Weight:		100 (100%)
-Endpoints:	10.129.2.19:8080, 10.129.2.19:8443
+eramon:~$ oc describe route myhttpd
 ```
 
 Test that it's working, issuing a curl command to the host indicated by _Requested Host_ in the output above:
 ```
-eramon:~$ curl myapache-eva-ramon-ibm-dev.apps.sandbox.x8i5.p1.openshiftapps.com
+eramon:~$ curl _hostname_:8080 
 ```
 
 Did you get the HTML code of the index page of Apache? If so, congratulations, you deployed an Apache Web Server on OpenShift :)
