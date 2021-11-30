@@ -7,7 +7,7 @@ NUMBER_USERS=10
 PASSWORD=superSecure
 #
 # Install podman
-yum install -y podman
+yum install -y podman git
 # Copy the download link for your operating system from the web console.
 OC_DOWNLOAD_LINK=https://downloads-openshift-console.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud/amd64/linux/oc.tar
 #
