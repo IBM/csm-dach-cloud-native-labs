@@ -1,18 +1,30 @@
 ## Deploy an application from source code
 
+### Table of contents
+
+ 1. Introduction
+ 2. Demonstration: use the Openshift Web Console
+ 3. Create an application from source from the command line
+ 4. Examining the resources
+ 5. Routes
+ 6. Demonstration: change the source code and restart the build 
+
+### 1. Introduction
+
 We mentioned in the previous lab that there are three ways to create an application with _oc new-app_. We saw how to deploy an application from an existing docker image. In this lab, we are going to explore how to deploy an application directly from source code. 
 
 _One of the main differences between OpenShift and Kubernetes is the concept of build-related artifacts. In OpenShift, such artififacts are considered first class Kubernetes resources upon which standard Kubernetes operators can apply._
 
 OpenShift relies internally on _Source-to-Image (S2I)_ to build reproducible, docker-formatted container images. 
 
+### 2. Demonstration: use the OpenShift Web Console (Optional)
+
+_The teacher might show first how to create an application from source from the web console._
+
+### 3. Create an application from source from the command line
+
 For this lab, we have prepared a simple nodejs application, which you can find on the labs github:
 https://github.com/IBM/csm-dach-cloud-native-labs/nodejs-helloworld
-
-_Use the branch "workshop" for the exercises_
-
- *  __Demonstration__: show how to create an application from source on the WebConsole (Optional)
- *  __Exercise__: create application from source on the command line
 
 The command _oc new-app_ can take as a parameter a repository location. The _context-dir_ parameter indicates the folder where the source code of the application can be found:
 ```
@@ -42,6 +54,12 @@ eramon:~$ oc new-app https://github.com/IBM/csm-dach-cloud-native-labs#workshop 
     Run 'oc status' to view your app.
 ```
 
+### 4. Examining the resources
+
+_A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A BuildConfig object is the definition of the entire build process._
+
+_An image stream and its associated tags provide an abstraction for referencing container images. The image stream and its tags allow to see what images are available and ensure you are using the specific image you need even if the image in the repository changes_
+
 When creating an application from source, resources are automatically generated:
 ```
 eramon:~$ oc get all
@@ -68,11 +86,7 @@ NAME                                        IMAGE REPOSITORY                    
 imagestream.image.openshift.io/helloworld   image-registry.openshift-image-registry.svc:5000/user1/helloworld   latest   37 seconds ago
 ```
 
-_A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A BuildConfig object is the definition of the entire build process._
-
-_An image stream and its associated tags provide an abstraction for referencing container images. The image stream and its tags allow to see what images are available and ensure you are using the specific image you need even if the image in the repository changes_
-
-We can identify following resources:
+Let's take a closer look:
 
  * The Pods which host the application 
  * The Deployment "helloworld"
@@ -82,6 +96,8 @@ We can identify following resources:
  * An ImageStream: the imagestream "helloworld" represents the different versions of the created images
 
 A build container was created, which took care of building the application. Upon termination, the application pods were created and are running. 
+
+### 5. Routes
 
 The service allows to access the application internally, but if we want to access it externally? We need to create a route.
 
@@ -124,7 +140,11 @@ Hello World!
 
 Congratulations! Your helloworld application is greeting you from inside of the pod running as part of a deployment in our OpenShift cluster :)
 
-__Demonstration:__ What if we change something in the application? Let's see how to manage changes. 
+### 6. Demonstration: change the source code and restart the build
+
+_This part needs to be performed as a demonstration, since only the teacher has permission to edit the source code. Of course it can be done as an exercise if the student forks the source code to the own github repository._
+
+What if we change something in the application? Let's see how to manage changes. 
 
 Change the text in _app.js_ to say "Hello OpenShift!" instead of "Hello World!"
 ```
@@ -159,7 +179,7 @@ eramon:nodejs-helloworld$ curl helloworld-user1.externaldemo-5115c94768819e85b5d
 Hello Openshift! 
 ```
 
-## References:
+### References
 
 _The helloworld application used as an example is based on
 https://github.com/RedHatTraining/DO180-apps_
