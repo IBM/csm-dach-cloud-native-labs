@@ -14,7 +14,7 @@ OC_DOWNLOAD_LINK=https://downloads-openshift-console.externaldemo-5115c94768819e
 # Get oc binary
 wget $OC_DOWNLOAD_LINK
 tar -xf oc.tar
-chmod 770 oc
+chmod 777 oc
 mv oc /usr/bin/
 #
 # Create group + user
