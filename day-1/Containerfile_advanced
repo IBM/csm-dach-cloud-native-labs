@@ -1,0 +1,35 @@
+# Node.js 14.18.1
+FROM node@sha256:2f73ba076865cc8d685d479ba6fcc0cee5b9f00335fd3fac0f8211d34c4e278b
+# The FROM command tell us which is the base image. Using the digest (@sha...) we uniquely and immutably identify a container image.
+# https://hub.docker.com/layers/node/library/node/14.18.1/images/sha256-2f73ba076865cc8d685d479ba6fcc0cee5b9f00335fd3fac0f8211d34c4e278b?context=explore
+
+LABEL author="Raphael Tholl raphael.tholl@ibm.com"
+# The LABEL is optional but useful to provide information about the image
+
+WORKDIR /app
+# The WORKDIR command creates a folder inside the container and sets the working directory for all subsequent instructions.
+
+COPY ["../nodejs-helloworld/app.js", "../node-js-helloworld/package.json", "/app/"]
+# The COPY command copies files from the host into the container image. The array's last index is the destination inside the container.
+
+RUN npm install
+# The RUN command is executed during build
+# Each RUN command adds a layer to the image, so it's a good practice to use && to combine commands 
+
+RUN groupadd -r appuser &&\
+    useradd -r appuser -g appuser -s /sbin/nologin -c "Non-root user to run application"
+# It is considered best practice to not run your applications as root inside the container. Thus create a new user for your application
+
+USER appuser
+# The USER runs all subsequent instructions as the provided user.
+
+EXPOSE 8080
+# The EXPOSE command says which port on the container should be exposed (metadata only)
+
+ENTRYPOINT ["npm"]
+# The ENTRYPOINT is the command to be executed on the container when it is started 
+# The entrypoint can't be overriden
+
+CMD ["start"]
+# The CMD command provides the parameters for the command specified in ENTRYPOINT
+# The arguments can be overriden by passing them at the end of _podman run_
