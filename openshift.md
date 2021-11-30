@@ -4,7 +4,10 @@ After you learnt about containers, images and podman, in this lab you are going 
 
 ### Table of contents
 
-
+1. Command line interface
+2. Create a new project
+3. Create an application from an existing image
+4. Add a route
 
 _Kubernetes is a portable, extensible, open-source platform for managing containerized workloads and services._
 
@@ -27,14 +30,15 @@ OpenShift or Kubernetes cluster. It also includes the administrative
 commands for managing a cluster under the 'adm' subcommand.
 ```
 
-### Create a new project
+### 2. Create a new project
 
 _In Kubernetes, a Namespace provices a mechanism to scope resources in a cluster.In OpenShift, a Project is a Kubernetes Namespace with additional annotations._
 
 In OpenShift, all resources are grouped into projects.
 
-_1. Demonstration: create a project using the OpenShift web console_
-_2. Exercise: create your project using the oc CLI_
+__Demonstration__: create a project using the OpenShift web console
+
+__Exercise__: create your project using the oc CLI
 
 Create your project 
 ```
@@ -49,7 +53,7 @@ to build a new example application in Ruby. Or use kubectl to deploy a simple Ku
 
     kubectl create deployment hello-node --image=k8s.gcr.io/serve_hostname
 ```
-_NOTE: Replace the 1 with your user number__
+_NOTE: Replace the 1 with your user number_
 
 
 List all available projects:
@@ -58,10 +62,9 @@ eramon:~$ oc projects
 ```
 The project you just created has a * next to its name. That means that's the current project in use.
 
-### Create a new application from an existing image
+### 3. Create a new application from an existing image
 
 Now you have your own namespace/project, deploy your first application on OpenShift. 
-
 There are three ways to create a new application in OpenShift:
 
  * From an image
@@ -70,14 +73,13 @@ There are three ways to create a new application in OpenShift:
 
 In this lab, we are going to explore the first one, building an application from an existing image. 
 
-_1. Demonstration: how to create an application from the OpenShift Web Console_
-_2. Exercise: create your application using the CLI_
+__Demonstration__: how to create an application from the OpenShift Web Console
+
+__Exercise__: create your application using the CLI
 
 In this lab, we are going to use an image from the RedHat registry. 
 
-_In the first lab featuring podman, we used images from the public registry dockerhub._
-
-The featured image is registry.redhat.io/rhscl/httpd-24-rhel7, which is a HTTP 2.4 Server.
+In the first lab featuring podman, we used images from the public registry dockerhub. The featured image in this lab is registry.redhat.io/rhscl/httpd-24-rhel7, which is a HTTP 2.4 Server.
 
 Let's see how the command looks like:
 ```
@@ -144,14 +146,14 @@ We can find among other information:
 - The docker image used: registry.redhat.io/rhscl/httpd-24-rhel7
 - The number of replicas: in this example 1
 
-### Add a route
+### 4. Add a route
 
 _An openshift route is a way to expose a service by giving it an externally accessible hostname_
 
 In order to make our new apache server accessible from outside the cluster, we need to create a route.
 
-_1. Demonstration: show how to create a root on the Web Interface_
-_2. Exercise: create the route using the CLI_
+__Demonstration__: show how to create a root on the Web Interface
+__Exercise:__ create the route using the CLI
 
 Create the route exposing the service:
 ```
@@ -183,7 +185,7 @@ Endpoints:	10.129.2.19:8080, 10.129.2.19:8443
 
 Test that it's working, issuing a curl command to the host indicated by _Requested Host_ in the output above:
 ```
-myapache-eva-ramon-ibm-dev.apps.sandbox.x8i5.p1.openshiftapps.com
+eramon:~$ curl myapache-eva-ramon-ibm-dev.apps.sandbox.x8i5.p1.openshiftapps.com
 ```
 
 Did you get the HTML code of the index page of Apache? If so, congratulations, you deployed an Apache Web Server on OpenShift :)
