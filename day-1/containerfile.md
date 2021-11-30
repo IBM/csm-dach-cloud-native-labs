@@ -1,4 +1,4 @@
-## 2. Create Custom Images
+## Create Custom Images
 
 In this lab we are going to see how an image is built:
 

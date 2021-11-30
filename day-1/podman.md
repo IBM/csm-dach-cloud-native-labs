@@ -1,9 +1,14 @@
 
-## 1. Managing Images and Containers with Podman
+## Managing Images and Containers with Podman
 
 _Podman_ is a daemonless container engine for developing, managing and running OCI containers. 
 
-### 1.1. Nginx
+### Table of contents
+
+1. Nginx
+2. MariaDB 
+
+### 1. Nginx
 
 Let's start pulling an image from a public registry. 
 
