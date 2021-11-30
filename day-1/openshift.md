@@ -152,7 +152,7 @@ _An openshift route is a way to expose a service by giving it an externally acce
 
 In order to make our new apache server accessible from outside the cluster, we need to create a route.
 
-__Demonstration__: show how to create a root on the Web Interface
+__Demonstration__: show how to create a route on the Web Interface
 
 __Exercise:__ create the route using the CLI
 
