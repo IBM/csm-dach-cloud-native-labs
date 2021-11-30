@@ -3,7 +3,7 @@
 # Run this script with root privileges. Report bugs at: https://github.com/IBM/csm-dach-cloud-native-labs/issues
 #
 # Choose how many users you want and their password
-NUMBER_USERS=10
+NUMBER_USERS=15
 PASSWORD=superSecure
 #
 # Install podman

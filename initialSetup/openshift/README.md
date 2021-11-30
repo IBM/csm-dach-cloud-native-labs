@@ -41,3 +41,27 @@ oc create secret generic htpasswd-secret --from-file htpasswd=$(pwd)/htpasswd -n
 ```
 oc apply -f HTPasswdCR.yaml
 ```
+
+### Managed OpenShift on IBM Cloud
+
+If managed OpenShift on IBM Cloud is used, then user management via htpasswd is not supported. Instead use the IBM Cloud Shell via the browser.
+
+Once users logged into the IBM Cloud web console, they can open the shell at: https://cloud.ibm.com/shell
+
+Then run the following commands to continue using the oc CLI.
+
+```
+ibmcloud ks clusters
+```
+
+Copy the cluster name and paste it into the next command to replace the CLUSTERNAME variable
+
+```
+ibmcloud oc cluster config -c CLUSTERNAME --admin
+```
+
+From then on, the normal oc commands can be used like
+
+```
+oc whoami
+```
