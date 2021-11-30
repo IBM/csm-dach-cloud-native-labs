@@ -17,7 +17,8 @@ RUN npm install
 # Each RUN command adds a layer to the image, so it's a good practice to use && to combine commands 
 
 RUN groupadd -r appuser &&\
-    useradd -r appuser -g appuser -s /sbin/nologin -c "Non-root user to run application"
+    useradd -r appuser -g appuser -s /sbin/nologin -c "Non-root user to run application" &&\
+    chown -R appuser:appuser /app
 # It is considered best practice to not run your applications as root inside the container. Thus create a new user for your application
 
 USER appuser
