@@ -23,15 +23,15 @@ systemctl enable --now firewalld
 Create a new conf under /etc/ssh/ssh_config.d/ to add whatever port you want.
 
 ```
-echo "Port 5000" > /etc/ssh/ssh_config.d/customPort.conf
+echo "Port 32122" >> /etc/ssh/sshd_config
 ```
 
 Enable custom ssh port through SELinux + firewall
 
 ```
 dnf install -y policycoreutils-python-utils
-semanage port -a -t ssh_port_t -p tcp 5000
-firewall-cmd --add-port=2021/tcp --permanent
+semanage port -a -t ssh_port_t -p tcp 32122
+firewall-cmd --add-port=32122/tcp --permanent
 firewall-cmd --reload
 systemctl reload sshd
 ```
