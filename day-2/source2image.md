@@ -1,18 +1,20 @@
 ## Deploy an application from source code
 
-We mentioned in the previous lab that there is three ways to create an application with _oc new-app_. In this lab, we are going to explore how to deploy an application directly from source code. 
+We mentioned in the previous lab that there are three ways to create an application with _oc new-app_. We saw how to deploy an application from an existing docker image. In this lab, we are going to explore how to deploy an application directly from source code. 
 
 _One of the main differences between OpenShift and Kubernetes is the concept of build-related artifacts. In OpenShift, such artififacts are considered first class Kubernetes resources upon which standard Kubernetes operators can apply._
 
-OpenShift relies internally on _Source-to-Image (S2I)_ to build reproducible, Docker-formatted container images. 
+OpenShift relies internally on _Source-to-Image (S2I)_ to build reproducible, docker-formatted container images. 
 
- * 1. Demonstration: create application from source on the WebConsole (Optional)
- * 2. Exercise: create application from source on the command line
-
-For this exercise, we have prepared a simple nodejs application, which you can find on the labs github:
+For this lab, we have prepared a simple nodejs application, which you can find on the labs github:
 https://github.com/IBM/csm-dach-cloud-native-labs/nodejs-helloworld
 
-Let's try it out:
+_Use the branch "workshop" for the exercises_
+
+ *  __Demonstration__: show how to create an application from source on the WebConsole (Optional)
+ *  __Exercise__: create application from source on the command line
+
+The command _oc new-app_ can take as a parameter a repository location. The _context-dir_ parameter indicates the folder where the source code of the application can be found:
 ```
 eramon:~$ oc new-app https://github.com/IBM/csm-dach-cloud-native-labs#workshop --name helloworld --context-dir=nodejs-helloworld
 --> Found image e7672e7 (3 weeks old) in image stream "openshift/nodejs" under tag "14-ubi8" for "nodejs"
@@ -40,7 +42,7 @@ eramon:~$ oc new-app https://github.com/IBM/csm-dach-cloud-native-labs#workshop 
     Run 'oc status' to view your app.
 ```
 
-Let's examine the resource which were created:
+When creating an application from source, resources are automatically generated:
 ```
 eramon:~$ oc get all
 NAME                              READY   STATUS      RESTARTS   AGE
@@ -66,20 +68,20 @@ NAME                                        IMAGE REPOSITORY                    
 imagestream.image.openshift.io/helloworld   image-registry.openshift-image-registry.svc:5000/user1/helloworld   latest   37 seconds ago
 ```
 
-When creating an application from source, resources are automatically generated:
-
- * The Pods which host the application 
- * A Deployment: we see the deployment "helloworld"
- * A ReplicaSet: as part of the deployment, the replicaset "helloworld" aims to create 1 replica
- * A Service: the service "helloworld" allows the internal access to the application
- * A BuildConfig: the build config created the build container which took care of building the application
- * An ImageStream: the imagestream "helloworld" represents the different versions of the created images
-
 _A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A BuildConfig object is the definition of the entire build process._
 
 _An image stream and its associated tags provide an abstraction for referencing container images. The image stream and its tags allow to see what images are available and ensure you are using the specific image you need even if the image in the repository changes_
 
-We see, a build container was created, which took care of building the application. Upon termination, the application pods were created and are running. 
+We can identify following resources:
+
+ * The Pods which host the application 
+ * The Deployment "helloworld"
+ * A ReplicaSet: as part of the deployment, the replicaset "helloworld" aims to create 1 replica
+ * A Service: the service "helloworld" allows internal access to the application
+ * A BuildConfig: the build config resource creates build containers to build the application
+ * An ImageStream: the imagestream "helloworld" represents the different versions of the created images
+
+A build container was created, which took care of building the application. Upon termination, the application pods were created and are running. 
 
 The service allows to access the application internally, but if we want to access it externally? We need to create a route.
 
@@ -120,7 +122,7 @@ eramon:~$ curl helloworld-user1.externaldemo-5115c94768819e85b5dd426c66340439-00
 Hello World!
 ```
 
-Our helloworld application is greeting us from inside the pod, deployed in our OpenShift cluster :D
+Congratulations! Your helloworld application is greeting you from inside of the pod running as part of a deployment in our OpenShift cluster :)
 
 __Demonstration:__ What if we change something in the application? Let's see how to manage changes. 
 
@@ -137,7 +139,7 @@ eramon:nodejs-helloworld$ git commit -m "Change hello message"
 eramon:nodejs-helloworld$ git push
 ```
 
- 5) Restart the build with _oc start build helloworld_
+Restart the build with _oc start build helloworld_:
 
 ```
 eramon:nodejs-helloworld$ oc start-build helloworld
@@ -146,10 +148,10 @@ build.build.openshift.io/helloworld-2 started
 
 If we inspect the resources with _oc get all_, we'll see:
 
- * There is a new builder pod _helloworld-2-build_, which after a short while should be in stautus _Completed_
- * A new build config _helloworld-2_, which after the build should be in status _Complete_
- * The previously running pod terminate
- * A new pod running the modified application
+ * There is a new builder pod _helloworld-2-build_ which after a short while should be in stautus _Completed_
+ * A new build config _helloworld-2_ which after the build should be in status _Complete_
+ * The previously running pod is either in status _terminating_ or it's already gone
+ * A new pod is running with the new version of the application, including our changes
 
 If we test the same url as before, we should see the new message:
 ```
@@ -159,5 +161,5 @@ Hello Openshift!
 
 ## References:
 
-_The application example is the one available here:
+_The helloworld application used as an example is based on
 https://github.com/RedHatTraining/DO180-apps_
