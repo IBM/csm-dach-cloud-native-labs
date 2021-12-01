@@ -7,7 +7,7 @@ Workshops to teach the basics of containerization and OpenShift. They include ha
 - LAB 1.1: Try out podman and oc [day-1/environment.md](day-1/environment.md)
 - LAB 1.2: Managing Images and Containers with Podman [day-1/containers.md](day-1/containers.md)
 - LAB 1.3: Create Custom Images [day-1/customimages.md](day-1/customimages.md)
-- LAB 1.4 (Optional): Advanced Containerfile commands [day-1/advanced.md](day-1/advanced.md)
+- LAB 1.4: Advanced Containerfile commands [Advanced Containerfile](day-1/advanced/Containerfile)
 
 ## Day 2: OpenShift
 
