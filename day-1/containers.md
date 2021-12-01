@@ -29,6 +29,10 @@ _Nginx is an open-source web application server_
 We are pulling the bitnami/nginx image from docker.io:
 ```
 user1:~$ podman pull docker.io/bitnami/nginx
+
+Trying to pull docker.io/bitnami/nginx:latest...
+Getting image source signatures
+...
 ```
 
 _The bitnami images are rootless. Relying on rootless containers is a security best practice._
@@ -36,6 +40,7 @@ _The bitnami images are rootless. Relying on rootless containers is a security b
 We can see that the image is now available locally:
 ```
 user1:~$ podman images
+
 REPOSITORY               TAG         IMAGE ID      CREATED      SIZE
 docker.io/bitnami/nginx  latest      55027d4388b7  4 hours ago  94.7 MB
 ```
@@ -45,6 +50,7 @@ We just pulled the image, we did not create any container yet.
 Run the image as a container:
 ```
 user1:~$ podman run -d --name mynginx bitnami/nginx
+
 097ee94c96e5e6e1655ed688fbe043a14d769248bf907effc64bc740f8acfe49
 ```
  * The _-d_ parameter means _dettached_ so the image runs as daemon
@@ -53,6 +59,7 @@ user1:~$ podman run -d --name mynginx bitnami/nginx
 If we list the running containers, we'll see our new nginx container there:
 ```
 user1:~$ podman ps
+
 CONTAINER ID  IMAGE                           COMMAND               CREATED         STATUS             PORTS       NAMES
 097ee94c96e5  docker.io/bitnami/nginx:latest  /opt/bitnami/scri...  44 seconds ago  Up 44 seconds ago              mynginx
 
@@ -73,20 +80,25 @@ That means that after the container is built the command script _run.sh_ is call
 Now we are going to delete the running container:
 ```
 user1:~$ podman rm mynginx
+
 Error: cannot remove container 097ee94c96e5e6e1655ed688fbe043a14d769248bf907effc64bc740f8acfe49 as it is running - running or paused containers cannot be removed without force: container state improper
 ```
 
 What's happening? This does not work. In order to be able to delete the container, we need to stop it first:
 ```
 user1:~$ podman stop mynginx
+
 mynginx
+
 user1:~$ podman rm mynginx
+
 097ee94c96e5e6e1655ed688fbe043a14d769248bf907effc64bc740f8acfe49
 ```
 
 This time it worked. Next we delete the image:
 ```
 user1:~$ podman rmi nginx
+
 Untagged: docker.io/bitnami/nginx:latest
 Deleted: 55027d4388b7e10014c9983093a10bdd08e7272aabbb15e2919866d9bdc49e80
 ```
@@ -96,6 +108,7 @@ _Alternatively, it is possible to use the _-f_ flag on the _podman remove_ comma
 Now we'll run a new container from the same image, this time performing a port forwarding of a port on our host machine to a port in the container:
 ```
 user1:~$ podman run -d --name mynginx -p 8080:8080 docker.io/bitnami/nginx
+
 Trying to pull docker.io/bitnami/nginx:latest...
 ```
 
@@ -113,10 +126,15 @@ With this we see that our nginx web server is working as expected.
 A little bit of housekeeping: remove the nginx image and container:
 ```
 user1:~$ podman stop mynginx
+
 mynginx
+
 user1:~$ podman rm mynginx
+
 0718b4a9411235a561d0d2a8dfab78750c91f7c2094b58521a0bd4963c24398a
+
 user1:~$ podman rmi bitnami/nginx
+
 Untagged: docker.io/bitnami/nginx:latest
 Deleted: 55027d4388b7e10014c9983093a10bdd08e7272aabbb15e2919866d9bdc49e80
 ```
@@ -128,6 +146,7 @@ _MariaDB is a open-source database server based on MySQL_
 We want to create a new container from a MariaDB image:
 ```
 user1:~$ podman run --name mymariadb -d -p 3306:3306 bitnami/mariadb
+
 ✔ docker.io/bitnami/mariadb:latest
 Trying to pull docker.io/bitnami/mariadb:latest...
 ```
@@ -135,6 +154,7 @@ Trying to pull docker.io/bitnami/mariadb:latest...
 When we list the locally available images, we see a mariadb image on the list:
 ```
 user1:~$ podman images
+
 REPOSITORY                 TAG         IMAGE ID      CREATED       SIZE
 docker.io/bitnami/mariadb  latest      179e8d2f6d89  12 hours ago  338 MB
 ```
@@ -143,6 +163,7 @@ However, if we list the running containers with _podman ps_, we'll see there is 
 To be able to see also the stopped and exited containers, we use another command:
 ```
 user1:~$ podman ps -a
+
 CONTAINER ID  IMAGE                             COMMAND               CREATED             STATUS                         PORTS                    NAMES
 c8e968144f86  docker.io/bitnami/mariadb:latest  /opt/bitnami/scri...  About a minute ago  Exited (1) About a minute ago  0.0.0.0:3306->3306/tcp  mymariadb
 ```
@@ -161,18 +182,21 @@ That is the reason of the failure. At least the environment variable MARIADB_ROO
 Since we want to reuse the same container name _mymariadb_ we need to remove the failed one first:
 ```
 user1:~$ podman rm mymariadb
+
 c8e968144f861cfba12c8d1238029a6ffe129be1fe90181f15a6838e771b4565
 ```
 
 Then we run a new container from the same image, this time providing the required environment variable:
 ```
 user1:~$ podman run -d --name mymariadb -p 3306:3306 -e MARIADB_ROOT_PASSWORD=passw0rd bitnami/mariadb
+
 de035cd79b5461ec102d7cb2fa7c47672a8585e5a71a44796741ab5ae618c984
 ```
 
 This time the container did not exit, we see it's up and running:
 ```
 user1:~$ podman ps
+
 CONTAINER ID  IMAGE                             COMMAND               CREATED         STATUS             PORTS                    NAMES
 de035cd79b54  docker.io/bitnami/mariadb:latest  /opt/bitnami/scri...  1 second ago    Up 1 second ago    0.0.0.0:3306->3306/tcp  mymariadb
 ```
@@ -180,6 +204,7 @@ de035cd79b54  docker.io/bitnami/mariadb:latest  /opt/bitnami/scri...  1 second a
 That means our database server is running. There is a way to connect to a running container, that's what we are trying next:
 ```
 user1:~$ podman exec -it mymariadb /bin/bash
+
 1001@de035cd79b54:/$ 
 ```
 
@@ -191,6 +216,7 @@ What does this mean?
 Inside the MariaDB container, we can for example connect to the database:
 ```
 1001@de035cd79b54:/$ mysql -uroot -ppassw0rd
+
 Welcome to the MariaDB monitor.  Commands end with ; or \g.
 Your MariaDB connection id is 3
 Server version: 10.6.5-MariaDB Source distribution
@@ -200,15 +226,19 @@ Exit the mysql shell and then the running container:
 ```
 MariaDB [(none)]> exit
 Bye
+
 1001@de035cd79b54:/$ exit
 exit
+
 user1:~$ 
 ```
 
 Clean-up everything:
 ```
 user1:dev$ podman stop --all
+
 user1:dev$ podman rm --all
+
 user1:dev$ podman rmi --all
 ```
 
