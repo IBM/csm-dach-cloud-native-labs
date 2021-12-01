@@ -42,6 +42,22 @@ oc create secret generic htpasswd-secret --from-file htpasswd=$(pwd)/htpasswd -n
 oc apply -f HTPasswdCR.yaml
 ```
 
+### Create a project per user
+
+Run the following script to create user projects
+
+```
+sh createProjects.sh
+```
+
+### Clean up cluster
+
+Run the following script to delete all user projects
+
+```
+sh clean.sh
+```
+
 ### Managed OpenShift on IBM Cloud
 
 If managed OpenShift on IBM Cloud is used, then user management via htpasswd is not supported. Instead use the IBM Cloud Shell via the browser.
@@ -64,4 +80,10 @@ From then on, the normal oc commands can be used like
 
 ```
 oc whoami
+```
+
+To give users the right to create new projects and delete their own, assign the correct cluster-role to them. They will only be able to delete their own projects. Replace **USERNAME** with your preferred user.
+
+```
+oc adm policy add-cluster-role-to-user self-provisioner USERNAME
 ```
