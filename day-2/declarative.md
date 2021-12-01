@@ -116,7 +116,8 @@ The service uses selectors (labels) to know which pods to connect to when the se
 
 All we need is now declared in the yaml files. To deploy the database, we just have to apply the yaml files to generate the resources:
 ```
-user1:yaml$ oc apply -f yaml 
+user1:~$ oc apply -f yaml 
+
 namespace/lab6 created
 deployment.apps/mariadb created
 secret/mariadb-secret created
