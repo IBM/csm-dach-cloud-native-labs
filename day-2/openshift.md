@@ -180,7 +180,7 @@ user1:~$ oc describe route myhttpd
 ```
 In the output, you'll find the host name indicated by _Request Host_. Put it in an environment variable:
 ```
-user1:~$ export HOST=myhost
+user1:~$ export HOST=<write here the URL you got>
 ```
 
 Test that it's working, issuing a curl command:

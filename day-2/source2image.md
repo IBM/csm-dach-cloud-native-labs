@@ -3,11 +3,10 @@
 ### Table of contents
 
  1. Introduction
- 2. Demonstration: use the Openshift Web Console
- 3. Create an application from source from the command line
- 4. Examining the resources
- 5. Routes
- 6. Demonstration: change the source code and restart the build 
+ 2. Create an application from source
+ 3. Examining the resources
+ 4. Routes
+ 5. Change the source code and restart the build 
 
 ### 1. Introduction
 
@@ -17,11 +16,13 @@ _One of the main differences between OpenShift and Kubernetes is the concept of 
 
 OpenShift relies internally on _Source-to-Image (S2I)_ to build reproducible, docker-formatted container images. 
 
-### 2. Demonstration: use the OpenShift Web Console (Optional)
+### 2. Create an application from source
+
+__Demonstration:__ use the OpenShift Web Console (Optional)
 
 _The teacher might show first how to create an application from source from the web console._
 
-### 3. Create an application from source from the command line
+__Exercise:__ Create an application from source from the command line
 
 For this lab, we have prepared a simple nodejs application, which you can find on the labs github:
 https://github.com/IBM/csm-dach-cloud-native-labs/nodejs-helloworld
@@ -55,7 +56,7 @@ user1:~$ oc new-app https://github.com/IBM/csm-dach-cloud-native-labs#workshop -
     Run 'oc status' to view your app.
 ```
 
-### 4. Examining the resources
+### 3. Examining the resources
 
 _A build is the process of transforming input parameters into a resulting object. Most often, the process is used to transform input parameters or source code into a runnable image. A BuildConfig object is the definition of the entire build process._
 
@@ -99,7 +100,7 @@ Let's take a closer look:
 
 A build container was created, which took care of building the application. Upon termination, the application pods were created and are running. 
 
-### 5. Routes
+### 4. Routes
 
 The service allows to access the application internally, but if we want to access it externally? We need to create a route.
 
@@ -145,13 +146,13 @@ Hello World!
 
 Congratulations! Your helloworld application is greeting you from inside of the pod running as part of a deployment in our OpenShift cluster :)
 
-### 6. Demonstration: change the source code and restart the build
+### 5. Change the source code and restart the build
 
 _This part needs to be performed as a demonstration, since only the teacher has permission to edit the source code. Of course it can be done as an exercise if the student forks the source code to the own github repository._
 
 What if we change something in the application? Let's see how to manage changes. 
-```
-Change the text in _app.js_ to say "Hello OpenShift!" instead of "Hello World!"
+
+Change the text in _app.js_ to say "Hello OpenShift!" instead of "Hello World!":
 ```
 user1:~$ -helloworld$ sed -i 's/World/Openshift/g' nodejs-helloworld/app.js
 ```
