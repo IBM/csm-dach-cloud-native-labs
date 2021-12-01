@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+  namespace: lab6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: mariadb
+  template:
+    metadata:
+      labels:
+        deployment: mariadb
+    spec:
+      containers:
+      - image: docker.io/bitnami/mariadb
+        name: mariadb
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        env:
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-secret
+              key: password
