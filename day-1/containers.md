@@ -1,6 +1,8 @@
 
 ## Managing Images and Containers with Podman
 
+The objective of this lab is to learn how to create and manage containers and images, using the _podman_ command line interface tool. We are going to work with two examples, a nginx web server and a mariadb database server. 
+
 _Podman_ is a daemonless container engine for developing, managing and running OCI containers. 
 
 ### Table of contents
