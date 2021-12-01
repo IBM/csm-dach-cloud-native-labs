@@ -40,6 +40,8 @@ In OpenShift, all resources are grouped into projects.
 
 __Demonstration__: create a project using the OpenShift web console
 
+_The teacher might show first how to create a project on the web console._
+
 __Exercise__: create your project using the oc CLI
 
 Create your namespace/project:
@@ -78,6 +80,8 @@ There are three ways to create a new application in OpenShift:
 In this lab, we are going to explore the first one, building an application from an existing image. 
 
 __Demonstration__: how to create an application from the OpenShift Web Console
+
+_The teacher might show first how to create an application from an image on the web console._
 
 __Exercise__: create your application using the CLI
 
@@ -164,6 +168,8 @@ _An openshift route is a way to expose a service by giving it an externally acce
 In order to make our new apache server accessible from outside the cluster, we need to create a route.
 
 __Demonstration__: show how to create a route on the Web Interface
+
+_The teacher might show first how to create a route the web console._
 
 __Exercise:__ create the route using the CLI
 
