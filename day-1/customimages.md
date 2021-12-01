@@ -57,7 +57,8 @@ Successfully tagged localhost/myapache:0.1
 
 In the list of images, we see both the image we created and the base image:
 ```
-user1:cloud-native-labs$ podman images
+user1:~$ podman images
+
 REPOSITORY             TAG         IMAGE ID      CREATED        SIZE
 localhost/myapache     0.1         8997b9661025  2 minutes ago  292 MB
 docker.io/redhat/ubi8  latest      cc0656847854  3 weeks ago    235 MB
@@ -65,7 +66,8 @@ docker.io/redhat/ubi8  latest      cc0656847854  3 weeks ago    235 MB
 
 Run a container from this image:
 ```
-user1:cloud-native-labs$ podman run --name myapache -d -p 8080:80 myapache
+user1:~$ podman run --name myapache -d -p 8080:80 myapache
+
 278e7d99275e981315f06c5517847d810e80b6153eaed30a29134106771129b7
 user1:cloud-native-labs$ podman ps 
 CONTAINER ID  IMAGE                   COMMAND        CREATED        STATUS            PORTS                 NAMES
@@ -77,6 +79,7 @@ We created a new container based on our custom image, with name _myapache_, in d
 Should we try it?
 ```
 user1:cloud-native-labs$ curl localhost:8080
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 ...
 		<title>Test Page for the HTTP Server on Red Hat Enterprise Linux</title>
@@ -94,14 +97,16 @@ We saw in the Containerfile that there is an ENTRYPOINT and a CMD commands. Both
 
 Let's try overriding CMD:
 ```
-user1:cloud-native-labs$ podman run --name override -p 8081:80 myapache -v
+user1:~$ podman run --name override -p 8081:80 myapache -v
+
 Server version: Apache/2.4.37 (Red Hat Enterprise Linux)
 Server built:   Oct 26 2021 14:18:06
 ```
 
 What did we do? Instead starting the web server by executing _httpd -d foreground_ we printed out the apache version by calling _httpd -v_. The version was printed and the container finished, so the container is not running anymore:
 ```
-user1:cloud-native-labs$ podman ps -a
+user1:~$ podman ps -a
+
 CONTAINER ID  IMAGE                   COMMAND        CREATED         STATUS                    PORTS                 NAMES
 ...
 e42a2930ed34  localhost/myapache:0.1  -v             2 minutes ago   Exited (0) 2 minutes ago  0.0.0.0:8081->80/tcp  override
@@ -109,11 +114,16 @@ e42a2930ed34  localhost/myapache:0.1  -v             2 minutes ago   Exited (0) 
 
 To finish a little housekeeping:
 ```
-user1:cloud-native-labs$ podman stop --all
+user1:~$ podman stop --all
+
 ac05d949910abc9ffe04ed8d34d2a4c2024de13ae234dc16233a92b2c3c9250f
-user1:cloud-native-labs$ podman rm --all
+
+user1:~$ cloud-native-labs$ podman rm --all
+
 ac05d949910abc9ffe04ed8d34d2a4c2024de13ae234dc16233a92b2c3c9250f
-user1:cloud-native-labs$ podman rmi --all
+
+user1:~$ podman rmi --all
+
 Untagged: docker.io/redhat/ubi8:latest
 Untagged: localhost/myapache:0.1
 Deleted: ec600407b590f735212f408bf86a7cfd460e6480f0e8319b19620f1b3c8349cd
