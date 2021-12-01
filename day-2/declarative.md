@@ -1,3 +1,14 @@
+## Deploying an application in a declarative way 
+
+### Table of contents
+
+1. Namespace
+2. Secret
+3. Deployment
+4. Service
+5. Create the resources
+6. Log in to the database server 
+
 We saw how to deploy applications in openshift. We did this in an imperative way, issuing the oc commands which tell the openshift cluster - via API calls - which is the new desired state of the cluster i.e. which operations must be performed. 
 
 In this lab we are going to see how to do this in a declarative way: writting yaml files which define the desired state of the cluster, then just applying them to generate the openshift resources.
@@ -6,6 +17,8 @@ The application to be deployed is going to be MariaDB.
 
 The sample yaml files are available in this repository.
 
+### 1. Namespace
+
 The namespace (project):
 ```
 apiVersion: v1
@@ -13,9 +26,11 @@ kind: Namespace
 metadata:
   name: lab6 
 ```
-[lab6-namespace.yaml](lab6-namespace.yaml)
+[lab6-namespace.yaml](yaml/lab6-namespace.yaml)
 
 In this lab we are going to use a secret to save the root password for MariaDB.
+
+### 2. Secret
 
 The secret:
 ```
@@ -28,11 +43,13 @@ type: Opaque
 data:
   password: cGFzc3cwcmQ=
 ```
-[mariadb-secret.yaml](mariadb-secret.yaml)
+[mariadb-secret.yaml](yaml/mariadb-secret.yaml)
 
 The secret saves the root password for MARIADB. The value of the secret is the string "passw0rd" base64-encoded.
 
 In the deployment, the secret containing the root password must be specified as environment variable.
+
+### 3. Deployment
 
 The deployment:
 ```
@@ -64,9 +81,11 @@ spec:
               name: mariadb-secret
               key: password
 ```
-[mariadb-deplyoment.yaml](mariadb-deployment.yaml)
+[mariadb-deplyoment.yaml](yaml/mariadb-deployment.yaml)
 
 We are using the same image we used on day 1 to practice with podman. 
+
+### 4. Service
 
 The service, to access the application internally:
 ```
@@ -87,9 +106,11 @@ spec:
     deployment: mariadb
   type: ClusterIP
 ```
-[mariadb-service.yaml](mariadb-service.yaml)
+[mariadb-service.yaml](yaml/mariadb-service.yaml)
 
 The service uses selectors (labels) to know which pods to connect to when the service is accessed.
+
+### 5. Create the resources
 
 All we need is now declared in the yaml files. To deploy the database, we just have to apply the yaml files to genreate the resources:
 ```
@@ -120,6 +141,8 @@ replicaset.apps/mariadb-58c7665fd5   1         1         1       101s
 ```
 
 Everything is looking good. The namespace, the deployment (and therefore the pods and the replicaset), the secret and the service were created. The pod - we specified only 1 replica - is running.
+
+### 6. Log in to the database server 
 
 To check that our database is running, let's connect to the running container:
 ```
