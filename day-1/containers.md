@@ -28,14 +28,14 @@ _Nginx is an open-source web application server_
 
 We are pulling the bitnami/nginx image from docker.io:
 ```
-user1$ podman pull docker.io/bitnami/nginx
+user1:~$ podman pull docker.io/bitnami/nginx
 ```
 
 _The bitnami images are rootless. Relying on rootless containers is a security best practice._
 
 We can see that the image is now available locally:
 ```
-user1$ podman images
+user1:~$ podman images
 REPOSITORY               TAG         IMAGE ID      CREATED      SIZE
 docker.io/bitnami/nginx  latest      55027d4388b7  4 hours ago  94.7 MB
 ```
@@ -44,7 +44,7 @@ We just pulled the image, we did not create any container yet.
 
 Run the image as a container:
 ```
-user1$ podman run -d --name mynginx bitnami/nginx
+user1:~$ podman run -d --name mynginx bitnami/nginx
 097ee94c96e5e6e1655ed688fbe043a14d769248bf907effc64bc740f8acfe49
 ```
  * The _-d_ parameter means _dettached_ so the image runs as daemon
@@ -52,7 +52,7 @@ user1$ podman run -d --name mynginx bitnami/nginx
 
 If we list the running containers, we'll see our new nginx container there:
 ```
-user1$ podman ps
+user1:~$ podman ps
 CONTAINER ID  IMAGE                           COMMAND               CREATED         STATUS             PORTS       NAMES
 097ee94c96e5  docker.io/bitnami/nginx:latest  /opt/bitnami/scri...  44 seconds ago  Up 44 seconds ago              mynginx
 
