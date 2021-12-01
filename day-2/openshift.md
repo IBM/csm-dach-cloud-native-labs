@@ -17,12 +17,12 @@ _OpenShift is a Kubernetes distribution._
 
 The OpenShift cluster was already provisioned for you. Log in using the _oc_ command line tool:
 ```
-eramon:~$ oc login --token=$TOKEN --server=$URL
+user1:~$ oc login --token=$TOKEN --server=$URL
 ```
 
 Let's explore the CLI help a little bit:
 ```
-eramon:~$ oc --help
+user1:~$ oc --help
 OpenShift Client
 
 This client helps you develop, build, deploy, and run your applications on any
@@ -42,7 +42,7 @@ __Exercise__: create your project using the oc CLI
 
 Create your namespace/project:
 ```
-eramon:~$ oc new-project user1
+user1:~$ oc new-project user1
 Now using project "user1" on server "https://c115-e.eu-de.containers.cloud.ibm.com:32297".
 
 You can add applications to this project with the 'new-app' command. For example, try:
@@ -58,7 +58,7 @@ _NOTE: Replace the 1 with your user number_
 
 List all available projects:
 ```
-eramon:~$ oc projects
+user1:~$ oc projects
 ```
 The project you just created has a * next to its name. That means that's the current project in use.
 
@@ -82,7 +82,7 @@ In the first two labs - containers, images, podman and custom images - we used i
 
 Let's see how the command looks like:
 ```
-eramon:~$ oc new-app --name myhttpd registry.access.redhat.com/rhscl/httpd-24-rhel7
+user1:~$ oc new-app --name myhttpd registry.access.redhat.com/rhscl/httpd-24-rhel7
 
 --> Found container image a8d6d7d (11 days old) from registry.access.redhat.com for "registry.access.redhat.com/rhscl/httpd-24-rhel7"
 
@@ -111,7 +111,7 @@ It's actually quite simple:
 
 Let's see what happened:
 ```
-eramon:~$ oc get all
+user1:~$ oc get all
 NAME                          READY   STATUS    RESTARTS   AGE
 pod/myhttpd-c95cb9dd7-zdznk   1/1     Running   0          37s
 
@@ -141,12 +141,12 @@ _A Service serves as an internal load balancer. It identifies a set of replicate
 
 If we want to see the details of the deployment, we can do it like this:
 ```
-eramon:~$ oc describe deployment myhttpd
+user1:~$ oc describe deployment myhttpd
 ```
 
 Or alternatively, we can see the declarative form of the deployment in yaml format:
 ```
-eramon:~$ oc get deployment myhttpd -o yaml
+user1:~$ oc get deployment myhttpd -o yaml
 ```
 
 We can find among other information:
@@ -165,18 +165,18 @@ __Exercise:__ create the route using the CLI
 
 Create the route exposing the service:
 ```
-eramon:~$ oc expose service myhttpd
+user1:~$ oc expose service myhttpd
 route.route.openshift.io/myhttpd exposed
 ```
 
 Find out the URL to access the service externally:
 ```
-eramon:~$ oc describe route myhttpd
+user1:~$ oc describe route myhttpd
 ```
 
 Test that it's working, issuing a curl command to the host indicated by _Requested Host_ in the output above:
 ```
-eramon:~$ curl _hostname_:8080 
+user1:~$ curl _hostname_:8080 
 ```
 
 Did you get the HTML code of the index page of Apache? If so, congratulations, you deployed an Apache Web Server on OpenShift :)
