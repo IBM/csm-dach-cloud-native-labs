@@ -45,7 +45,8 @@ Explanations to the different commands are included in the file as comments.
 
 Our Containerfile is ready - let's build the image with _podman build_:
 ```
-user1:cloud-native-labs$ podman build -t myapache:0.1 .
+user1$ podman build -t myapache:0.1 .
+
 STEP 1: FROM redhat/ubi8-minimal
 ✔ docker.io/redhat/ubi8-minimal:latest
 Trying to pull docker.io/redhat/ubi8-minimal:latest...

@@ -5,8 +5,8 @@ _Podman_ is a daemonless container engine for developing, managing and running O
 
 ### Table of contents
 
-1. Nginx
-2. MariaDB 
+1. Example 1: Nginx
+2. Example 2: MariaDB 
 
 ### 1. Nginx
 

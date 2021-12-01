@@ -149,6 +149,7 @@ Everything is looking good. The namespace, the deployment (and therefore the pod
 To check that our database is running, let's connect to the running container:
 ```
 user1:~$ oc exec -it mariadb-58c7665fd5-mb44w -- /bin/bash
+
 1000670000@mariadb-58c7665fd5-mb44w:/$ mysql -uroot -ppassw0rd
 Welcome to the MariaDB monitor.  Commands end with ; or \g.
 Your MariaDB connection id is 3

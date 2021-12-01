@@ -29,6 +29,7 @@ https://github.com/IBM/csm-dach-cloud-native-labs/nodejs-helloworld
 The command _oc new-app_ can take as a parameter a repository location. The _context-dir_ parameter indicates the folder where the source code of the application can be found:
 ```
 user1:~$ oc new-app https://github.com/IBM/csm-dach-cloud-native-labs#workshop --name helloworld --context-dir=nodejs-helloworld
+
 --> Found image e7672e7 (3 weeks old) in image stream "openshift/nodejs" under tag "14-ubi8" for "nodejs"
 
     Node.js 14 
@@ -63,6 +64,7 @@ _An image stream and its associated tags provide an abstraction for referencing 
 When creating an application from source, resources are automatically generated:
 ```
 user1:~$ oc get all
+
 NAME                              READY   STATUS      RESTARTS   AGE
 pod/helloworld-1-build            0/1     Completed   0          88s
 pod/helloworld-768796c5b8-pll66   1/1     Running     0          37s
@@ -107,12 +109,14 @@ To create a route we need to expose the service associated with the application.
 Let's create a route:
 ```
 user1:~$ oc expose service/helloworld
+
 route.route.openshift.io/helloworld exposed
 ```
 
 Examine the details of the route resource:
 ```
 user1:~$ oc describe route helloworld
+
 Name:			helloworld
 Namespace:		user1
 Created:		25 seconds ago
@@ -135,6 +139,7 @@ Endpoints:	172.30.157.17:8080
 We see the hostname which was assigned to the route. Let's try it:
 ```
 user1:~$ curl helloworld-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
+
 Hello World!
 ```
 
@@ -145,24 +150,26 @@ Congratulations! Your helloworld application is greeting you from inside of the 
 _This part needs to be performed as a demonstration, since only the teacher has permission to edit the source code. Of course it can be done as an exercise if the student forks the source code to the own github repository._
 
 What if we change something in the application? Let's see how to manage changes. 
-
+```
 Change the text in _app.js_ to say "Hello OpenShift!" instead of "Hello World!"
 ```
-user1:csm-dach-cloud-native-labs$ cd nodejs-helloworld/
-user1:nodejs-helloworld$ sed -i 's/World/Openshift/g' app.js
+user1:~$ -helloworld$ sed -i 's/World/Openshift/g' nodejs-helloworld/app.js
 ```
 
 Commit and push the changes:
 ```
-user1:nodejs-helloworld$ git add app.js
-user1:nodejs-helloworld$ git commit -m "Change hello message"
-user1:nodejs-helloworld$ git push
+user1:~$ git add nodejs-helloworld/app.js
+
+user1:~$ git commit -m "Change hello message"
+
+user1:~$ git push
 ```
 
 Restart the build with _oc start build helloworld_:
 
 ```
 user1:nodejs-helloworld$ oc start-build helloworld
+
 build.build.openshift.io/helloworld-2 started
 ```
 
@@ -176,6 +183,7 @@ If we inspect the resources with _oc get all_, we'll see:
 If we test the same url as before, we should see the new message:
 ```
 user1:nodejs-helloworld$ curl helloworld-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
+
 Hello Openshift! 
 ```
 

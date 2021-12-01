@@ -19,11 +19,12 @@ The OpenShift cluster was already provisioned for you. Log in using the _oc_ com
 ```
 user1:~$ oc login --token=$TOKEN --server=$URL
 ```
-_NOTE: the environment variables TOKEN and URL must have been set.__
+_NOTE: the environment variables TOKEN and URL must have been set._
 
 Let's explore the CLI help a little bit:
 ```
 user1:~$ oc --help
+
 OpenShift Client
 
 This client helps you develop, build, deploy, and run your applications on any
@@ -44,6 +45,7 @@ __Exercise__: create your project using the oc CLI
 Create your namespace/project:
 ```
 user1:~$ oc new-project user1
+
 Now using project "user1" on server "https://c115-e.eu-de.containers.cloud.ibm.com:32297".
 
 You can add applications to this project with the 'new-app' command. For example, try:
@@ -113,6 +115,7 @@ It's actually quite simple:
 Let's see what happened:
 ```
 user1:~$ oc get all
+
 NAME                          READY   STATUS    RESTARTS   AGE
 pod/myhttpd-c95cb9dd7-zdznk   1/1     Running   0          37s
 
@@ -167,6 +170,7 @@ __Exercise:__ create the route using the CLI
 Create the route exposing the service:
 ```
 user1:~$ oc expose service myhttpd
+
 route.route.openshift.io/myhttpd exposed
 ```
 
