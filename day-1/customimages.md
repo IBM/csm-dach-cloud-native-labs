@@ -10,7 +10,7 @@ In this lab we are going to see how an image is built:
 
 _NOTE for us (to be removed): we neeed to use docker.io images in all examples with podman, otherwise each participant need a login to redhat. I guess that's the reason the original garage workshop only features oc commands and no podman part. When working with the openshift cluster, the access to the registry is already solved._
 
-This is an example of a Dockerfile:
+This is an example of a Containerfile:
 ```
 FROM redhat/ubi8
 # The FROM command tell us which is the base image. We are using a dockerhub image published by RedHat. 
@@ -39,11 +39,16 @@ CMD ["-D", "FOREGROUND"]
 # The arguments can be overriden by passing them at the end of podman run
 ```
 
-_NOTE: Notice that we talk from a Dockerfile or Contaierfile arbitrarly. Both names are interchangeable and accepted by podman._
+You can copy the Containerfile from here:
+https://raw.githubusercontent.com/IBM/csm-dach-cloud-native-labs/main/day-1/Containerfile
+
+Save it as "Containerfile" or as "Dockerfile".
+
+_NOTE: Notice that we talk from a Dockerfile or Containerfile arbitrarly. Both names are interchangeable and accepted by podman._
 
 Explanations to the different commands are included in the file as comments.
 
-Our Containerfile is ready - let's build the image with _podman build_:
+Our Containerfile is ready - Let's build the image with _podman build_:
 ```
 user1$ podman build -t myapache:0.1 .
 
@@ -54,6 +59,8 @@ Trying to pull docker.io/redhat/ubi8-minimal:latest...
 Successfully tagged localhost/myapache:0.1
 8997b9661025a5baa1b0fc5c4dfc73508ff32eb26afaa34ce752098c6f7fd58b
 ```
+
+__Please don't miss the dot (.)__ since it indicates the location of the source, in this case the current directory. The Containerfile must be in the same directory where the build command is ran.
 
 In the list of images, we see both the image we created and the base image:
 ```
