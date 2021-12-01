@@ -12,7 +12,7 @@
 
 We mentioned in the previous lab that there are three ways to create an application with _oc new-app_. We saw how to deploy an application from an existing docker image. In this lab, we are going to explore how to deploy an application directly from source code. 
 
-_One of the main differences between OpenShift and Kubernetes is the concept of build-related artifacts. In OpenShift, such artififacts are considered first class Kubernetes resources upon which standard Kubernetes operators can apply._
+_One of the main differences between OpenShift and Kubernetes is the concept of build-related artifacts. In OpenShift, such artifacts are considered first class Kubernetes resources upon which standard Kubernetes operators can apply._
 
 OpenShift relies internally on _Source-to-Image (S2I)_ to build reproducible, docker-formatted container images. 
 
@@ -20,7 +20,7 @@ OpenShift relies internally on _Source-to-Image (S2I)_ to build reproducible, do
 
 __Demonstration:__ use the OpenShift Web Console (Optional)
 
-_The teacher might show first how to create an application from source from the web console._
+_The teacher might show first how to create an application from source on the web console._
 
 __Exercise:__ Create an application from source from the command line
 
@@ -89,7 +89,7 @@ NAME                                        IMAGE REPOSITORY                    
 imagestream.image.openshift.io/helloworld   image-registry.openshift-image-registry.svc:5000/user1/helloworld   latest   37 seconds ago
 ```
 
-Let's take a closer look:
+Taking a closer look, we see folowing resources were generated :
 
  * The Pods which host the application 
  * The Deployment "helloworld"
