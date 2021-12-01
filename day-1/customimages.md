@@ -39,10 +39,12 @@ CMD ["-D", "FOREGROUND"]
 # The arguments can be overriden by passing them at the end of podman run
 ```
 
-You can copy the Containerfile from here:
-https://raw.githubusercontent.com/IBM/csm-dach-cloud-native-labs/main/day-1/Containerfile
+Copy the content and save it as "Containerfile" or as "Dockerfile".
 
-Save it as "Containerfile" or as "Dockerfile".
+_Alternatively, you can download it directly from here:_
+```
+wget https://raw.githubusercontent.com/IBM/csm-dach-cloud-native-labs/main/day-1/Containerfile
+```
 
 _NOTE: Notice that we talk from a Dockerfile or Containerfile arbitrarly. Both names are interchangeable and accepted by podman._
 
