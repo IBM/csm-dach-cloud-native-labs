@@ -20,7 +20,7 @@ setenforce enforcing
 systemctl enable --now firewalld
 ```
 
-Create a new conf under /etc/ssh/ssh_config.d/ to add whatever port you want.
+Add custom ssh port to /etc/ssh/sshd_config
 
 ```
 echo "Port 32122" >> /etc/ssh/sshd_config
