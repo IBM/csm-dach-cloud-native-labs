@@ -28,6 +28,8 @@ metadata:
 ```
 [lab6-namespace.yaml](yaml/lab6-namespace.yaml)
 
+For the upcoming yaml files, it's important to specify the namespace to be _lab6_ so all resources are created in the same project.
+
 In this lab we are going to use a secret to save the root password for MariaDB.
 
 ### 2. Secret
@@ -114,7 +116,7 @@ The service uses selectors (labels) to know which pods to connect to when the se
 
 All we need is now declared in the yaml files. To deploy the database, we just have to apply the yaml files to genreate the resources:
 ```
-user1:yaml$ oc apply -f .
+user1:yaml$ oc apply -f yaml 
 namespace/lab6 created
 deployment.apps/mariadb created
 secret/mariadb-secret created
