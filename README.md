@@ -18,5 +18,7 @@ Workshops to teach the basics of containerization and OpenShift. They include ha
 ### Links and references:
 
 https://docs.openshift.com
+
 https://github.com/ibm-garage-dach/cloud-native-bootcamp-ocp311
+
 https://en.wikipedia.org/wiki/OpenShift
