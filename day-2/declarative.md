@@ -127,6 +127,7 @@ service/mariadb created
 Let's change to the new created project and see if the resources are there:
 ```
 user1$ oc project lab6
+
 Now using project "lab6" on server "https://c115-e.eu-de.containers.cloud.ibm.com:32297".
 
 user1:~$ oc get all
