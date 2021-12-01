@@ -19,6 +19,7 @@ The OpenShift cluster was already provisioned for you. Log in using the _oc_ com
 ```
 user1:~$ oc login --token=$TOKEN --server=$URL
 ```
+_NOTE: the environment variables TOKEN and URL must have been set.__
 
 Let's explore the CLI help a little bit:
 ```
@@ -173,10 +174,14 @@ Find out the URL to access the service externally:
 ```
 user1:~$ oc describe route myhttpd
 ```
-
-Test that it's working, issuing a curl command to the host indicated by _Requested Host_ in the output above:
+In the output, you'll find the host name indicated by _Request Host_. Put it in an environment variable:
 ```
-user1:~$ curl _hostname_:8080 
+user1:~$ export HOST=myhost
+```
+
+Test that it's working, issuing a curl command:
+```
+user1:~$ curl $HOST:8080 
 ```
 
 Did you get the HTML code of the index page of Apache? If so, congratulations, you deployed an Apache Web Server on OpenShift :)
