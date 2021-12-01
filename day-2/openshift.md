@@ -1,4 +1,4 @@
-## Working with OpenShift 4.7
+## Working with OpenShift
 
 After you learnt about containers, images and podman, in this lab you are going to work with OpenShift. 
 
@@ -79,7 +79,7 @@ There are three ways to create a new application in OpenShift:
 
 In this lab, we are going to explore the first one, building an application from an existing image. 
 
-__Demonstration__: how to create an application from the OpenShift Web Console
+__Demonstration__: how to create an application using the OpenShift Web Console
 
 _The teacher might show first how to create an application from an image on the web console._
 
@@ -167,9 +167,9 @@ _An openshift route is a way to expose a service by giving it an externally acce
 
 In order to make our new apache server accessible from outside the cluster, we need to create a route.
 
-__Demonstration__: show how to create a route on the Web Interface
+__Demonstration__: show how to create a route using the OpenShift web interface
 
-_The teacher might show first how to create a route the web console._
+_The teacher might show first how to create a route on the web console._
 
 __Exercise:__ create the route using the CLI
 
