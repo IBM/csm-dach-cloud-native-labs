@@ -114,7 +114,7 @@ The service uses selectors (labels) to know which pods to connect to when the se
 
 ### 5. Create the resources
 
-All we need is now declared in the yaml files. To deploy the database, we just have to apply the yaml files to genreate the resources:
+All we need is now declared in the yaml files. To deploy the database, we just have to apply the yaml files to generate the resources:
 ```
 user1:yaml$ oc apply -f yaml 
 namespace/lab6 created
