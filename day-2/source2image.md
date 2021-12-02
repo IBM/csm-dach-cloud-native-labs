@@ -154,7 +154,7 @@ What if we change something in the application? Let's see how to manage changes.
 
 Change the text in _app.js_ to say "Hello OpenShift!" instead of "Hello World!":
 ```
-$ helloworld$ sed -i 's/World/Openshift/g' nodejs-helloworld/app.js
+$ sed -i 's/World/Openshift/g' nodejs-helloworld/app.js
 ```
 
 Commit and push the changes:
