@@ -26,6 +26,18 @@ Add custom ssh port to /etc/ssh/sshd_config
 echo "Port 32122" >> /etc/ssh/sshd_config
 ```
 
+You may also want to block direct ssh access to the root user. Make sure you have another user on the VM, before performing this step!
+
+```
+vim /etc/ssh/sshd_config
+```
+
+And then scroll down to **PermitRootLogin** and set it to **no**. Finally reload the sshd service.
+
+```
+systemctl reload sshd
+```
+
 Enable custom ssh port through SELinux + firewall
 
 ```

@@ -10,7 +10,7 @@ groupdel devUsers
 echo "Deleted group devUsers"
 for NUM in $(seq 1 $NUMBER_USERS)
 	do
-	userdel user$NUM
+	userdel -f user$NUM
     rm -fR /home/user$NUM
 	echo "Deleted user${NUM}"
 	done
