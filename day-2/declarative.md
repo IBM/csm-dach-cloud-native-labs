@@ -2,12 +2,11 @@
 
 ### Table of contents
 
-1. Namespace
-2. Secret
-3. Deployment
-4. Service
-5. Create the resources
-6. Log in to the database server 
+1. Secret
+2. Deployment
+3. Service
+4. Create the resources
+5. Log in to the database server 
 
 We saw how to deploy applications in openshift. We did this in an imperative way, issuing the oc commands which tell the openshift cluster - via API calls - which is the new desired state of the cluster i.e. which operations must be performed. 
 
@@ -27,7 +26,7 @@ __For the upcoming yaml files, it's important to specify the namespace to be _de
 
 In this lab we are going to use a secret to save the root password for MariaDB.
 
-### 2. Secret
+### 1. Secret
 
 The secret:
 ```
@@ -46,7 +45,7 @@ The secret saves the root password for MARIADB. The value of the secret is the s
 
 In the deployment, the secret containing the root password must be specified as environment variable.
 
-### 3. Deployment
+### 2. Deployment
 
 The deployment:
 ```
@@ -82,7 +81,7 @@ spec:
 
 We are using the same image we used on day 1 to practice with podman. 
 
-### 4. Service
+### 3. Service
 
 The service, to access the application internally:
 ```
@@ -107,7 +106,7 @@ spec:
 
 The service uses selectors (labels) to know which pods to connect to when the service is accessed.
 
-### 5. Create the resources
+### 4. Create the resources
 
 All we need is now declared in the yaml files. The sample yaml files are available in this repository. You can either create a _yaml_ directory and copy-paste the content of the files or clone the repository.
 
@@ -155,7 +154,7 @@ replicaset.apps/mariadb-58c7665fd5   1         1         1       101s
 
 Everything is looking good. The deployment (and therefore the pods and the replicaset), the secret and the service were created. The pod - we specified only 1 replica - is running.
 
-### 6. Log in to the database server 
+### 5. Log in to the database server 
 
 To check that our database is running, let's connect to the running container:
 ```
