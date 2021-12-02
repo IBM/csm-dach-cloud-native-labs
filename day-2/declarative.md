@@ -19,7 +19,7 @@ First and as usual, let's create the namespace:
 ```
 user1:~$ oc new-project declarative-user1
 ```
-__Important: replace X with you user number__
+__Important: replace 1 with you user number__
 
 Now examine the different yaml files and its content.
 
