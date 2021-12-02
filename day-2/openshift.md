@@ -45,9 +45,13 @@ _The teacher might show first how to create a project on the web console._
 __Exercise__: create your project using the oc CLI
 
 Create your namespace/project:
+__(Replace the 1 with your user number)__
 ```
 user1:~$ oc new-project user1
+```
 
+The output of the command looks like this:
+```
 Now using project "user1" on server "https://c115-e.eu-de.containers.cloud.ibm.com:32297".
 
 You can add applications to this project with the 'new-app' command. For example, try:
@@ -58,10 +62,8 @@ to build a new example application in Ruby. Or use kubectl to deploy a simple Ku
 
     kubectl create deployment hello-node --image=k8s.gcr.io/serve_hostname
 ```
-__Important: Replace the 1 with your user number__
 
-
-List all available projects:
+Use the following command to see the list all available projects:
 ```
 user1:~$ oc projects
 ```
@@ -147,6 +149,12 @@ _A Pod is one or more containers deployed on a host_
 
 _A Service serves as an internal load balancer. It identifies a set of replicated pods in order to proxy the connections it receives to them._
 
+The created deployment has 1 replica (1 pod) as the default. If you want to scale your application to have 2 pods, you can do the following:
+```
+user1:~$ oc scale --replicas=2 deployment/myhttpd
+```
+Now if you execute _oc get all_ again, you will see that there is now two _pod-myhttpd-xyz_ running.
+
 If we want to see the details of the deployment, we can do it like this:
 ```
 user1:~$ oc describe deployment myhttpd
@@ -159,7 +167,7 @@ user1:~$ oc get deployment myhttpd -o yaml
 
 We can find among other information:
 - The docker image used: _registry.access.redhat.com/rhscl/httpd-24-rhel7_ 
-- The number of replicas: in this example 1
+- The number of replicas: in this example 1 (or 2 after you executed the scale command)
 
 ### 4. Add a route
 
@@ -180,7 +188,7 @@ user1:~$ oc expose service myhttpd
 route.route.openshift.io/myhttpd exposed
 ```
 
-Find out the URL to access the service externally:
+Find out the URL to access the service externally, examining the output of the following comand:
 ```
 user1:~$ oc describe route myhttpd
 ```
@@ -191,8 +199,10 @@ user1:~$ export HOST=<write here the URL you got>
 
 Test that it's working, issuing a curl command:
 ```
-user1:~$ curl $HOST:8080 
+user1:~$ curl $HOST
 ```
+
+_Alternatively, you can copy the URL on your browser_
 
 Did you get the HTML code of the index page of Apache? If so, congratulations, you deployed an Apache Web Server on OpenShift :)
 
