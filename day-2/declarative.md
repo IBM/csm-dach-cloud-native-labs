@@ -134,10 +134,6 @@ service/mariadb created
 
 Let's see if the resources are there:
 ```
-user1$ oc project lab6
-
-Now using project "lab6" on server "https://c115-e.eu-de.containers.cloud.ibm.com:32297".
-
 user1:~$ oc get all
 NAME                           READY   STATUS    RESTARTS   AGE
 pod/mariadb-58c7665fd5-mb44w   1/1     Running   0          100s
