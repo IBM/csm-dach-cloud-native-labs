@@ -8,8 +8,6 @@ In this lab we are going to see how an image is built:
  * Each image is composed by layers
  * Each instruction on the Containerfile adds a layer
 
-_NOTE for us (to be removed): we neeed to use docker.io images in all examples with podman, otherwise each participant need a login to redhat. I guess that's the reason the original garage workshop only features oc commands and no podman part. When working with the openshift cluster, the access to the registry is already solved._
-
 This is an example of a Containerfile:
 ```
 FROM redhat/ubi8
