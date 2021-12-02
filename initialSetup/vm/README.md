@@ -43,3 +43,11 @@ Run the setup script
 ```
 sh createSetupScript.sh
 ```
+
+### Delete users + devUsers group
+
+Run the clean script
+
+```
+sh clean.sh
+```
