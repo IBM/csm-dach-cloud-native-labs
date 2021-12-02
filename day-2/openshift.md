@@ -58,7 +58,7 @@ to build a new example application in Ruby. Or use kubectl to deploy a simple Ku
 
     kubectl create deployment hello-node --image=k8s.gcr.io/serve_hostname
 ```
-_NOTE: Replace the 1 with your user number_
+__Important: Replace the 1 with your user number__
 
 
 List all available projects:
