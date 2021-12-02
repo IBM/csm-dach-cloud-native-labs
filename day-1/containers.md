@@ -143,7 +143,7 @@ Deleted: 55027d4388b7e10014c9983093a10bdd08e7272aabbb15e2919866d9bdc49e80
 
 ### MariaDB
 
-_MariaDB is a open-source database server based on MySQL_
+_MariaDB is an open-source database server based on MySQL_
 
 We want to create a new container from a MariaDB image:
 ```

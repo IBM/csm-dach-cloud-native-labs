@@ -5,7 +5,7 @@ In this lab we are going to see how an image is built:
  * An image is specified on a file called _Containerfile_ or _Dockerfile_ 
  * An image bases on a _base image_
  * A base image provides a common basis for building an image
- * Each image is composed by layers
+ * Each image is composed of layers
  * Each instruction on the Containerfile adds a layer
 
 This is an example of a Containerfile:
@@ -14,11 +14,9 @@ FROM redhat/ubi8
 # The FROM command tell us which is the base image. We are using a dockerhub image published by RedHat. 
 # https://hub.docker.com/r/redhat/ubi8
 
-MAINTAINER user1
-# The MAINTAINER command tells who is the author of the Containerfile
-
+LABEL author="Eva Ramon eva.ramon@ibm.com"
 LABEL description="My very own Apache Server"
-# The LABEL is optional but useful to provide information about the image
+# The LABEL command is useful to provide information about the image
 
 RUN yum install -y httpd &&\
     yum clean all
