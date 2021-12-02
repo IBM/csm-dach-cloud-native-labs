@@ -19,7 +19,7 @@ The OpenShift cluster was already provisioned for you. Log in using the _oc_ com
 ```
 user1:~$ oc login --token=$TOKEN --server=$URL
 ```
-_NOTE: the environment variables TOKEN and URL must have been set._
+_NOTE: either set the environment variables TOKEN and URL or replace their values on the command. The values have to be provided by the teacher or environment owner_
 
 Let's explore the CLI help a little bit:
 ```
