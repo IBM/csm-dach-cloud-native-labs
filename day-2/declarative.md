@@ -176,7 +176,7 @@ To clean up, delete the project:
 ```
 user1:~$ oc delete project declarative-user1
 ```
-__Replace the 1 with your user number!_
+__Replace the 1 with your user number!__
 
 Congratulations! You finished the last lab.
 
