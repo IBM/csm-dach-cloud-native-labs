@@ -11,7 +11,7 @@ After you learnt about containers, images and podman, in this lab you are going 
 
 _Kubernetes is a portable, extensible, open-source platform for managing containerized workloads and services._
 
-_OpenShift is a Kubernetes distribution._
+_OpenShift is an enterprise-grade, certified Kubernetes distribution with additional features._ 
 
 ### 1. Command Line Interface
 
