@@ -124,7 +124,7 @@ user1:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
 user1:~$ cd csm-dach-cloud-native-labs/day-2/yaml
 ```
 
-To deploy the database, we just have to apply the yaml files to generate the resources. Run following command from inside the _yaml_directory where the files are located:
+To deploy the database, we just have to apply the yaml files to generate the resources. Run following command from inside the _yaml_ directory where the files are located:
 ```
 user1:yaml~$ oc apply -f . 
 
