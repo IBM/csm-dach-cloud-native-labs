@@ -25,7 +25,13 @@ _The teacher might show first how to create an application from source on the we
 __Exercise:__ Create an application from source from the command line
 
 For this lab, we have prepared a simple nodejs application, which you can find on the labs github:
-https://github.com/IBM/csm-dach-cloud-native-labs/nodejs-helloworld
+https://github.com/IBM/csm-dach-cloud-native-labs/tree/main/nodejs-helloworld
+
+Create a new project:
+```
+user1:~$ oc new-project s2i-user1
+```
+__Replace 1 with your user number!__
 
 The command _oc new-app_ can take as a parameter a repository location. The _context-dir_ parameter indicates the folder where the source code of the application can be found:
 ```

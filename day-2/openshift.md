@@ -149,7 +149,7 @@ _A Pod is one or more containers deployed on a host_
 
 _A Service serves as an internal load balancer. It identifies a set of replicated pods in order to proxy the connections it receives to them._
 
-The created deployment has 1 replica (1 pod) as the default. If you want to scale your application to have 2 pods, you can do the following:
+The created deployment has 1 replica (1 pod), since that is the default for the _oc new-app_ command. If you want to scale your application to have 2 pods, you can do the following:
 ```
 user1:~$ oc scale --replicas=2 deployment/myhttpd
 ```

@@ -15,21 +15,15 @@ In this lab we are going to see how to do this in a declarative way: writting ya
 
 The application to be deployed is going to be MariaDB. 
 
-
-Examine the different yaml files and its content:
-
-### 1. Namespace
-
-The namespace (project):
+First and as usual, let's create the namespace:
 ```
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: lab6 
+user1:~$ oc new-project declarative-user1
 ```
-[lab6-namespace.yaml](yaml/lab6-namespace.yaml)
+__Important: replace X with you user number__
 
-For the upcoming yaml files, it's important to specify the namespace to be _lab6_ so all resources are created in the same project.
+Now examine the different yaml files and its content.
+
+__For the upcoming yaml files, it's important to specify the namespace to be _declarative-user1_ replacing the 1 for you user number, so all resources are created in the same project.__
 
 In this lab we are going to use a secret to save the root password for MariaDB.
 
@@ -41,7 +35,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: mariadb-secret
-  namespace: lab6
+  namespace: declarative-user1 
 type: Opaque
 data:
   password: cGFzc3cwcmQ=
@@ -60,7 +54,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mariadb
-  namespace: lab6
+  namespace: declarative-user1 
 spec:
   replicas: 1
   selector:
@@ -98,7 +92,7 @@ metadata:
   labels:
     app: mariadb
   name: mariadb
-  namespace: lab6
+  namespace: declarative-user1 
 spec:
   ports:
   - name: 3306-tcp
@@ -124,17 +118,22 @@ user1:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
 user1:~$ cd csm-dach-cloud-native-labs/day-2/yaml
 ```
 
+Replace _user1_ with your user. For example, if you are user2, do the following __inside the yaml directory__:
+```
+user2:~$ sed -i 's/user1/user2/g' *
+```
+_NOTE: if you're user1 you're lucky and don't have to do the replacement ;)_
+
 To deploy the database, we just have to apply the yaml files to generate the resources. Run following command from inside the _yaml_ directory where the files are located:
 ```
 user1:yaml~$ oc apply -f . 
 
-namespace/lab6 created
 deployment.apps/mariadb created
 secret/mariadb-secret created
 service/mariadb created
 ```
 
-Let's change to the new created project and see if the resources are there:
+Let's see if the resources are there:
 ```
 user1$ oc project lab6
 
@@ -154,7 +153,7 @@ NAME                                 DESIRED   CURRENT   READY   AGE
 replicaset.apps/mariadb-58c7665fd5   1         1         1       101s
 ```
 
-Everything is looking good. The namespace, the deployment (and therefore the pods and the replicaset), the secret and the service were created. The pod - we specified only 1 replica - is running.
+Everything is looking good. The deployment (and therefore the pods and the replicaset), the secret and the service were created. The pod - we specified only 1 replica - is running.
 
 ### 6. Log in to the database server 
 
@@ -177,6 +176,12 @@ MariaDB [(none)]>
 It's working :) Our database is running and the root password is the one stored in the secret.
 
 To exit the mysql and the running container, type _exit_ twice.
+
+To clean up, delete the project:
+```
+user1:~$ oc delete project declarative-user1
+```
+__Replace the 1 with your user number!_
 
 Congratulations! You finished the last lab.
 
