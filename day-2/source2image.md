@@ -154,7 +154,7 @@ What if we change something in the application? Let's see how to manage changes.
 
 Change the text in _app.js_ to say "Hello OpenShift!" instead of "Hello World!":
 ```
-$ -helloworld$ sed -i 's/World/Openshift/g' nodejs-helloworld/app.js
+$ helloworld$ sed -i 's/World/Openshift/g' nodejs-helloworld/app.js
 ```
 
 Commit and push the changes:
@@ -169,7 +169,7 @@ $ git push
 Restart the build with _oc start build helloworld_:
 
 ```
-nodejs-helloworld$ oc start-build helloworld
+$ oc start-build helloworld
 
 build.build.openshift.io/helloworld-2 started
 ```
@@ -183,7 +183,7 @@ If we inspect the resources with _oc get all_, we'll see:
 
 If we test the same url as before, we should see the new message:
 ```
-nodejs-helloworld$ curl helloworld-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
+$ curl helloworld-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
 
 Hello Openshift! 
 ```
