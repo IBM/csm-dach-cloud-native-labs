@@ -15,7 +15,8 @@ In this lab we are going to see how to do this in a declarative way: writting ya
 
 The application to be deployed is going to be MariaDB. 
 
-The sample yaml files are available in this repository.
+
+Examine the different yaml files and its content:
 
 ### 1. Namespace
 
@@ -114,9 +115,18 @@ The service uses selectors (labels) to know which pods to connect to when the se
 
 ### 5. Create the resources
 
-All we need is now declared in the yaml files. To deploy the database, we just have to apply the yaml files to generate the resources:
+All we need is now declared in the yaml files. The sample yaml files are available in this repository. You can either create a _yaml_ directory and copy-paste the content of the files or clone the repository.
+
+__Clone repository:__
 ```
-user1:~$ oc apply -f yaml 
+user1:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git 
+
+user1:~$ cd csm-dach-cloud-native-labs/day-2/yaml
+```
+
+To deploy the database, we just have to apply the yaml files to generate the resources. Run following command from inside the _yaml_directory where the files are located:
+```
+user1:yaml~$ oc apply -f . 
 
 namespace/lab6 created
 deployment.apps/mariadb created
