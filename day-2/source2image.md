@@ -92,7 +92,7 @@ NAME                                    TYPE     FROM          STATUS           
 build.build.openshift.io/helloworld-1   Source   Git@bc703d5   Complete                      About a minute ago   52s
 
 NAME                                        IMAGE REPOSITORY                                                    TAGS     UPDATED
-imagestream.image.openshift.io/helloworld   image-registry.openshift-image-registry.svc:5000/user1/helloworld   latest   37 seconds ago
+imagestream.image.openshift.io/helloworld   image-registry.openshift-image-registry.svc:5000/s2i-user1/helloworld   latest   37 seconds ago
 ```
 
 Taking a closer look, we see folowing resources were generated :
@@ -125,13 +125,13 @@ Examine the details of the route resource:
 user1:~$ oc describe route helloworld
 
 Name:			helloworld
-Namespace:		user1
+Namespace:		s2i-user1
 Created:		25 seconds ago
 Labels:			app=helloworld
 			app.kubernetes.io/component=helloworld
 			app.kubernetes.io/instance=helloworld
 Annotations:		openshift.io/host.generated=true
-Requested Host:		helloworld-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
+Requested Host:		helloworld-s2i-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
 			   exposed on router default (host externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud) 25 seconds ago
 Path:			<none>
 TLS Termination:	<none>
@@ -145,7 +145,7 @@ Endpoints:	172.30.157.17:8080
 
 We see the hostname which was assigned to the route. Let's try it:
 ```
-user1:~$ curl helloworld-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
+user1:~$ curl helloworld-s2i-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
 
 Hello World!
 ```
@@ -189,9 +189,10 @@ If we inspect the resources with _oc get all_, we'll see:
 
 If we test the same url as before, we should see the new message:
 ```
-$ curl helloworld-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
+$ curl helloworld-s2i-user1.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
 
 Hello Openshift! 
+
 ```
 
 ### References
