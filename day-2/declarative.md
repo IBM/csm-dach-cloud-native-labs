@@ -170,20 +170,24 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 MariaDB [(none)]> 
 ```
+Run a SQL command, for example, show the databases:
+```
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.004 sec)
+```
 
 It's working :) Our database is running and the root password is the one stored in the secret.
 
 To exit the mysql and the running container, type _exit_ twice.
-
-To clean up, delete your projects.
-__Replace the 1 with your user number!__
-```
-user1:~$ oc delete project declarative-user1
-
-user1:~$ oc delete project s2i-user1
-
-user1:~$ oc delete project user1
-```
 
 Congratulations! You finished the last lab.
 
