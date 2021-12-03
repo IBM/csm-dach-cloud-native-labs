@@ -172,11 +172,15 @@ It's working :) Our database is running and the root password is the one stored 
 
 To exit the mysql and the running container, type _exit_ twice.
 
-To clean up, delete the project:
+To clean up, delete your projects.
+__Replace the 1 with your user number!__
 ```
 user1:~$ oc delete project declarative-user1
+
+user1:~$ oc delete project s2i-user1
+
+user1:~$ oc delete project user1
 ```
-__Replace the 1 with your user number!__
 
 Congratulations! You finished the last lab.
 
