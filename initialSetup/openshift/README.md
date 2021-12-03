@@ -23,7 +23,14 @@ chmod 744 createServiceAccountUserScript.sh
 sh createServiceAccountUserScript.sh
 ```
 
-### Create users via htpasswd file
+Print all oc login commands.
+
+```
+chmod 744 getServiceAccountCreds.sh
+sh getServiceAccountCreds.sh
+```
+
+### OPTIONAL: Create users via htpasswd file
 
 Optional: modify the amount of users and the password inside the script.
 
@@ -39,7 +46,7 @@ Verify that the password is set correctly
 htpasswd -vb htpasswd user1 superSecure
 ```
 
-### Create secret based on htpasswd file
+### OPTIONAL: Create secret based on htpasswd file
 
 Run this command inside the folder where the htpasswd file is located
 
@@ -51,7 +58,7 @@ oc create secret generic htpasswd-secret --from-file htpasswd=$(pwd)/htpasswd -n
 oc apply -f HTPasswdCR.yaml
 ```
 
-### Create a project per user
+### OPTIONAL: Create a project per user
 
 Run the following script to create user projects
 
