@@ -14,4 +14,6 @@ for NUM in $(seq 1 $NUMBER_PROJECTS)
 	do
 	oc delete project user$NUM
 	echo "Deleted project user${NUM}"
+	oc delete project declarative-user$NUM
+	echo "Deleted project declarative-user${NUM}"
 	done
