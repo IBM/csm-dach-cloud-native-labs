@@ -14,6 +14,15 @@ You get this information from the web console. Click on your user in the top rig
 oc login --token=<YourToken> --server=<YourServer>
 ```
 
+### Create users via serviceaccount
+
+Optional: modify the amount of users inside the script.
+
+```
+chmod 744 createServiceAccountUserScript.sh
+sh createServiceAccountUserScript.sh
+```
+
 ### Create users via htpasswd file
 
 Optional: modify the amount of users and the password inside the script.
@@ -21,7 +30,7 @@ Optional: modify the amount of users and the password inside the script.
 ```
 chmod 744 createUserScript.sh
 touch htpasswd
-sh createUserScript.sh
+sh createHTPasswdUserScript.sh
 ```
 
 Verify that the password is set correctly
