@@ -34,7 +34,7 @@ commands for managing a cluster under the 'adm' subcommand.
 
 ### 2. Create a new project
 
-_In Kubernetes, a Namespace provices a mechanism to scope resources in a cluster. In OpenShift, a Project is a Kubernetes Namespace with additional annotations._
+_In Kubernetes, a Namespace provides a mechanism to scope resources in a cluster. In OpenShift, a Project is a Kubernetes Namespace with additional annotations._
 
 In OpenShift, all resources are grouped into projects.
 
