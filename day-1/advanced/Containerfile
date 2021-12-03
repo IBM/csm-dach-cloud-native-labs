@@ -15,6 +15,7 @@ WORKDIR /app
 
 COPY ["app.js", "package.json", "/app/"]
 # The COPY command copies files from the host into the container image. The array's last index must be the destination inside the container
+# You could also use the ADD command. The ADD command even extracts archives (apart from *.zip) while copying.
 
 RUN npm install
 # The RUN command is executed during build
