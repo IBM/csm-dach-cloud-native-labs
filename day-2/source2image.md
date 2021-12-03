@@ -12,7 +12,7 @@
 
 We mentioned in the previous lab that there are three ways to create an application with _oc new-app_. We saw how to deploy an application from an existing docker image. In this lab, we are going to explore how to deploy an application directly from source code.
 
-_One of the main differences between OpenShift and Kubernetes is the concept of build-related artifacts. In OpenShift, such artifacts are considered first class Kubernetes resources upon which standard Kubernetes operators can apply._
+With OpenShift it is possible to create applications direct from source. The _BuildConfig_ and _ImageStream_ resources (build-related artifacts) don't exist in Kubernetes, this is one of the main differences between Kubernetes and OpenShift.
 
 OpenShift relies internally on _Source-to-Image (S2I)_ to build reproducible, docker-formatted container images.
 
