@@ -17,11 +17,11 @@ In this lab we are going to see how to do this in a declarative way: writting ya
 
 The application to be deployed is going to be MariaDB. 
 
-First and as usual, let's create the namespace:
+First and as usual, let's create the namespace.
+__Important: replace 1 with you user number__
 ```
 user1:~$ oc new-project declarative-user1
 ```
-__Important: replace 1 with you user number__
 
 Now examine the different yaml files and its content.
 
