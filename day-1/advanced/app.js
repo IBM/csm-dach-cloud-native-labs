@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 8000;
 
 app.get("/", (req, res) => {
   res.send(
-    `Hello ${process.env.username}. This message comes from inside the container!`
+    `Hello ${process.env.username}. This message comes from inside the container!\n`
   );
 });
 
