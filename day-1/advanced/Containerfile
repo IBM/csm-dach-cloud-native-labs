@@ -6,6 +6,10 @@ FROM node@sha256:c6a80feca9e12e6d66eb6957ba2b7425fc46ea0807d13a7d80ea0688b2c9f79
 LABEL author="Raphael Tholl raphael.tholl@ibm.com"
 # The LABEL is optional but useful to provide information about the image
 
+ENV username=raphael
+# The ENV instruction sets an environment variable, which the app can later access.
+# The ARG instruction is rather similar. The difference is that ARG variables are only accessible during the image build process.
+
 WORKDIR /app
 # The WORKDIR command creates a folder inside the container and sets the working directory for all subsequent instructions.
 
