@@ -25,7 +25,7 @@ user1:~$ oc new-project declarative-user1
 
 Now examine the different yaml files and its content.
 
-__For the upcoming yaml files, it's important to specify the namespace to be _declarative-user1_ replacing the 1 for you user number, so all resources are created in the same project.__
+__For the upcoming yaml files, it's important to specify the namespace to be _declarative-userX_ - replacing the X with you user number - so all resources are created in the same project.__
 
 In this lab we are going to use a secret to save the root password for MariaDB.
 
