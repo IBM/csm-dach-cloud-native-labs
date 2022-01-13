@@ -3,7 +3,9 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 app.get("/", (req, res) => {
-  res.send("Hello from inside the container!");
+  res.send(
+    `Hello ${process.env.username}. This message comes from inside the container!\n`
+  );
 });
 
 app.listen(PORT, () => {

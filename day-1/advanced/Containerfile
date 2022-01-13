@@ -1,36 +1,53 @@
-# Node.js 14.18.1
-FROM node@sha256:c6a80feca9e12e6d66eb6957ba2b7425fc46ea0807d13a7d80ea0688b2c9f79b
-# The FROM command tell us which is the base image. Using the digest (@sha...) we uniquely and immutably identify a container image.
-#https://hub.docker.com/layers/node/library/node/14.18.1/images/sha256-c6a80feca9e12e6d66eb6957ba2b7425fc46ea0807d13a7d80ea0688b2c9f79b?context=explore
+# BUILD STAGE
 
-LABEL author="Raphael Tholl raphael.tholl@ibm.com"
-# The LABEL is optional but useful to provide information about the image
+# Node.js 16.13.1
+FROM node@sha256:534004248435dea5cecf3667232f800fc6bd101768306aecf6b87d78067b0563 as builder
+# The FROM command tell us which is the base image. Using the digest (@sha...) we uniquely and immutably identify a container image. The alias "builder" we set will become relevant in the next step.
+# https://hub.docker.com/layers/node/library/node/16.13.1/images/sha256-534004248435dea5cecf3667232f800fc6bd101768306aecf6b87d78067b0563?context=explore
 
 WORKDIR /app
 # The WORKDIR command creates a folder inside the container and sets the working directory for all subsequent instructions.
 
 COPY ["app.js", "package.json", "/app/"]
 # The COPY command copies files from the host into the container image. The array's last index must be the destination inside the container
+# You could also use the ADD command. The ADD command even extracts archives (apart from *.zip) while copying.
 
 RUN npm install
 # The RUN command is executed during build
 # Each RUN command adds a layer to the image, so it's a good practice to use && to combine commands 
 
-RUN groupadd -r appuser &&\
-    useradd -r appuser -g appuser -s /sbin/nologin -c "Non-root user to run application" &&\
-    chown -R appuser:appuser /app
+
+# RUN STAGE
+
+# Node.js 16.13.1-alpine3.14
+FROM node@sha256:8569c8f07454ec42501e5e40a680e49d3f9aabab91a6c149e309bac63a3c8d54
+# https://hub.docker.com/layers/node/library/node/16.13.1-alpine3.14/images/sha256-8569c8f07454ec42501e5e40a680e49d3f9aabab91a6c149e309bac63a3c8d54?context=explore
+# For the final container image we take a much smaller base image (~113MB) and copy the installed depencendies from the build stage. This is called a multi-stage build. 
+
+WORKDIR /app
+
+COPY --from=builder /app/ .
+
+LABEL author="Raphael Tholl raphael.tholl@ibm.com"
+# The LABEL is optional but useful to provide information about the image
+
+ENV username=raphael
+# The ENV instruction sets an environment variable, which the app can later access.
+# The ARG instruction is rather similar. The difference is that ARG variables are only accessible during the image build process.
+
+RUN chown -R node:node /app
 # It is considered best practice to not run your applications as root inside the container. Thus create a new user for your application
 
-USER appuser
+USER node
 # The USER runs all subsequent instructions as the provided user.
 
 EXPOSE 8000
 # The EXPOSE command says which port on the container should be exposed (metadata only)
 
-ENTRYPOINT ["npm"]
+ENTRYPOINT ["node"]
 # The ENTRYPOINT is the command to be executed on the container when it is started 
 # The entrypoint can't be overriden
 
-CMD ["start"]
+CMD ["app.js"]
 # The CMD command provides the parameters for the command specified in ENTRYPOINT
 # The arguments can be overriden by passing them at the end of _podman run_
