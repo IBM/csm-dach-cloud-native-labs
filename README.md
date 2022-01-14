@@ -15,6 +15,9 @@ Workshops to teach the basics of containerization and OpenShift. They include ha
 - LAB 2.2: Managing Applications with Source2Image [day-2/source2image.md](day-2/source2image.md)
 - LAB 2.3: Deploying an application in a declarative way [day-2/declarative.md](day-2/declarative.md) 
 
+## Additional laabs:
+- Microservices: deploying two loosely-coupled components as one application [additional/microservices.md](additional/microservices.md)
+
 ### Links and references:
 
 https://docs.openshift.com
