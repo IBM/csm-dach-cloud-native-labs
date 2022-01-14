@@ -18,7 +18,8 @@ chmod 777 oc
 sudo mv oc /usr/bin/
 #
 # Add auto completion
-sudo oc completion bash > /etc/bash_completion.d/oc_bash_completion
+oc completion bash > oc_bash_completion
+sudo cp oc_bash_completion /etc/bash_completion.d/
 #
 # Create group + user
 sudo groupadd devUsers
