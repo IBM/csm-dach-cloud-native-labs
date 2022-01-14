@@ -17,6 +17,9 @@ tar -xf oc.tar
 chmod 777 oc
 mv oc /usr/bin/
 #
+# Add auto completion
+oc completion bash > /etc/bash_completion.d/oc_bash_completion
+#
 # Create group + user
 groupadd devUsers
 chown root:devUsers /usr/bin/oc
