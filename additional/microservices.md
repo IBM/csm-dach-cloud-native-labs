@@ -176,7 +176,7 @@ OpenShift features insecure (http) and secure (https) routes. There are three ty
 
 To see how to access our application via HTTPS, we are going to create a secure edge route. Since TLS termination is taken care of, the application does not have to change anything at all. 
 
-To create a edge route, use the following command:
+To create an edge route, use the following command:
 ```
 user1:~$ oc create route edge wordpress-secure --service=wordpress
 ```
@@ -200,7 +200,7 @@ When creating an edge route, you can provide your certificate and key. In this c
 
 _Let's Encrypt is a non-profit certificate authority run by Internet Security Research Group (ISRG) that provides X.509 certificates for Transport Layer Security (TLS) encryption at no charge. It is the world's largest certificate authority._
 
-And that's it :) Even if this is a very simple example, you see how we abided to microservices best practices:
+And that's it :) Even if this is a very simple example, you see how we abided by microservices best practices:
  * Separating configuration from application code
  * Securely storing passwords as secrets
  * Deploying two independent services, loosely coupled through their environment variables, becoming part of the same application 
