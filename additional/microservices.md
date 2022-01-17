@@ -224,10 +224,16 @@ This concludes this exercise.
 
 __References and links:__
 
+https://en.wikipedia.org/wiki/Microservices
+
 https://kubernetes.io/de/docs/home/
 
-https://en.wikipedia.org/wiki/Let%27s_Encrypt
+https://hub.docker.com/r/bitnami/mariadb
+
+https://en.wikipedia.org/wiki/WordPress
 
 https://hub.docker.com/r/bitnami/wordpress
 
-https://hub.docker.com/r/bitnami/mariadb
+https://en.wikipedia.org/wiki/Let%27s_Encrypt
+
+
