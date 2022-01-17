@@ -11,6 +11,11 @@ _A microservice architecture structural style arranges an application as a colle
 
 ### 1. Database 
 
+Let's start creating a new project:
+```
+user1:~$ oc new-project microservices
+```
+
 Let's start deploying a MariaDB database from an image:
 ```
 user1:~$ oc new-app --name mariadb --docker-image bitnami/mariadb
@@ -103,7 +108,7 @@ So let's create a new configmap:
 user1$ oc create configmap wordpress-config --from-literal=host=mariadb --from-literal=port_number=3306 --from-literal=user=bn_wordpress --from-literal=name=bitnami_wordpress
 ```
 Important to notice here are following values:
- * The _host_ points to the mariadb deployment, using _mariadb_ as database host. This is the name of the pods which matches the DNS name inside the pod network, so the wordpress deployment will be able to resolve this hostname to the IP of the mariadb application
+ * The _host_ points to the mariadb deployment, using _mariadb_ as database host. This is the name of the pod, which matches the DNS name inside the pod network, so the wordpress deployment will be able to resolve this hostname to the IP of the mariadb application
  * The _user_ matches the MARIADB_USER set in the mariadb deployment before
  * The _name_ matches the MARIADB_DATABASE set in the mariadb deployment before
 
@@ -160,4 +165,8 @@ To try the application, open the URL you see under _Requested Host_ on your brow
 
 And that's it :) Even if this is a very simple example, you see how - abiding to the microservices best practices  - two applications which are independent from one another can be loosely coupled through the environment variables. 
 
+Now let's clean up:
+```
+user1:~$ oc delete project microservices 
+```
 
