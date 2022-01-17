@@ -170,9 +170,9 @@ The routes created with _oc expose service_ are insecure routes. Notice the brow
 That's OK for demo and learning purposes, however when hosting a website the server must always present a trusted TLS certificate, otherwise the browser will complain.
 
 OpenShift features insecure (http) and secure (https) routes. There are three types of secure routes:
- * Edge: TLS termination occurs at the router, before the traffic is routed to the pods
- * Passthrough: encrypted traffic is sent straight to the destination pod
- * Re-encryption: the router terminates TLS with a certificate and then re-encryptes the connection to the endpoint with a different one
+ * __Edge__: TLS termination occurs at the router, before the traffic is routed to the pods
+ * __Passthrough__: encrypted traffic is sent straight to the destination pod
+ * __Re-encryption__: the router terminates TLS with a certificate and then re-encryptes the connection to the endpoint with a different one
 
 To see how to access our application via HTTPS, we are going to create a secure edge route. Since TLS termination is taken care of, the application does not have to change anything at all. 
 
@@ -204,6 +204,7 @@ And that's it :) Even if this is a very simple example, you see how we abided to
  * Separating configuration from application code
  * Securely storing passwords as secrets
  * Deploying two independent services, loosely coupled through their environment variables, becoming part of the same application 
+ * Creating two different routes to access the application and take care of SSL termination without having to change the application
 
 Now let's clean up. Instead of deleting the whole project, let's try something new this time. When you create a new application using _oc new app_, all generated resources get a label with key "app" and value the name of the application. So let's delete first all resources belonging to the wordpress application:
 ```
