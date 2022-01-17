@@ -28,6 +28,10 @@ mariadb-bd54cc664-4hr6t     0/1     Error              0          17s
 ```
 What's the problem? Let's take a look at the logs:
 ```
+user1$ oc logs mariadb-bd54cc664-4hr6t
+```
+From the output:
+```
 mariadb 07:59:34.54 ERROR ==> The MARIADB_ROOT_PASSWORD environment variable is empty or not set. Set the environment variable ALLOW_EMPTY_PASSWORD=yes to allow the container to be started with blank passwords. This is recommended only for development.
 ```
 As it looks, we need to set at least the MARIADB_ROOT_PASSWORD variable. 
@@ -47,11 +51,7 @@ user1:~$ oc set env deployment/mariadb --from=secret/mariadb-secret --prefix=MAR
 ```
 How did we do that? Well, we said we want to set an environment variable in the deployment _mariadb_ from the secret _mariadb-secret_ using a prefix, which means the environment variable will be called MARIADB_ROOT_PASSWORD and its value will be _password_.
 
-But the pod is still not starting. Let's check the logs:
-```
-mariadb 08:10:51.33 ERROR ==> The MARIADB_PASSWORD environment variable is empty or not set. Set the environment variable ALLOW_EMPTY_PASSWORD=yes to allow the container to be started with blank passwords. This is recommended only for development.
-```
-Oh, we need to set the MARIADB_PASSWORD as well. We can use the same password, how convenient :)  So we'll use the same secret with another prefix to set the variable:
+There is another password to be set: we need to provide a value for MARIADB_PASSWORD as well. We can use the same password, how convenient :)  So we'll use the same secret with another prefix to set the variable:
 ```
 user1$ oc set env deployment/mariadb --from=secret/mariadb-secret --prefix=MARIADB_
 ```
@@ -73,12 +73,16 @@ And now let's mount it, in the same way we did before with the secret:
 user1:~$ oc set env deployment/mariadb --from=configmap/mariadb-config --prefix=MARIADB_
 ```
 
-Let's go inside the running container and take a look to make sure all environment variables are indeed there:
+We need the list of running pods to get the pod's name:
 ```
 user1$ oc get pods
 NAME                         READY   STATUS    RESTARTS   AGE
 mariadb-7c64cff894-pzl7s     1/1     Running   0          20m
 wordpress-759c4dfd96-9cnfm   1/1     Running   0          10m
+```
+
+Let's go inside the running container and take a look to make sure all environment variables are indeed there:
+```
 user1$ oc exec -it mariadb-7c64cff894-pzl7s -- /bin/bash
 1001@mariadb-7c64cff894-pzl7s:/$ env |grep MARIADB_
 ...
@@ -89,6 +93,8 @@ MARIADB_ROOT_PASSWORD=password
 MARIADB_PASSWORD=password
 ...
 ```
+_NOTE: the user and database passed as environment variables will be used by the wordpress application we'll deploy next, that explains the naming._
+
 That looks good so far. Exit the running container typing _exit_.
 
 Now we have our database deployment, next thing to do is to deploy an application _wordpress_ which will use this mariadb server instance as its database.
@@ -119,7 +125,7 @@ user1$ oc set env deployment/wordpress --from=configmap/wordpress-config --prefi
 
 The prefix indicates that the variables will be in the form WORDPRESS_DATABASE_xyz, for example WORDPRESS_DATABASE_HOST.
 
-In addition to the environment variables we just set, wordpress needs a password, stored in the environment variable WORDPRESS_DATABASE_PASSWORD. For this, we'll use the same password as for the mysql application before, that means we can use the same secret:
+In addition to the environment variables we just set, wordpress needs a password, stored in the environment variable WORDPRESS_DATABASE_PASSWORD. For this, we'll use the same password as for the mariadb application before, that means we can use the same secret:
 ```
 user1$ oc set env deployment/wordpress --from=secret/mariadb-secret --prefix=WORDPRESS_DATABASE_
 ```
@@ -199,6 +205,12 @@ This time the browser considers the site to be secure. If you click on the littl
 When creating an edge route, you can provide your certificate and key. In this case, we didn't, since openshift automatically creates a Let's Encrypt certificate, which is trusted and used to encrypt the route.
 
 _Let's Encrypt is a non-profit certificate authority run by Internet Security Research Group (ISRG) that provides X.509 certificates for Transport Layer Security (TLS) encryption at no charge. It is the world's largest certificate authority._
+
+If you want to get rid of the insecure route after creating the edge route, to make the application more secure, you can just delete the old route:
+```
+user1:~$ oc delete route wordpress
+```
+After this, if you try to go to the first URL again, you'll see it's not working anymore.
 
 And that's it :) Even if this is a very simple example, you see how we abided by microservices best practices:
  * Separating configuration from application code
