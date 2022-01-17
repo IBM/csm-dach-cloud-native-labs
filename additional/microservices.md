@@ -196,9 +196,7 @@ This time the browser considers the site to be secure. If you click on the littl
 
 ![Alt text](certificate.png?raw=true "Wordpress HTTPS")
 
-When creating an edge route, you can provide your certificate and key. In this case, we didn't, since openshift automatically creates a Let's Encrypt certificate, which is trusted and used to encrypt the route. Take a look at the certificate:
-
-![Alt text](certificate.png?raw=true "Certificate")
+When creating an edge route, you can provide your certificate and key. In this case, we didn't, since openshift automatically creates a Let's Encrypt certificate, which is trusted and used to encrypt the route.
 
 _Let's Encrypt is a non-profit certificate authority run by Internet Security Research Group (ISRG) that provides X.509 certificates for Transport Layer Security (TLS) encryption at no charge. It is the world's largest certificate authority._
 
