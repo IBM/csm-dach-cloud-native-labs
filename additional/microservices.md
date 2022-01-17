@@ -16,7 +16,7 @@ Let's start creating a new project:
 user1:~$ oc new-project microservices
 ```
 
-Let's start deploying a MariaDB database from an image:
+Now we deploy a MariaDB database from an image:
 ```
 user1:~$ oc new-app --name mariadb --docker-image bitnami/mariadb
 ```
@@ -121,7 +121,7 @@ The prefix indicates that the variables will be in the form WORDPRESS_DATABASE_x
 
 In addition to the environment variables we just set, wordpress needs a password, stored in the environment variable WORDPRESS_DATABASE_PASSWORD. For this, we'll use the same password as for the mysql application before, that means we can use the same secret:
 ```
-user1$ oc set env deployment/wordpress --from=secret/mariadb-secret --prefix=WORDPRESS_DATABASE
+user1$ oc set env deployment/wordpress --from=secret/mariadb-secret --prefix=WORDPRESS_DATABASE_
 ```
 Let's go inside the wordpress running container and take a look at the environment variables:
 ```
@@ -135,7 +135,9 @@ WORDPRESS_DATABASE_PASSWORD=password
 ```
 That's looking good, all needed variables are there. Exit the running container typing _exit_.
 
-Before we try out the application, we need to create a route to expose the service to external connections - same as we did in previous exercises:
+Before we try out the application, we need to create a route to expose the service to external connections. 
+
+First, let's create an insecure route, same as we did in previous exercises:
 ```
 user1$ oc expose service/wordpress
 ```
@@ -143,14 +145,14 @@ To get the URL, we describe the route we just created:
 ```
 user1$ oc describe route wordpress
 Name:			wordpress
-Namespace:		default
-Created:		3 minutes ago
+Namespace:		microservices
+Created:		6 minutes ago
 Labels:			app=wordpress
 			app.kubernetes.io/component=wordpress
 			app.kubernetes.io/instance=wordpress
 Annotations:		openshift.io/host.generated=true
-Requested Host:		wordpress-default.itzroks-6620021ddi-mjkann-6ccd7f378ae819553d37d5f2ee142bd6-0000.ams03.containers.appdomain.cloud
-			   exposed on router default (host itzroks-6620021ddi-mjkann-6ccd7f378ae819553d37d5f2ee142bd6-0000.ams03.containers.appdomain.cloud) 3 minutes ago
+Requested Host:		wordpress-microservices.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud
+			   exposed on router default (host externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud) 6 minutes ago
 Path:			<none>
 TLS Termination:	<none>
 Insecure Policy:	<none>
@@ -158,15 +160,69 @@ Endpoint Port:		8080-tcp
 
 Service:	wordpress
 Weight:		100 (100%)
-Endpoints:	172.30.62.240:8080, 172.30.62.240:8443
+Endpoints:	172.30.20.40:8080, 172.30.20.40:8443
 ```
 To try the application, open the URL you see under _Requested Host_ on your browser. You'll see something like that:
-![Alt text](helloworld.png?raw=true "Wordpress")
+![Alt text](insecure.png?raw=true "Wordpress")
 
-And that's it :) Even if this is a very simple example, you see how - abiding to the microservices best practices  - two applications which are independent from one another can be loosely coupled through the environment variables. 
+The routes created with _oc expose service_ are insecure routes. Notice the browser's warning and the "Not secure" icon on the left top next to the url.
 
-Now let's clean up:
+That's OK for demo and learning purposes, however when hosting a website the server must always present a trusted TLS certificate, otherwise the browser will complain.
+
+OpenShift features insecure (http) and secure (https) routes. There are three types of secure routes:
+ * Edge: TLS termination occurs at the router, before the traffic is routed to the pods
+ * Passthrough: encrypted traffic is sent straight to the destination pod
+ * Re-encryption: the router terminates TLS with a certificate and then re-encryptes the connection to the endpoint with a different one
+
+To see how to access our application via HTTPS, we are going to create a secure edge route. Since TLS termination is taken care of, the application does not have to change anything at all. 
+
+To create a edge route, use the following command:
+```
+eramon:~$ oc create route edge wordpress-secure --service=wordpress
+```
+Now if we describe the avaiable routes, we'll see two of them - an insecure one and a secure one with edge termination:
+```
+eramon:~$ oc get routes
+NAME               HOST/PORT                                                                                                            PATH   SERVICES    PORT       TERMINATION   WILDCARD
+wordpress          wordpress-microservices.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud                 wordpress   8080-tcp                 None
+wordpress-secure   wordpress-secure-microservices.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud          wordpress   8080-tcp   edge          None
+```
+
+On your browser, try to access "https://" followed by the path of the secure route, which is part of the output of the last command.
+![Alt text](secure.png?raw=true "Wordpress")
+
+This time the browser considers the site to be secure. If you click on the little lock on the left upper side, you can find information about the certificate:
+![Alt text](certificate.png?raw=true "Wordpress HTTPS")
+
+When creating an edge route, you can provide your certificate and key. In this case, we didn't, since openshift automatically creates a Let's Encrypt certificate - which is trusted - which is used to encrypt the route. Take a look at the certificate:
+![Alt text](certificate.png?raw=true "Certificate")
+
+_Let's Encrypt is a non-profit certificate authority run by Internet Security Research Group (ISRG) that provides X.509 certificates for Transport Layer Security (TLS) encryption at no charge. It is the world's largest certificate authority._
+
+And that's it :) Even if this is a very simple example, you see how we abided to microservices best practices:
+ * Separating configuration from application code
+ * Securely storing passwords as secrets
+ * Deploying two applications independent from one another which become loosely coupled through their environment variables, to be part of an application 
+
+Now let's clean up. Instead of deleting the whole project, let's try something new this time. When you create a new application using _oc new app_, all generated resources get a label with key "app" and value the name of the application. So let's delete first all resources belonging to the wordpress application:
+```
+user1:~$ oc delete all -l app=wordpress
+```
+Now we delete all resources belonging to the mariadb application:
+```
+user1:~$ oc delete all -l app=mariadb
+```
+That would be handy if we want to delete an application without deleting the whole project. Or if you want to delete one application but not the other. 
+
+Truth is we don't need the project anymore, so let's delete it as well anyway:
 ```
 user1:~$ oc delete project microservices 
 ```
 
+This concludes this exercise.
+
+__References and links:__
+https://kubernetes.io/de/docs/home/
+https://en.wikipedia.org/wiki/Let%27s_Encrypt
+https://hub.docker.com/r/bitnami/wordpress
+https://hub.docker.com/r/bitnami/mariadb
