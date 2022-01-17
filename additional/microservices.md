@@ -70,7 +70,7 @@ user1$ oc create configmap mariadb-config --from-literal=user=bn_wordpress --fro
 
 And now let's mount it, in the same way we did before with the secret:
 ```
-oc set env deployment/mariadb --from=configmap/mariadb-config --prefix=MARIADB_
+user1:~$ oc set env deployment/mariadb --from=configmap/mariadb-config --prefix=MARIADB_
 ```
 
 Let's go inside the running container and take a look to make sure all environment variables are indeed there:
@@ -178,23 +178,26 @@ To see how to access our application via HTTPS, we are going to create a secure 
 
 To create a edge route, use the following command:
 ```
-eramon:~$ oc create route edge wordpress-secure --service=wordpress
+user1:~$ oc create route edge wordpress-secure --service=wordpress
 ```
 Now if we describe the avaiable routes, we'll see two of them - an insecure one and a secure one with edge termination:
 ```
-eramon:~$ oc get routes
+user1:~$ oc get routes
 NAME               HOST/PORT                                                                                                            PATH   SERVICES    PORT       TERMINATION   WILDCARD
 wordpress          wordpress-microservices.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud                 wordpress   8080-tcp                 None
 wordpress-secure   wordpress-secure-microservices.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud          wordpress   8080-tcp   edge          None
 ```
 
 On your browser, try to access "https://" followed by the path of the secure route, which is part of the output of the last command.
+
 ![Alt text](secure.png?raw=true "Wordpress")
 
 This time the browser considers the site to be secure. If you click on the little lock on the left upper side, you can find information about the certificate:
+
 ![Alt text](certificate.png?raw=true "Wordpress HTTPS")
 
-When creating an edge route, you can provide your certificate and key. In this case, we didn't, since openshift automatically creates a Let's Encrypt certificate - which is trusted - which is used to encrypt the route. Take a look at the certificate:
+When creating an edge route, you can provide your certificate and key. In this case, we didn't, since openshift automatically creates a Let's Encrypt certificate, which is trusted and used to encrypt the route. Take a look at the certificate:
+
 ![Alt text](certificate.png?raw=true "Certificate")
 
 _Let's Encrypt is a non-profit certificate authority run by Internet Security Research Group (ISRG) that provides X.509 certificates for Transport Layer Security (TLS) encryption at no charge. It is the world's largest certificate authority._
@@ -202,7 +205,7 @@ _Let's Encrypt is a non-profit certificate authority run by Internet Security Re
 And that's it :) Even if this is a very simple example, you see how we abided to microservices best practices:
  * Separating configuration from application code
  * Securely storing passwords as secrets
- * Deploying two applications independent from one another which become loosely coupled through their environment variables, to be part of an application 
+ * Deploying two independent services, loosely coupled through their environment variables, becoming part of the same application 
 
 Now let's clean up. Instead of deleting the whole project, let's try something new this time. When you create a new application using _oc new app_, all generated resources get a label with key "app" and value the name of the application. So let's delete first all resources belonging to the wordpress application:
 ```
@@ -212,9 +215,9 @@ Now we delete all resources belonging to the mariadb application:
 ```
 user1:~$ oc delete all -l app=mariadb
 ```
-That would be handy if we want to delete an application without deleting the whole project. Or if you want to delete one application but not the other. 
+That would be handy if we wanted to delete an application without deleting the whole project. Or if we wanted to delete one application but not the other. 
 
-Truth is we don't need the project anymore, so let's delete it as well anyway:
+Truth is we don't need the project anymore, so let's delete it anyway:
 ```
 user1:~$ oc delete project microservices 
 ```
@@ -222,7 +225,11 @@ user1:~$ oc delete project microservices
 This concludes this exercise.
 
 __References and links:__
+
 https://kubernetes.io/de/docs/home/
+
 https://en.wikipedia.org/wiki/Let%27s_Encrypt
+
 https://hub.docker.com/r/bitnami/wordpress
+
 https://hub.docker.com/r/bitnami/mariadb
