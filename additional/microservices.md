@@ -222,6 +222,8 @@ user1:~$ oc get pods -w -l app=wordpress
 ```
 After a couple of seconds, there will be two different running pods for the wordpress application.
 
+Stop the visualization of the running pod by pressing Ctrl-C.
+
 And that's it :) Even if this is a very simple example, you see how we abided by microservices best practices:
  * Separating configuration from application code
  * Securely storing passwords as secrets
