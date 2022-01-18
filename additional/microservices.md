@@ -212,11 +212,22 @@ user1:~$ oc delete route wordpress
 ```
 After this, if you try to go to the first URL again, you'll see it's not working anymore.
 
+We are doing to do a one last thing, and it's to manually scale our application to 2 replicas:
+```
+user1:~$ oc scale --replicas=2 deployment/wordpress
+```
+After running the scale command, we observe the list of running pods of the wordpress application:
+```
+user1:~$ oc get pods -w -l app=wordpress 
+```
+After a couple of seconds, there will be two different running pods for the wordpress application.
+
 And that's it :) Even if this is a very simple example, you see how we abided by microservices best practices:
  * Separating configuration from application code
  * Securely storing passwords as secrets
  * Deploying two independent services, loosely coupled through their environment variables, becoming part of the same application 
  * Creating two different routes to access the application and take care of SSL termination without having to change the application
+ * Horizontally scaling the frontend application, without affecting the application code or the backend
 
 Now let's clean up. Instead of deleting the whole project, let's try something new this time. When you create a new application using _oc new app_, all generated resources get a label with key "app" and value the name of the application. So let's delete first all resources belonging to the wordpress application:
 ```
