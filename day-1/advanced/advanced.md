@@ -6,7 +6,18 @@ In this lab we are going to see some best practices to build more advanced conta
 - Introduce multi-stage builds to shrink the final container image's size
 - Introduce new instructions such as: WORKDIR, COPY, ENV, ARG and USER
 
-The following example shows an andvanced Containerfile. Before we go through it step by step, let me quickly introduce a new concept, which is called multi-stage builds. The goal is to keep the final image as small as possible. If we use a typical Node.js base image, it comes with tools such as the Node Package Manager (npm) and more. This is necessary to build your application, but you won't need npm to run your app. What we can do is to split the image build in multiple stages and use different base images for each stage. In the first stage (build) we use a heavy base image, containing npm and more. We also reference this image with an alias called "builder". In the second stage (run) we then take a much slimmer base image, which only contains the Node.js runtime and copy the previously installed depencendies over. This results in a final image size, that is roughly 8 times smaller!
+The following example shows an andvanced Containerfile.
+
+Before we go through it step by step, let me quickly introduce a new concept, which is called **multi-stage builds**. The goal is to keep the final image as small as possible.
+
+If we use a typical Node.js base image, it comes with tools such as the Node Package Manager (npm) and more. This is necessary to build your application, but you won't need npm to run your app.
+
+What we can do is to split the image build in multiple stages and use different base images for each stage.
+
+- In the first stage (build) we use a heavy base image, containing npm and more. We also reference this image with an alias called "builder".
+- In the second stage (run) we then take a much slimmer base image, which only contains the Node.js runtime and copy the previously installed depencendies over.
+
+This results in a final image size, that is roughly 8 times smaller!
 
 ```
 # BUILD STAGE
