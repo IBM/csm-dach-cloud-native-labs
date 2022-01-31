@@ -79,7 +79,6 @@ We need the list of running pods to get the pod's name:
 user1$ oc get pods
 NAME                         READY   STATUS    RESTARTS   AGE
 mariadb-7c64cff894-pzl7s     1/1     Running   0          20m
-wordpress-759c4dfd96-9cnfm   1/1     Running   0          10m
 ```
 
 Let's go inside the running container and take a look to make sure all environment variables are indeed there:
@@ -212,18 +211,6 @@ If you want to get rid of the insecure route after creating the edge route, to m
 user1:~$ oc delete route wordpress
 ```
 After this, if you try to go to the first URL again, you'll see it's not working anymore.
-
-We are going to do a one last thing, and it's to manually scale our application to 2 replicas:
-```
-user1:~$ oc scale --replicas=2 deployment/wordpress
-```
-After running the scale command, we observe the list of running pods of the wordpress application:
-```
-user1:~$ oc get pods -w -l app=wordpress 
-```
-After a couple of seconds, there will be two different running pods for the wordpress application.
-
-Stop the visualization of the running pods by pressing Ctrl-C.
 
 And that's it :) Even if this is a very simple example, you see how we abided by microservices best practices:
  * Separating configuration from application code
