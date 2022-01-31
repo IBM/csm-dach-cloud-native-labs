@@ -13,8 +13,9 @@ _A microservice architecture structural style arranges an application as a colle
 
 Let's start creating a new project:
 ```
-user1:~$ oc new-project microservices
+user1:~$ oc new-project microservices-user1
 ```
+_Note: replace the 1 in user1 through your own user number._
 
 Now we deploy a MariaDB database from an image:
 ```

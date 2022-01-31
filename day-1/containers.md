@@ -97,21 +97,11 @@ user1:~$ podman rm mynginx
 097ee94c96e5e6e1655ed688fbe043a14d769248bf907effc64bc740f8acfe49
 ```
 
-This time it worked. Next we delete the image:
-```
-user1:~$ podman rmi nginx
-
-Untagged: docker.io/bitnami/nginx:latest
-Deleted: 55027d4388b7e10014c9983093a10bdd08e7272aabbb15e2919866d9bdc49e80
-```
-
-_Alternatively, it is possible to use the _-f_ flag on the _podman remove_ command to force the removal of all containers and images._
+This time it worked. 
 
 Now we'll run a new container from the same image, this time performing a port forwarding of a port on our host machine to a port in the container:
 ```
 user1:~$ podman run -d --name mynginx -p 8080:8080 docker.io/bitnami/nginx
-
-Trying to pull docker.io/bitnami/nginx:latest...
 ```
 
 What did we just do? We told podman to forward traffic on the host port 8080 to the container port 8080. 
