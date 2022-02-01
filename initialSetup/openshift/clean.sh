@@ -16,6 +16,8 @@ for NUM in $(seq 1 $NUMBER_PROJECTS)
 	echo "Deleted project user${NUM}"
 	oc delete project declarative-user$NUM
 	echo "Deleted project declarative-user${NUM}"
+	oc delete project s2i-user$NUM
+	echo "Deleted project s2i-user${NUM}"
 	oc delete serviceaccount user$NUM -n default
 	echo "Deleted serviceaccount user${NUM}"
 	oc delete clusterrolebinding user$NUM
