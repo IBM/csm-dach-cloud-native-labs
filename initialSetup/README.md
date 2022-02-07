@@ -25,6 +25,12 @@ Run the _delete_ script to clean up actions from previous workshops:
 [eva@external-demo csm-dach-cloud-native-labs]$ sudo sh initialSetup/vm/clean.sh
 ```
 
+Change the default password. Replace _myPa55w0rD_ with a new string!
+
+```
+[eva@external-demo csm-dach-cloud-native-labs]$ sed -i 's/PW/myPa55w0rD/g' initialSetup/vm/createSetupScript.sh
+```
+
 Run the _create user_ script to set up the user accounts on the VM:
 
 ```
