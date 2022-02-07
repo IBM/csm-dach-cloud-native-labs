@@ -12,7 +12,11 @@ To log in, just run the following command, replacing the "1" with your user numb
 eramon:~$ ssh user1@158.177.83.155
 user1@158.177.83.155's password: 
 ```
-
+Alternatively, you can SSH to an alternative port, in case your firewall prevents to connect to the standard one:
+```
+eramon:~$ ssh -p 32122 user1@158.177.83.155
+user1@158.177.83.155's password: 
+```
 Once logged in, check that podman is working:
 ```
 [user1@external-demo ~]$ podman --version
