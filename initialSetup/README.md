@@ -19,8 +19,7 @@ Clone repository and go into the directory:
 [eva@external-demo csm-dach-cloud-native-labs]$
 ```
 
-Change the default password. Replace _myPa55w0rD_ with a new string!
-
+Change the default password, which is _PW_. Replace the _myPa55w0rD_ in this example with your own password!
 ```
 [eva@external-demo csm-dach-cloud-native-labs]$ sed -i 's/PW/myPa55w0rD/g' initialSetup/vm/createSetupScript.sh
 ```
