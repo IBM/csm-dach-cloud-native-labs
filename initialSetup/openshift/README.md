@@ -16,8 +16,7 @@ oc login --token=<YourToken> --server=<YourServer>
 
 ### Create users via serviceaccount
 
-Optional: modify the amount of users inside the script.
-
+You can modify the amount of users by editing the script.
 ```
 chmod 744 createServiceAccountUserScript.sh
 sh createServiceAccountUserScript.sh
@@ -30,23 +29,28 @@ chmod 744 getServiceAccountCreds.sh
 sh getServiceAccountCreds.sh
 ```
 
-### OPTIONAL: Create users via htpasswd file
+### Alternative: RBAC with OAuth and HTPasswd
+Another way to provision user accounts and set up RBAC is using a htpasswd file and the OpenShift OAuth provider.
+
+##### Create users via htpasswd file
+
+Another way to provision user accounts and set up RBAC is using a htpasswd file and the OpenShift OAuth provider. 
+
+_To use this way on a managed OpenShift cluster on the IBM Cloud, each user must have an IBMId, otherwise it won't work._
 
 Optional: modify the amount of users and the password inside the script.
-
 ```
 chmod 744 createUserScript.sh
 touch htpasswd
 sh createHTPasswdUserScript.sh
 ```
 
-Verify that the password is set correctly
-
+Verify that the password is set correctly:
 ```
 htpasswd -vb htpasswd user1 superSecure
 ```
 
-### OPTIONAL: Create secret based on htpasswd file
+#### Create secret based on htpasswd file
 
 Run this command inside the folder where the htpasswd file is located
 
@@ -58,7 +62,9 @@ oc create secret generic htpasswd-secret --from-file htpasswd=$(pwd)/htpasswd -n
 oc apply -f HTPasswdCR.yaml
 ```
 
-### OPTIONAL: Create a project per user
+### Additional Scripts
+
+#### Create a project per user
 
 Run the following script to create user projects
 
@@ -66,7 +72,7 @@ Run the following script to create user projects
 sh createProjects.sh
 ```
 
-### Clean up cluster
+#### Clean up cluster
 
 Run the following script to delete all user projects
 
@@ -74,9 +80,11 @@ Run the following script to delete all user projects
 sh clean.sh
 ```
 
-### Managed OpenShift on IBM Cloud
+### Alternative: Managed OpenShift on IBM Cloud
 
 If managed OpenShift on IBM Cloud is used, then user management via htpasswd is not supported. Instead use the IBM Cloud Shell via the browser.
+
+_This alternatie only works if each user has an IBMId._
 
 Once users logged into the IBM Cloud web console, they can open the shell at: https://cloud.ibm.com/shell
 
