@@ -41,7 +41,8 @@ In OpenShift, all resources are grouped into projects.
 __Demonstration__: create a project using the OpenShift web console
 
 _The teacher might show first how to create a project on the web console._
-[day-2/videos/create_project.webm](day-2/videos/create_project.webm)
+
+[videos/create_project.webm](videos/create_project.webm)
 
 __Exercise__: create your project using the oc CLI
 
