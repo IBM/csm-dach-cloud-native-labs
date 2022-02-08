@@ -17,49 +17,15 @@ oc login --token=<YourToken> --server=<YourServer>
 ### Create users via serviceaccount
 
 You can modify the amount of users by editing the script.
+
 ```
-chmod 744 createServiceAccountUserScript.sh
 sh createServiceAccountUserScript.sh
 ```
 
 Print all oc login commands.
 
 ```
-chmod 744 getServiceAccountCreds.sh
 sh getServiceAccountCreds.sh
-```
-
-### Alternative: RBAC with OAuth and HTPasswd
-Another way to provision user accounts and set up RBAC is using a htpasswd file and the OpenShift OAuth provider.
-
-##### Create users via htpasswd file
-
-Another way to provision user accounts and set up RBAC is using a htpasswd file and the OpenShift OAuth provider. 
-
-_To use this way on a managed OpenShift cluster on the IBM Cloud, each user must have an IBMId, otherwise it won't work._
-
-Optional: modify the amount of users and the password inside the script.
-```
-chmod 744 createUserScript.sh
-touch htpasswd
-sh createHTPasswdUserScript.sh
-```
-
-Verify that the password is set correctly:
-```
-htpasswd -vb htpasswd user1 superSecure
-```
-
-#### Create secret based on htpasswd file
-
-Run this command inside the folder where the htpasswd file is located
-
-```
-oc create secret generic htpasswd-secret --from-file htpasswd=$(pwd)/htpasswd -n openshift-config
-```
-
-```
-oc apply -f HTPasswdCR.yaml
 ```
 
 ### Additional Scripts
