@@ -42,13 +42,7 @@ __Demonstration__: create a project using the OpenShift web console
 
 _The teacher might show first how to create a project on the web console._
 
-[videos/create_project.gif](videos/create_project.gif)
-
-https://github.com/IBM/csm-dach-cloud-native-labs/blob/workshop/day-2/videos/create_project.webm
-
-<video width="320" height="240" controls>
-  <source src="videos/create_project.gif" type="image/gif">
-</video>
+https://github.com/IBM/csm-dach-cloud-native-labs/blob/workshop/day-2/videos/create_project.gif
 
 __Exercise__: create your project using the oc CLI
 
