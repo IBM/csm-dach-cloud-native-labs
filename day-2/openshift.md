@@ -44,6 +44,8 @@ _The teacher might show first how to create a project on the web console._
 
 [videos/create_project.gif](videos/create_project.gif)
 
+https://github.com/IBM/csm-dach-cloud-native-labs/blob/workshop/day-2/videos/create_project.webm
+
 <video width="320" height="240" controls>
   <source src="videos/create_project.gif" type="image/gif">
 </video>
