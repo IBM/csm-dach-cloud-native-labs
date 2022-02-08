@@ -205,6 +205,40 @@ Hello Openshift!
 
 ```
 
+### Automatically build via GitHub webhooks
+
+You can automate this even further by leveraging GitHub webhooks. Every commit will then directly be deployed into OpenShift.
+
+First, you need to extract the buildconfig's GitHub webhook URL:
+
+```
+$ oc describe bc helloworld | grep -m1 -A1 GitHub | awk '{print$2'} | awk '(NR>1)'
+https://c115-e.eu-de.containers.cloud.ibm.com:32297/apis/build.openshift.io/v1/namespaces/s2i-raphael/buildconfigs/helloworld/webhooks/<secret>/github
+```
+
+Then we extract the buildconfig's GitHub secret:
+
+```
+$ oc get bc/helloworld -o yaml | grep -m1 -A1 secret | awk '{print$2}' | head -1
+Q6ZGh-GBUl4***********
+```
+
+Replace the URL's **"secret"** placeholder with the extracted secret.
+
+Finally we switch to your GitHub repository to enter this information in the repository's settings -> Webhooks section. For this step you need the required permissions on the repository!
+
+Example URL for our repository: https://github.com/IBM/csm-dach-cloud-native-labs/settings/hooks
+
+Create a new Webhook by clicking **Add Webhook**
+
+![GitHub_settings_webhooks](../additional/webhooks.png)
+
+Paste the extrated buildconfig's GitHub URL including the replaced secret into the field Payload URL. Also switch the content type to **application/json**. Finally, add the new webhook.
+
+![GitHub_settings_webhooks_new](../additional/new_webhook.png)
+
+Now perform a small change to the source code again and commit these changes. Watch how the new commit is automatically deployed to OpenShift :)
+
 ### References
 
 _The helloworld application used as an example is based on
