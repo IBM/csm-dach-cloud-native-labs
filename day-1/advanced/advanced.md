@@ -65,10 +65,11 @@ ENTRYPOINT ["node"]
 CMD ["app.js"]
 ```
 
-Copy the content and save it as "Containerfile" or as "Dockerfile". _Alternatively, you can download it directly from here:_
+Clone the GitHub repository and change into the folder where the advanced Containerfile is located:
 
 ```
-wget https://github.com/IBM/csm-dach-cloud-native-labs/blob/main/day-1/advanced/Containerfile
+git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
+cd csm-dach-cloud-native-labs/day-1/advanced
 ```
 
 Our Containerfile is ready - Let's build the image with _podman build_:

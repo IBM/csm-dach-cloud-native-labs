@@ -2,7 +2,7 @@
 
 ### Part 1. On the VM
 
-Following steps must be executed on the VM. 
+Following steps must be executed on the VM.
 
 Log in:
 
@@ -17,6 +17,11 @@ Clone repository and go into the directory:
 [eva@external-demo ~]$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
 [eva@external-demo ~]$ cd csm-dach-cloud-native-labs/
 [eva@external-demo csm-dach-cloud-native-labs]$
+```
+
+Change the default password, which is _PW_. Replace the _myPa55w0rD_ in this example with your own password!
+```
+[eva@external-demo csm-dach-cloud-native-labs]$ sed -i 's/PW/myPa55w0rD/g' initialSetup/vm/createSetupScript.sh
 ```
 
 _For the next two steps, you'll need administrator rights_
@@ -48,6 +53,7 @@ Connection to 158.177.83.155 closed.
 Delete the existing _workshop_ branch.
 
 First list all branches and select which branch you want to delete. Make sure to delete both the remote and the local branch:
+
 ```
 [raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git branch -a
 [raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git checkout main
@@ -62,4 +68,5 @@ Re-create the _workshop_ branch based on the main branch:
 [raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git checkout workshop
 [raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git push origin -u workshop
 ```
+
 The git repository branch is now ready for the workshop.
