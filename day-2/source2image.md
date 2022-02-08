@@ -6,7 +6,8 @@
 2.  Create an application from source
 3.  Examining the resources
 4.  Routes
-5.  Change the source code and restart the build
+5.  Demo: Change the source code and restart the build
+6.  Demo: Automatic build via GitHub Webhooks
 
 ### 1. Introduction
 
@@ -159,11 +160,19 @@ Hello World!
 
 Congratulations! Your helloworld application is greeting you from inside of the pod running as part of a deployment in our OpenShift cluster :)
 
-### 5. Change the source code and restart the build
+### 5. Demo: Change the source code and restart the build
 
 _This part needs to be performed as a demonstration, since only the teacher has permission to edit the source code. Of course it can be done as an exercise if the student forks the source code to the own github repository._
 
 What if we change something in the application? Let's see how to manage changes.
+
+Go to the repository folder and change to branch _workshop_:
+```
+$ cd csm-dach-cloud-native-labs/
+
+$ git checkout -b workshop
+Switched to a new branch 'workshop'
+```
 
 Change the text in _app.js_ to say "Hello OpenShift!" instead of "Hello World!":
 
@@ -178,7 +187,7 @@ $ git add nodejs-helloworld/app.js
 
 $ git commit -m "Change hello message"
 
-$ git push
+$ git push--set-upstream origin workshop
 ```
 
 Restart the build with _oc start build helloworld_:
@@ -205,7 +214,9 @@ Hello Openshift!
 
 ```
 
-### Automatically build via GitHub webhooks
+### 6. Demo: Automatic build via GitHub Webhooks
+
+_This part needs to be performed as a demonstration. A student could fork the repository to their own github account and perform all tasks on it, however it's out of the scope of the training._
 
 You can automate this even further by leveraging GitHub webhooks. Every commit will then directly be deployed into OpenShift.
 
@@ -226,8 +237,6 @@ Q6ZGh-GBUl4***********
 Replace the URL's **"secret"** placeholder with the extracted secret.
 
 Finally we switch to your GitHub repository to enter this information in the repository's settings -> Webhooks section. For this step you need the required permissions on the repository!
-
-Example URL for our repository: https://github.com/IBM/csm-dach-cloud-native-labs/settings/hooks
 
 Create a new Webhook by clicking **Add Webhook**
 
