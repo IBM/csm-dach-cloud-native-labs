@@ -1,2 +1,3 @@
-# Ansible vault file
+# Ansible files
 password
+ansible.log
