@@ -1,0 +1,6 @@
+---
+# tasks file for cloud-native-workshop
+- name: Configure SELinux
+  selinux:
+    policy: targeted
+    state: enforcing

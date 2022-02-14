@@ -1,0 +1,6 @@
+---
+- name: Secure remote host and configure cloud native workshop
+  hosts: workstation
+  
+  roles:
+    - cloud-native-workshop

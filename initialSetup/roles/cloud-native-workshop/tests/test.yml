@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+  remote_user: ansible
+  roles:
+    - cloud-native-workshop

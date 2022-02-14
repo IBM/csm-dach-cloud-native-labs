@@ -1,25 +1,63 @@
 ## Set up a clean enviroment for the workshop
 
-### Part 1. On the VM
+### Prerequisites
 
-Following steps must be executed on the VM.
-
-Log in:
+Install Ansible on your Red Hat Enterprise Linux
 
 ```
-eramon:~$ ssh -p 32122 eva@158.177.83.155
-eva@158.177.83.155's password:
+sudo yum -y install ansible
 ```
 
-Clone repository and go into the directory:
+Create an ansible user with sudo privileges, which doesn't require a password to elevate privileges
 
 ```
-[eva@external-demo ~]$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
-[eva@external-demo ~]$ cd csm-dach-cloud-native-labs/
-[eva@external-demo csm-dach-cloud-native-labs]$
+sudo useradd ansible
+sudo passwd ansible
+sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
+```
+
+Create ssh keys and the public key to all remote hosts you wish to manage. Replace **MYHOST** with your remote host e.g. 192.168.1.2
+
+```
+ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa_ansible
+ssh-copy-id -i ~/.ssh/id_rsa_ansible.pub ansible@MYHOST
+```
+
+### Clone the repository
+
+```
+raphael@desktop:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
+
+```
+
+### Set a password for the participant users
+
+You first need to **set a password for the vault**. When later running the playbook, you need this password again.
+
+```
+raphael@desktop:~$ cd csm-dach-cloud-native-labs/initialSetup
+raphael@desktop:~$ ansible-vault create password
+New Vault password:
+Confirm New Vault password:
+```
+
+Enter your password to the key **password** in the following format:
+
+```yaml
+password: myPassword
+```
+
+### Run the Ansible playbook
+
+The remote host will be **reset** to its previous state!
+
+```
+raphael@desktop:~$ ansible-playbook playbook.yml
+
 ```
 
 Change the default password, which is _PW_. Replace the _myPa55w0rD_ in this example with your own password!
+
 ```
 [eva@external-demo csm-dach-cloud-native-labs]$ sed -i 's/PW/myPa55w0rD/g' initialSetup/vm/createSetupScript.sh
 ```
