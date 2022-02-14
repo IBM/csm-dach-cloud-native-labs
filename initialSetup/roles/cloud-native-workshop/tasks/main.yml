@@ -4,3 +4,62 @@
   selinux:
     policy: targeted
     state: enforcing
+
+- name: "Configure SELinux to accept custom ssh port {{ ssh_port }}"
+  seport:
+    ports: "{{ ssh_port }}"
+    proto: tcp
+    setype: ssh_port_t
+    state: present
+  when: ssh_port != 22
+
+- name: Install firewalld
+  yum:
+    name: firewalld
+    state: latest
+
+- name: Start and enable firewalld
+  service: 
+    name: firewalld
+    enabled: true
+    state: started
+
+- name: "Allow custom ssh port {{ ssh_port }} through firewall"
+  firewalld:
+    port: "{{ ssh_port }}/tcp"
+    permanent: true
+    immediate: true
+    state: enabled
+  when: ssh_port != 22
+
+- name: "Set custom ansible ssh port {{ ssh_port }}"
+  set_fact:
+    ansible_port: "{{ ssh_port }}"
+  when: ssh_port != 22
+
+- name: "Configure ssh to listen on custom port {{ ssh_port }}"
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#Port"
+    line: "Port {{ ssh_port }}"
+    state: present
+  notify: Restart ssh
+  when: ssh_port != 22
+
+- name: Prohibit root login via ssh
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regex: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+    state: present
+  when: permitRootLogin == false
+  notify: Restart ssh
+
+- name: Allow root login via ssh
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regex: "^PermitRootLogin"
+    line: "PermitRootLogin yes"
+    state: present
+  when: permitRootLogin == true
+  notify: Restart ssh

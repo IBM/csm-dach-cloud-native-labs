@@ -2,3 +2,4 @@
 # defaults file for cloud-native-workshop
 number_of_users: 15
 permitRootLogin: false
+ssh_port: 32122
