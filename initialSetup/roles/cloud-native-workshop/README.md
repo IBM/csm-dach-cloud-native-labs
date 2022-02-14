@@ -9,7 +9,7 @@ Check: [https://github.com/IBM/csm-dach-cloud-native-labs/tree/main/initialSetup
 
 ## Role Variables
 
-Settable variables for this role that are in defaults/main.yml:
+Settable variables for this role that are in [defaults/main.yml](defaults/main.yml):
 
 ```yaml
 number_of_users: 15
