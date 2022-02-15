@@ -42,7 +42,7 @@ __Demonstration__: create a project using the OpenShift web console
 
 _The teacher might show first how to create a project on the web console._
 
-_Short videos to the demonstrations in this lab: 
+_Short videos to the demonstrations in this lab:_
 [day-2/videos](day-2/videos)
 
 __Exercise__: create your project using the oc CLI
