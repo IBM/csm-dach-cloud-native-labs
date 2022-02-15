@@ -8,12 +8,18 @@ Install Ansible on your Red Hat Enterprise Linux
 sudo yum -y install ansible
 ```
 
-Create an ansible user with sudo privileges, which doesn't require a password to elevate privileges
+Create an ansible user with sudo privileges on your managed host, which doesn't require a password to elevate privileges
 
 ```
 sudo useradd ansible
 sudo passwd ansible
 sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
+```
+
+Create a simple ansible user without any permissions on your Ansible control node
+
+```
+sudo useradd ansible
 ```
 
 Create ssh keys and the public key to all remote hosts you wish to manage. Replace **MYHOST** with your remote host e.g. 192.168.1.2

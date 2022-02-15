@@ -1,0 +1,64 @@
+---
+# ansible_port can change throughout this role, keep a copy around
+- name: Set configured port fact
+  set_fact:
+    configured_port: "{{ ssh_port }}"
+
+# From localhost, check if we're able to reach {{ inventory_hostname }} on port 22
+- name: Check if default SSH port is used
+  wait_for:
+    port: 22
+    state: started
+    host: "{{ inventory_hostname }}"
+    connect_timeout: 5
+    timeout: 5
+  delegate_to: localhost
+  ignore_errors: true
+  register: default_ssh
+
+# If reachable, continue the following tasks with this port
+- name: Set inventory ansible_port to default
+  set_fact:
+    ansible_port: 22
+  when: default_ssh is defined and
+        default_ssh.failed == false and
+        default_ssh.state == "started"
+  register: ssh_port_set
+
+# If unreachable on port 22, check if we're able to reach {{ inventory_hostname }} on {{ ssh_port }} 
+# provided by the inventory from the Ansible controle node
+- name: Check if we're using the custom SSH port
+  wait_for:
+    port: "{{ ssh_port }}"
+    state: started
+    host: "{{ inventory_hostname }}"
+    connect_timeout: 5
+    timeout: 5
+  delegate_to: localhost
+  ignore_errors: true
+  register: configured_ssh
+  when: default_ssh is defined and
+        default_ssh.state is undefined
+
+# If {{ ssh_port }} is reachable, we don't need to do anything special
+- name: SSH port is configured properly
+  debug:
+    msg: "SSH port is configured properly"
+  when: configured_ssh is defined and
+        configured_ssh.state is defined and
+        configured_ssh.state == "started"
+  register: ssh_port_set
+
+# If the SSH port is neither the default nor the configured, give up.
+- name: Fail if SSH port was not auto-detected
+  fail:
+    msg: "The SSH port is neither 22 nor {{ ssh_port }}."
+  when: ssh_port_set is undefined
+
+# Sanity check, make sure Ansible is able to connect to the host
+- name: Confirm host connection works
+  ping:
+
+# Once port is fixed, gather ansible_facts
+- name: Gather ansible_facts
+  setup:

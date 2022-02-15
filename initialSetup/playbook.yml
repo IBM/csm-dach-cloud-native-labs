@@ -1,6 +1,7 @@
 ---
 - name: Secure remote host and configure cloud native workshop
   hosts: workstation
+  gather_facts: false
   
   roles:
     - cloud-native-workshop
