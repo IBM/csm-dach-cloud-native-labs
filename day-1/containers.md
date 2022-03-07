@@ -103,8 +103,7 @@ Now we'll run a new container from the same image, this time performing a port f
 ```
 user1:~$ podman run -d --name mynginx -p 8081:8080 docker.io/bitnami/nginx
 ```
-_NOTE: in order to avoid port conflicts, please use as the local port (the one aon the left of the ':') your user number + 8000. For example, user 1 will use 80
-01._
+_NOTE: in order to avoid port conflicts, please use as the local port (the one on the left of the ':') your user number + 8000. For example, user 1 will use 8001._
 
 What did we just do? We told podman to forward traffic on the host port 8081 to the container port 8080. 
 
@@ -144,7 +143,7 @@ user1:~$ podman run --name mymariadb -d -p 3307:3306 bitnami/mariadb
 ✔ docker.io/bitnami/mariadb:latest
 Trying to pull docker.io/bitnami/mariadb:latest...
 ```
-_NOTE: in order to avoid port conflicts, please use as the local port (the one aon the left of the ':') your user number + 3306. For example, user 1 will use 3307._
+_NOTE: in order to avoid port conflicts, please use as the local port (the one on the left of the ':') your user number + 3306. For example, user 1 will use 3307._
 
 When we list the locally available images, we see a mariadb image on the list:
 ```

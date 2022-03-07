@@ -78,8 +78,7 @@ user1:cloud-native-labs$ podman ps
 CONTAINER ID  IMAGE                   COMMAND        CREATED        STATUS            PORTS                 NAMES
 278e7d99275e  localhost/myapache:0.1  -D FOREGROUND  3 seconds ago  Up 3 seconds ago  0.0.0.0:8081->80/tcp  myapache
 ```
-_NOTE: in order to avoid port conflicts, please use as the local port (the one aon the left of the ':') your user number + 8000. For example, user 1 will use 80
-01._
+_NOTE: in order to avoid port conflicts, please use as the local port (the one on the left of the ':') your user number + 8000. For example, user 1 will use 8001._
 
 We created a new container based on our custom image, with name _myapache_, in dettached mode and forwarding port 8080 on the host to port 80 on the container. 
 
