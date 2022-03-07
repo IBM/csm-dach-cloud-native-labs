@@ -101,14 +101,16 @@ This time it worked.
 
 Now we'll run a new container from the same image, this time performing a port forwarding of a port on our host machine to a port in the container:
 ```
-user1:~$ podman run -d --name mynginx -p 8080:8080 docker.io/bitnami/nginx
+user1:~$ podman run -d --name mynginx -p 8081:8080 docker.io/bitnami/nginx
 ```
+_NOTE: in order to avoid port conflicts, please use as the local port (the one aon the left of the ':') your user number + 8000. For example, user 1 will use 80
+01._
 
-What did we just do? We told podman to forward traffic on the host port 8080 to the container port 8080. 
+What did we just do? We told podman to forward traffic on the host port 8081 to the container port 8080. 
 
-We can try that is working by connecting to port 8080 on the host:
+We can try that is working by connecting to port 8081 on the host:
 ```
-user1:~$ curl localhost:8080
+user1:~$ curl localhost:8081
 ...
 <title>Welcome to nginx!</title>
 ...
@@ -137,11 +139,12 @@ _MariaDB is an open-source database server based on MySQL_
 
 We want to create a new container from a MariaDB image:
 ```
-user1:~$ podman run --name mymariadb -d -p 3306:3306 bitnami/mariadb
+user1:~$ podman run --name mymariadb -d -p 3307:3306 bitnami/mariadb
 
 ✔ docker.io/bitnami/mariadb:latest
 Trying to pull docker.io/bitnami/mariadb:latest...
 ```
+_NOTE: in order to avoid port conflicts, please use as the local port (the one aon the left of the ':') your user number + 3306. For example, user 1 will use 3307._
 
 When we list the locally available images, we see a mariadb image on the list:
 ```
@@ -180,7 +183,7 @@ c8e968144f861cfba12c8d1238029a6ffe129be1fe90181f15a6838e771b4565
 
 Then we run a new container from the same image, this time providing the required environment variable:
 ```
-user1:~$ podman run -d --name mymariadb -p 3306:3306 -e MARIADB_ROOT_PASSWORD=passw0rd bitnami/mariadb
+user1:~$ podman run -d --name mymariadb -p 3307:3306 -e MARIADB_ROOT_PASSWORD=passw0rd bitnami/mariadb
 
 de035cd79b5461ec102d7cb2fa7c47672a8585e5a71a44796741ab5ae618c984
 ```

@@ -71,19 +71,21 @@ docker.io/redhat/ubi8  latest      cc0656847854  3 weeks ago    235 MB
 
 Run a container from this image:
 ```
-user1:~$ podman run --name myapache -d -p 8080:80 myapache
+user1:~$ podman run --name myapache -d -p 8081:80 myapache
 
 278e7d99275e981315f06c5517847d810e80b6153eaed30a29134106771129b7
 user1:cloud-native-labs$ podman ps 
 CONTAINER ID  IMAGE                   COMMAND        CREATED        STATUS            PORTS                 NAMES
-278e7d99275e  localhost/myapache:0.1  -D FOREGROUND  3 seconds ago  Up 3 seconds ago  0.0.0.0:8080->80/tcp  myapache
+278e7d99275e  localhost/myapache:0.1  -D FOREGROUND  3 seconds ago  Up 3 seconds ago  0.0.0.0:8081->80/tcp  myapache
 ```
+_NOTE: in order to avoid port conflicts, please use as the local port (the one aon the left of the ':') your user number + 8000. For example, user 1 will use 80
+01._
 
 We created a new container based on our custom image, with name _myapache_, in dettached mode and forwarding port 8080 on the host to port 80 on the container. 
 
 Should we try it?
 ```
-user1:cloud-native-labs$ curl localhost:8080
+user1:cloud-native-labs$ curl localhost:8081
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 ...
@@ -102,7 +104,7 @@ We saw in the Containerfile that there is an ENTRYPOINT and a CMD commands. Both
 
 Let's try overriding CMD:
 ```
-user1:~$ podman run --name override -p 8081:80 myapache -v
+user1:~$ podman run --name override myapache -v
 
 Server version: Apache/2.4.37 (Red Hat Enterprise Linux)
 Server built:   Oct 26 2021 14:18:06
