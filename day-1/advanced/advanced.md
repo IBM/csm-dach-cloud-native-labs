@@ -106,18 +106,20 @@ Notice the weird looking image labeled **none**? This is a chached image, which 
 Run a container from this image:
 
 ```
-user1:~$ podman run -d --name mynode -p 8000:8000 mynode
+user1:~$ podman run -d --name mynode -p 8001:8000 mynode
 070a1c98224fec49e050408425f0f515b332815d3196c57ec054216731483a1d
 
 user1:cloud-native-labs$ podman ps
 CONTAINER ID  IMAGE                 COMMAND     CREATED        STATUS            PORTS                   NAMES
-070a1c98224f  localhost/mynode:1.0  app.js      8 seconds ago  Up 8 seconds ago  0.0.0.0:8000->8000/tcp  mynode
+070a1c98224f  localhost/mynode:1.0  app.js      8 seconds ago  Up 8 seconds ago  0.0.0.0:8001->8000/tcp  mynode
 ```
+
+_NOTE: in order to avoid port conflicts, please use as the local port (the one on the left of the ':') your user number + 8000. For example, user 1 will use 8001._
 
 Let's test our app
 
 ```
-user1:~$ curl localhost:8000
+user1:~$ curl localhost:8001
 Hello raphael. This message comes from inside the container!
 ```
 
