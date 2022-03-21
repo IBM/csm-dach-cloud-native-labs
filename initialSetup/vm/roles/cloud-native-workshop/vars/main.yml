@@ -3,3 +3,4 @@
 sw_packages: 
   - podman
   - git
+  - wget
