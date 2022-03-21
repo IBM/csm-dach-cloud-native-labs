@@ -63,7 +63,6 @@ The remote host will be **reset** to its previous state. All workshop users and 
 
 ```
 raphael@desktop:~$ ansible-playbook playbook.yml --vault-id password.yml@prompt
-
 ```
 
 The VM is now ready for the workshop.
