@@ -27,6 +27,7 @@ ssh-copy-id -i ~/.ssh/id_rsa_ansible.pub ansible@MYHOST
 
 ```
 raphael@desktop:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
+raphael@desktop:~$ cd csm-dach-cloud-native-labs/initialSetup/vm/
 ```
 
 ### Add your ansible managed vm
@@ -45,7 +46,7 @@ Do **NOT remove** the ansible_port part.
 You first need to **set a password for the Ansible vault**. When later running the playbook, you need this password again.
 
 ```
-raphael@desktop:~$ cd csm-dach-cloud-native-labs/initialSetup
+
 raphael@desktop:~$ ansible-vault create password.yml
 New Vault password:
 Confirm New Vault password:
