@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-Install Ansible on your Red Hat Enterprise Linux
+Install Ansible on your Red Hat Enterprise Linux host.
 
 ```
 sudo yum -y install ansible
@@ -27,7 +27,18 @@ ssh-copy-id -i ~/.ssh/id_rsa_ansible.pub ansible@MYHOST
 
 ```
 raphael@desktop:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
+raphael@desktop:~$ cd csm-dach-cloud-native-labs/initialSetup/vm/
+```
 
+### Add your ansible managed vm
+
+In the [inventory](inventory) file, replace the example IP address with your vm's IP or FQDN.
+
+Do **NOT remove** the ansible_port part.
+
+```
+[workstation]
+192.168.122.136 ansible_port="{{ ssh_port }}"
 ```
 
 ### Set a password for the workshop users
@@ -35,7 +46,6 @@ raphael@desktop:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.g
 You first need to **set a password for the Ansible vault**. When later running the playbook, you need this password again.
 
 ```
-raphael@desktop:~$ cd csm-dach-cloud-native-labs/initialSetup
 raphael@desktop:~$ ansible-vault create password.yml
 New Vault password:
 Confirm New Vault password:
@@ -53,7 +63,6 @@ The remote host will be **reset** to its previous state. All workshop users and 
 
 ```
 raphael@desktop:~$ ansible-playbook playbook.yml --vault-id password.yml@prompt
-
 ```
 
 The VM is now ready for the workshop.
