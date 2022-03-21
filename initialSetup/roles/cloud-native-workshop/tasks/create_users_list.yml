@@ -1,0 +1,8 @@
+---
+- name: Create users list
+  become: false
+  template: 
+    src: templates/users.j2
+    dest: /tmp/cloud_native_workshop_users.yml
+    mode: 0666
+  delegate_to: localhost

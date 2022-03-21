@@ -25,6 +25,10 @@
     name: devUsers
     state: present
 
+- name: Import users from vars/cloud_native_workshop_users.yml
+  include_vars:
+    file: /tmp/cloud_native_workshop_users.yml
+
 - name: Delete all workshop users and their home directories
   user: 
     name: "{{ item }}"
