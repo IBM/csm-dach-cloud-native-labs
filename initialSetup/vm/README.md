@@ -46,7 +46,6 @@ Do **NOT remove** the ansible_port part.
 You first need to **set a password for the Ansible vault**. When later running the playbook, you need this password again.
 
 ```
-
 raphael@desktop:~$ ansible-vault create password.yml
 New Vault password:
 Confirm New Vault password:
