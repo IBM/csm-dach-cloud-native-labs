@@ -4,3 +4,9 @@
 
 - name: Security hardening of the host
   import_tasks: security.yml
+
+- name: Create list of users
+  import_tasks: create_users_list.yml
+
+- name: Setup workshop environment
+  import_tasks: setup_workshop.yml

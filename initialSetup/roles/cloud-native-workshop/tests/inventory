@@ -1,2 +1,2 @@
-localhost
-
+[workstation]
+localhost ansible_port={{ ssh_port }}

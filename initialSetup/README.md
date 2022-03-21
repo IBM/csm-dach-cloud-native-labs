@@ -16,13 +16,7 @@ sudo passwd ansible
 sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
 ```
 
-Create a simple ansible user without any permissions on your Ansible control node
-
-```
-sudo useradd ansible
-```
-
-Create ssh keys and the public key to all remote hosts you wish to manage. Replace **MYHOST** with your remote host e.g. 192.168.1.2
+Create ssh keys and copy the public key to all remote hosts you wish to manage. Replace **MYHOST** with your remote host e.g. 192.168.1.2
 
 ```
 ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa_ansible
@@ -36,13 +30,13 @@ raphael@desktop:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.g
 
 ```
 
-### Set a password for the participant users
+### Set a password for the workshop users
 
-You first need to **set a password for the vault**. When later running the playbook, you need this password again.
+You first need to **set a password for the Ansible vault**. When later running the playbook, you need this password again.
 
 ```
 raphael@desktop:~$ cd csm-dach-cloud-native-labs/initialSetup
-raphael@desktop:~$ ansible-vault create password
+raphael@desktop:~$ ansible-vault create password.yml
 New Vault password:
 Confirm New Vault password:
 ```
@@ -55,44 +49,16 @@ password: myPassword
 
 ### Run the Ansible playbook
 
-The remote host will be **reset** to its previous state!
+The remote host will be **reset** to its previous state. All workshop users and their home directories will be deleted!
 
 ```
-raphael@desktop:~$ ansible-playbook playbook.yml
+raphael@desktop:~$ ansible-playbook playbook.yml --vault-id password.yml@prompt
 
-```
-
-Change the default password, which is _PW_. Replace the _myPa55w0rD_ in this example with your own password!
-
-```
-[eva@external-demo csm-dach-cloud-native-labs]$ sed -i 's/PW/myPa55w0rD/g' initialSetup/vm/createSetupScript.sh
-```
-
-_For the next two steps, you'll need administrator rights_
-
-Run the _delete_ script to clean up actions from previous workshops:
-
-```
-[eva@external-demo csm-dach-cloud-native-labs]$ sudo sh initialSetup/vm/clean.sh
-```
-
-Run the _create user_ script to set up the user accounts on the VM:
-
-```
-[eva@external-demo csm-dach-cloud-native-labs]$ sudo sh initialSetup/vm/createSetupScript.sh
 ```
 
 The VM is now ready for the workshop.
 
-Logout:
-
-```
-[eva@external-demo csm-dach-cloud-native-labs]$ exit
-logout
-Connection to 158.177.83.155 closed.
-```
-
-### Part 2. On your laptop
+### Part 2. During the workshop
 
 Delete the existing _workshop_ branch.
 
