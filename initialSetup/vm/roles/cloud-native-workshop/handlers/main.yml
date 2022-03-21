@@ -1,0 +1,6 @@
+---
+# handlers file for cloud-native-workshop
+- name: Restart ssh
+  service: 
+    name: sshd
+    state: restarted

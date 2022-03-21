@@ -1,0 +1,47 @@
+---
+- name: "Install {{ sw_packages }}"
+  yum:
+    name: "{{ sw_packages }}"
+    state: latest
+
+- name: Copy oc binary to /usr/bin
+  copy:
+    src: files/oc
+    dest: /usr/bin/
+    owner: root
+    group: root
+    mode: 0777
+
+- name: Copy oc bash completion to /etc/bash_completion.d/
+  copy:
+    src: files/oc_bash_completion
+    dest: /etc/bash_completion.d/
+    owner: root
+    group: root
+    mode: 0744
+
+- name: Create devUsers group
+  group:
+    name: devUsers
+    state: present
+
+- name: Import users from vars/cloud_native_workshop_users.yml
+  include_vars:
+    file: /tmp/cloud_native_workshop_users.yml
+
+- name: Delete all workshop users and their home directories
+  user: 
+    name: "{{ item }}"
+    state: absent
+    remove: true
+    force: true
+  loop: "{{ users }}"
+
+- name: Create workshop users
+  user: 
+    name: "{{ item }}"
+    group: devUsers
+    append: true
+    state: present
+    password: "{{ password | password_hash('sha512') }}"
+  loop: "{{ users }}"

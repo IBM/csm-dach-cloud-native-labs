@@ -1,0 +1,9 @@
+---
+- name: Secure remote host and configure cloud native workshop
+  hosts: workstation
+  gather_facts: false
+  vars_files:
+    - password.yml
+
+  roles:
+    - cloud-native-workshop

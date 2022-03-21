@@ -1,0 +1,69 @@
+# Some security hardening of the host
+---
+- name: Configure SELinux
+  selinux:
+    policy: targeted
+    state: enforcing
+
+- name: "Configure SELinux to accept custom ssh port {{ ssh_port }}"
+  seport:
+    ports: "{{ ssh_port }}"
+    proto: tcp
+    setype: ssh_port_t
+    state: present
+  when: ssh_port != 22
+
+- name: Install firewalld
+  yum:
+    name: firewalld
+    state: latest
+
+- name: Start and enable firewalld
+  service: 
+    name: firewalld
+    enabled: true
+    state: started
+
+- name: "Allow custom ssh port {{ ssh_port }} through firewall"
+  firewalld:
+    port: "{{ ssh_port }}/tcp"
+    permanent: true
+    immediate: true
+    state: enabled
+  when: ssh_port != 22
+
+- name: "Configure ssh to listen on custom port {{ ssh_port }}"
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.From }}"
+    line: "{{ item.To }}"
+    state: present
+  with_items:
+    - { From: '^Port', To: "Port {{ ssh_port }}"}
+    - { From: '^#Port', To: "Port {{ ssh_port }}"}
+  notify: Restart ssh
+  when: ssh_port != 22
+
+- name: Prohibit root login via ssh
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.From }}"
+    line: "{{ item.To }}"
+    state: present
+  with_items:
+    - { From: '^PermitRootLogin', To: "PermitRootLogin no"}
+    - { From: '^#PermitRootLogin', To: "PermitRootLogin no"}
+  when: permitRootLogin == false
+  notify: Restart ssh
+
+- name: Allow root login via ssh
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.From }}"
+    line: "{{ item.To }}"
+    state: present
+  with_items:
+    - { From: '^PermitRootLogin', To: "PermitRootLogin yes"}
+    - { From: '^#PermitRootLogin', To: "PermitRootLogin yes"}
+  when: permitRootLogin == true
+  notify: Restart ssh

@@ -1,0 +1,8 @@
+---
+- hosts: workstation
+  remote_user: ansible
+  vars_files:
+    password.yml
+
+  roles:
+    - cloud-native-workshop

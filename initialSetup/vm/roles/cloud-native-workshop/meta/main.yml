@@ -1,0 +1,13 @@
+galaxy_info:
+  author: Raphael Tholl
+  description: This role sets up a RHEL VM to work as provided workshop for the cloud-native workshop at https://github.com/IBM/csm-dach-cloud-native-labs
+  company: IBM
+  license: Apache-2.0
+
+  min_ansible_version: 2.9
+
+  platforms:
+  - name: Red Hat
+    versions:
+    - 8.4
+  

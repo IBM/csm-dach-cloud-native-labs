@@ -1,65 +1,82 @@
-# Initial VM setup
+## Set up a clean enviroment for the workshop
 
-This is a step by step instruction how to setup the workshop infrastructure
+### Prerequisites
 
-## Create admin users
-
-Replace "raphael" with your username
+Install Ansible on your Red Hat Enterprise Linux
 
 ```
-groupadd admin
-useradd -G admin raphael
-passwd raphael
-echo "%admin ALL=(ALL) ALL" > /etc/sudoers.d/admins
+sudo yum -y install ansible
 ```
 
-### Security: Enable firewall + SELinux, add custom ssh port
+Create an ansible user with sudo privileges on your managed host, which doesn't require a password to elevate privileges
 
 ```
-setenforce enforcing
-systemctl enable --now firewalld
+sudo useradd ansible
+sudo passwd ansible
+sudo echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
 ```
 
-Add custom ssh port to /etc/ssh/sshd_config
+Create ssh keys and copy the public key to all remote hosts you wish to manage. Replace **MYHOST** with your remote host e.g. 192.168.1.2
 
 ```
-echo "Port 32122" >> /etc/ssh/sshd_config
+ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa_ansible
+ssh-copy-id -i ~/.ssh/id_rsa_ansible.pub ansible@MYHOST
 ```
 
-You may also want to block direct ssh access to the root user. Make sure you have another user on the VM, before performing this step!
+### Clone the repository
 
 ```
-vim /etc/ssh/sshd_config
-```
-
-And then scroll down to **PermitRootLogin** and set it to **no**. Finally reload the sshd service.
+raphael@desktop:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
 
 ```
-systemctl reload sshd
-```
 
-Enable custom ssh port through SELinux + firewall
+### Set a password for the workshop users
 
-```
-dnf install -y policycoreutils-python-utils
-semanage port -a -t ssh_port_t -p tcp 32122
-firewall-cmd --add-port=32122/tcp --permanent
-firewall-cmd --reload
-systemctl reload sshd
-```
-
-### Download the oc binary, create group + users
-
-Run the setup script
+You first need to **set a password for the Ansible vault**. When later running the playbook, you need this password again.
 
 ```
-sh createSetupScript.sh
+raphael@desktop:~$ cd csm-dach-cloud-native-labs/initialSetup
+raphael@desktop:~$ ansible-vault create password.yml
+New Vault password:
+Confirm New Vault password:
 ```
 
-### Delete users + devUsers group
+Enter your password to the key **password** in the following format:
 
-Run the clean script
+```yaml
+password: myPassword
+```
+
+### Run the Ansible playbook
+
+The remote host will be **reset** to its previous state. All workshop users and their home directories will be deleted!
 
 ```
-sh clean.sh
+raphael@desktop:~$ ansible-playbook playbook.yml --vault-id password.yml@prompt
+
 ```
+
+The VM is now ready for the workshop.
+
+### Part 2. During the workshop
+
+Delete the existing _workshop_ branch.
+
+First list all branches and select which branch you want to delete. Make sure to delete both the remote and the local branch:
+
+```
+[raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git branch -a
+[raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git checkout main
+[raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git push origin -d workshop
+[raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git branch -D workshop
+```
+
+Re-create the _workshop_ branch based on the main branch:
+
+```
+[raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git branch workshop main
+[raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git checkout workshop
+[raphaeltholl@Raphaels-MacBook-Pro csm-dach-cloud-native-labs] % git push origin -u workshop
+```
+
+The git repository branch is now ready for the workshop.

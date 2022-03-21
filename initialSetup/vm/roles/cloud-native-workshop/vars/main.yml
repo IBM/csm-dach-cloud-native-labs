@@ -1,0 +1,6 @@
+---
+# vars file for cloud-native-workshop
+sw_packages: 
+  - podman
+  - git
+  - wget
