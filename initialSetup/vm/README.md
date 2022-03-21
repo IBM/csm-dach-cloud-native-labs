@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-Install Ansible on your Red Hat Enterprise Linux
+Install Ansible on your Red Hat Enterprise Linux host.
 
 ```
 sudo yum -y install ansible
@@ -27,7 +27,17 @@ ssh-copy-id -i ~/.ssh/id_rsa_ansible.pub ansible@MYHOST
 
 ```
 raphael@desktop:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git
+```
 
+### Add your ansible managed vm
+
+In the [inventory](inventory) file, replace the example IP address with your vm's IP or FQDN.
+
+Do **NOT remove** the ansible_port part.
+
+```
+[workstation]
+192.168.122.136 ansible_port="{{ ssh_port }}"
 ```
 
 ### Set a password for the workshop users
