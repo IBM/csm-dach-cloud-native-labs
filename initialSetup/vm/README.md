@@ -34,11 +34,11 @@ raphael@desktop:~$ cd csm-dach-cloud-native-labs/initialSetup/vm/
 
 In the [inventory](inventory) file, replace the example IP address with your vm's IP or FQDN.
 
-Do **NOT remove** the ansible_port part.
+Do **NOT remove** the ansible_port or ansible_ssh_private_key_file.
 
 ```
 [workstation]
-192.168.122.136 ansible_port="{{ ssh_port }}"
+192.168.122.136 ansible_port="{{ ssh_port }}" ansible_ssh_private_key_file=~/.ssh/id_rsa_ansible
 ```
 
 ### Set a password for the workshop users
