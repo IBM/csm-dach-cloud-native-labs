@@ -40,8 +40,7 @@
 - name: Create workshop users
   user: 
     name: "{{ item }}"
-    group: devUsers
-    append: true
+    groups: devUsers
     state: present
     password: "{{ password | password_hash('sha512') }}"
   loop: "{{ users }}"

@@ -1,2 +1,2 @@
 [workstation]
-192.168.122.136 ansible_port="{{ ssh_port }}"
+192.168.122.136 ansible_port="{{ ssh_port }}" ansible_ssh_private_key_file=~/.ssh/id_rsa_ansible

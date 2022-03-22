@@ -6,6 +6,7 @@
 
 # From localhost, check if we're able to reach {{ inventory_hostname }} on port 22
 - name: Check if default SSH port is used
+  become: false
   wait_for:
     port: 22
     state: started
@@ -28,6 +29,7 @@
 # If unreachable on port 22, check if we're able to reach {{ inventory_hostname }} on {{ ssh_port }} 
 # provided by the inventory from the Ansible controle node
 - name: Check custom SSH port is used
+  become: false
   wait_for:
     port: "{{ ssh_port }}"
     state: started
