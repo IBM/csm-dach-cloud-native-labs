@@ -2,6 +2,12 @@
 
 ### Prerequisites
 
+As Ansible is not included in the RHEL8 repositories, you need to add a new repo
+
+```
+sudo subscription-manager repos --enable ansible-2-for-rhel-8-x86_64-rpms
+```
+
 Install Ansible on your Red Hat Enterprise Linux host.
 
 ```
