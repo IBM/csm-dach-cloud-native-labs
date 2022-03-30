@@ -1,6 +1,5 @@
 FROM redhat/ubi8
 # The FROM command tell us which is the base image. We are using a dockerhub image published by RedHat.
-
 # https://hub.docker.com/r/redhat/ubi8
 
 LABEL author="Eva Ramon eva.ramon@ibm.com"
