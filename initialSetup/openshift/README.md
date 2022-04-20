@@ -30,14 +30,6 @@ sh getServiceAccountCreds.sh
 
 ### Additional Scripts
 
-#### Create a project per user
-
-Run the following script to create user projects
-
-```
-sh createProjects.sh
-```
-
 #### Clean up cluster
 
 Run the following script to delete all user projects
