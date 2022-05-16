@@ -11,7 +11,7 @@ COPY ["app.js", "package.json", "/app/"]
 # The COPY instruction copies files from the host into the container image. The array's last index must be the destination inside the container
 # You could also use the ADD instruction instead. The ADD instruction even extracts archives (apart from *.zip) while copying.
 
-RUN npm install
+RUN npm install --production
 
 
 # RUN STAGE
