@@ -71,7 +71,7 @@ docker.io/redhat/ubi8  latest      cc0656847854  3 weeks ago    235 MB
 
 Run a container from this image:
 ```
-user1:~$ podman run --name myapache -d -p 8081:80 myapache
+user1:~$ podman run --name myapache -d -p 8081:80 myapache:0.1
 
 278e7d99275e981315f06c5517847d810e80b6153eaed30a29134106771129b7
 user1:cloud-native-labs$ podman ps 
