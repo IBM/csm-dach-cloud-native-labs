@@ -103,7 +103,7 @@ We saw in the Containerfile that there is an ENTRYPOINT and a CMD commands. Both
 
 Let's try overriding CMD:
 ```
-user1:~$ podman run --name override myapache -v
+user1:~$ podman run --name override myapache:0.1 -v
 
 Server version: Apache/2.4.37 (Red Hat Enterprise Linux)
 Server built:   Oct 26 2021 14:18:06
