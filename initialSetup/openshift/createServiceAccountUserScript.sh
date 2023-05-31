@@ -5,10 +5,8 @@
 # Choose how many users you want
 NUMBER_USERS=15
 #
-oc adm groups new externals
 for NUM in $(seq 1 $NUMBER_USERS)
 	do
 	oc create serviceaccount -n default user$NUM
-	oc adm groups add-users externals user$NUM
+	oc adm policy add-cluster-role-to-user self-provisioner system:serviceaccount:default:user$NUM
 	done
-oc adm policy add-cluster-role-to-group self-provisioner externals
