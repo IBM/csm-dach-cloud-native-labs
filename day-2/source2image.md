@@ -223,7 +223,7 @@ You can automate this even further by leveraging GitHub webhooks. Every commit w
 First, you need to extract the buildconfig's GitHub webhook URL:
 
 ```
-$ oc describe bc helloworld | grep -m1 -A1 GitHub | awk '{print$2'} | awk '(NR>1)'
+$ oc describe bc helloworld | grep -m1 -A1 GitHub | awk '{print$2}' | awk '(NR>1)'
 https://c115-e.eu-de.containers.cloud.ibm.com:32297/apis/build.openshift.io/v1/namespaces/s2i-raphael/buildconfigs/helloworld/webhooks/<secret>/github
 ```
 
