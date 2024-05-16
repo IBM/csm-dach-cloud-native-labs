@@ -2,7 +2,7 @@ var express = require('express');
 app = express();
 
 app.get('/', function (req, res) {
-  res.send('Hello all! This time rebuilding manually on the UI.');
+  res.send('Hello all! This time rebuilding via Webhook on the UI.');
 });
 
 app.listen(8080, function () {
