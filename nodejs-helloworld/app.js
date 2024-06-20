@@ -2,7 +2,7 @@ var express = require('express');
 app = express();
 
 app.get('/', function (req, res) {
-  res.send('Hello all! We added the webhook againg from console.');
+  res.send('Hello all! Hope you have fun and learn something new!');
 });
 
 app.listen(8080, function () {
