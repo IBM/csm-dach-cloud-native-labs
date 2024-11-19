@@ -69,3 +69,18 @@ To give users the right to create new projects and delete their own, assign the 
 ```
 oc adm policy add-cluster-role-to-user self-provisioner USERNAME
 ```
+
+
+## Allow system:anonymous to access webhooks:
+
+Apply the build-config-webhooks.yaml
+
+```
+oc apply -f build-config-webhooks.yaml
+```
+Add the policy to the unauthenticated users.
+
+```
+oc adm policy add-cluster-role-to-user build-config-webhooks system:anonymous
+```
+
