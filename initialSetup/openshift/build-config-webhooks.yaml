@@ -1,12 +1,15 @@
+#Apply this file and add the policy to the anon group
+#oc create sa webhook-sa -n <namespace>
+#oc adm policy add-cluster-role-to-user build-config-webhooks system:anonymous
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: build-config-webhooks
 rules:
-- apiGroups:
-  - "build.openshift.io"
-  resources:
-  - "buildconfigs/webhooks"
-  verbs:
-  - "create"
-  - "get"
+  - apiGroups:
+      - "build.openshift.io"
+    resources:
+      - "buildconfigs/webhooks"
+    verbs:
+      - "create"
+      - "get"
