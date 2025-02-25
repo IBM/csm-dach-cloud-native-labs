@@ -138,7 +138,7 @@ _MariaDB is an open-source database server based on MySQL_
 
 We want to create a new container from a MariaDB image:
 ```
-user1:~$ podman run --name mymariadb -d -p 3307:3306 bitnami/mariadb
+user1:~$ podman run --name mymariadb -d -p 3307:3306 docker.io/bitnami/mariadb
 
 ✔ docker.io/bitnami/mariadb:latest
 Trying to pull docker.io/bitnami/mariadb:latest...
