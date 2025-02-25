@@ -75,7 +75,9 @@ cd csm-dach-cloud-native-labs/day-1/advanced
 Our Containerfile is ready - Let's build the image with _podman build_:
 
 ```
-user1$ podman build -t mynode:1.0 .
+podman build -t mynode:1.0 .
+```
+```
 [1/2] STEP 1/4: FROM node@sha256:534004248435dea5cecf3667232f800fc6bd101768306aecf6b87d78067b0563 AS builder
 [1/2] STEP 2/4: WORKDIR /app
 --> 52d9b363171
@@ -90,7 +92,9 @@ Note the difference in how the build steps are displayed **"[1/2] STEP 1/4:"**..
 In the list of images, we see both the image we created and the base image:
 
 ```
-user1:~$ podman images
+podman images
+```
+```
 
 REPOSITORY              TAG         IMAGE ID      CREATED             SIZE
 localhost/mynode        1.0         38e4c41581ea  About a minute ago  117 MB
@@ -106,10 +110,15 @@ Notice the weird looking image labeled **none**? This is a chached image, which 
 Run a container from this image:
 
 ```
-user1:~$ podman run -d --name mynode -p 8001:8000 mynode:1.0
+podman run -d --name mynode -p 8001:8000 mynode:1.0
+```
+```
 070a1c98224fec49e050408425f0f515b332815d3196c57ec054216731483a1d
-
-user1:cloud-native-labs$ podman ps
+```
+```
+podman ps
+```
+```
 CONTAINER ID  IMAGE                 COMMAND     CREATED        STATUS            PORTS                   NAMES
 070a1c98224f  localhost/mynode:1.0  app.js      8 seconds ago  Up 8 seconds ago  0.0.0.0:8001->8000/tcp  mynode
 ```
@@ -119,7 +128,9 @@ _NOTE: in order to avoid port conflicts, please use as the local port (the one o
 Let's test our app
 
 ```
-user1:~$ curl localhost:8001
+curl localhost:8001
+```
+```
 Hello raphael. This message comes from inside the container!
 ```
 
@@ -138,13 +149,21 @@ It looks like it's working as expected :)
 Let's clean up our work by removing all containers and images
 
 ```
-user1:~$ podman stop -a
+podman stop -a
+```
+```
 070a1c98224fec49e050408425f0f515b332815d3196c57ec054216731483a1d
-
-user1:~$ podman rm -a
+```
+```
+podman rm -a
+```
+```
 070a1c98224fec49e050408425f0f515b332815d3196c57ec054216731483a1d
-
-user1:~$ podman rmi -a
+```
+```
+podman rmi -a
+```
+```
 Untagged: docker.io/library/node@sha256:8569c8f07454ec42501e5e40a680e49d3f9aabab91a6c149e309bac63a3c8d54
 Untagged: localhost/mynode:1.0
 Deleted: 4e77f2d7a0fd986a4d4e6ca23186c5c6021e946ff819b45711cec2b9985ec6a9
