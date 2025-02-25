@@ -1,7 +1,7 @@
 # BUILD STAGE
 
 # Node.js 16.13.1
-FROM node@sha256:534004248435dea5cecf3667232f800fc6bd101768306aecf6b87d78067b0563 as builder
+FROM docker.io/node@sha256:534004248435dea5cecf3667232f800fc6bd101768306aecf6b87d78067b0563 as builder
 # By using the digest (@sha...) we uniquely and immutably identify a container image. Tags such as v1.0 are only pointers to a specific image. The digest is a more precise way to identify an image. The alias "builder" we set will become relevant in the next stage.
 
 WORKDIR /app
@@ -17,7 +17,7 @@ RUN npm install --production
 # RUN STAGE
 
 # Node.js 16.13.1-alpine3.14
-FROM node@sha256:8569c8f07454ec42501e5e40a680e49d3f9aabab91a6c149e309bac63a3c8d54
+FROM docker.io/node@sha256:8569c8f07454ec42501e5e40a680e49d3f9aabab91a6c149e309bac63a3c8d54
 # For the final container image we take a much smaller base image (~113MB) and copy the installed depencendies from the build stage. This is called a multi-stage build.
 
 WORKDIR /app
