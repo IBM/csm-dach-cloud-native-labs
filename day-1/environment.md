@@ -11,12 +11,17 @@ Prerequisites:
 To log in, just run the following command, replacing the "1" with your user number:
 
 ```
-eramon:~$ ssh -p 32122 user1@158.177.83.155
+ssh -p 32122 user1@158.177.83.155
+```
+```
 user1@158.177.83.155's password:
 ```
 
 Once logged in, check that podman is working:
 
+```
+podman --version
+```
 ```
 [user1@external-demo ~]$ podman --version
 podman version 3.3.1
@@ -24,6 +29,9 @@ podman version 3.3.1
 
 Then check that oc is working:
 
+```
+oc version
+```
 ```
 [user1@external-demo ~]$ oc version
 Client Version: 4.7.0-202110121415.p0.git.25914b8.assembly.stream-25914b8
