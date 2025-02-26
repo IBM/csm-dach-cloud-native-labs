@@ -90,7 +90,9 @@ Let's go inside the running container and take a look to make sure all environme
 oc exec -it mariadb-7c64cff894-pzl7s -- /bin/bash
 ```
 ```
-1001@mariadb-7c64cff894-pzl7s:/$ env |grep MARIADB_
+env |grep MARIADB_
+```
+```
 ...
 MARIADB_USER=bn_wordpress
 MARIADB_DATABASE=bitnami_wordpress
@@ -140,7 +142,9 @@ Let's go inside the wordpress running container and take a look at the environme
 oc exec -it wordpress-5b9dfb44d-x2m8r -- /bin/bash
 ```
 ```
-1001@wordpress-759c4dfd96-9cnfm:/$ env |grep WORDPRESS_DATABASE_
+env |grep WORDPRESS_DATABASE_
+```
+```
 WORDPRESS_DATABASE_HOST=mariadb
 WORDPRESS_DATABASE_USER=bn_wordpress
 WORDPRESS_DATABASE_PORT_NUMBER=3306
