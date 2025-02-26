@@ -20,7 +20,7 @@ The application to be deployed is going to be MariaDB.
 First and as usual, let's create the namespace.
 __Important: replace 1 with you user number__
 ```
-user1:~$ oc new-project declarative-user1
+oc new-project declarative-user1
 ```
 
 Now examine the different yaml files and its content.
@@ -115,21 +115,23 @@ All we need is now declared in the yaml files. The sample yaml files are availab
 
 __Clone repository:__
 ```
-user1:~$ git clone https://github.com/IBM/csm-dach-cloud-native-labs.git 
-
-user1:~$ cd csm-dach-cloud-native-labs/day-2/yaml
+git clone https://github.com/IBM/csm-dach-cloud-native-labs.git 
+```
+```
+cd csm-dach-cloud-native-labs/day-2/yaml
 ```
 
 Replace _user1_ with your user. For example, if you are user2, do the following __inside the yaml directory__:
 ```
-user2:~$ sed -i 's/user1/user2/g' *
+sed -i 's/user1/user2/g' *
 ```
 _NOTE: if you're user1 you're lucky and don't have to do the replacement ;)_
 
 To deploy the database, we just have to apply the yaml files to generate the resources. Run following command from inside the _yaml_ directory where the files are located:
 ```
-user1:yaml~$ oc apply -f . 
-
+oc apply -f . 
+```
+```
 deployment.apps/mariadb created
 secret/mariadb-secret created
 service/mariadb created
@@ -137,7 +139,9 @@ service/mariadb created
 
 Let's see if the resources are there:
 ```
-user1:~$ oc get all
+oc get all
+```
+```
 NAME                           READY   STATUS    RESTARTS   AGE
 pod/mariadb-58c7665fd5-mb44w   1/1     Running   0          100s
 
@@ -157,8 +161,9 @@ Everything is looking good. The deployment (and therefore the pods and the repli
 
 To check that our database is running, let's connect to the running container:
 ```
-user1:~$ oc exec -it mariadb-58c7665fd5-mb44w -- /bin/bash
-
+oc exec -it mariadb-58c7665fd5-mb44w -- /bin/bash
+```
+```
 1000670000@mariadb-58c7665fd5-mb44w:/$ mysql -uroot -ppassw0rd
 Welcome to the MariaDB monitor.  Commands end with ; or \g.
 Your MariaDB connection id is 3
