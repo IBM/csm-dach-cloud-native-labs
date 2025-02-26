@@ -221,14 +221,18 @@ On the Wordpress pod you can connect into the pod containing the database and us
 
 ```
 oc exec -it mariadb-7c64cff894-pzl7s -- /bin/bash
-
+```
+```
 mysql -uroot -ppassword
 ```
 ```
 use bitnami_wordpress;
+```
+```
 show tables;
+```
+```
 select * from wp_posts;
-
 ```
 
 ![Alt text](secure.png?raw=true "Wordpress")
