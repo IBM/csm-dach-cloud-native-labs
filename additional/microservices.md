@@ -13,23 +13,25 @@ _A microservice architecture structural style arranges an application as a colle
 
 Let's start creating a new project:
 ```
-user1:~$ oc new-project microservices-user1
+oc new-project microservices-user1
 ```
 _Note: replace the 1 in user1 through your own user number._
 
 Now we deploy a MariaDB database from an image:
 ```
-user1:~$ oc new-app --name mariadb --docker-image bitnami/mariadb
+oc new-app --name mariadb --docker-image bitnami/mariadb
 ```
 If we take a look at the pods, we'll see the pod is not starting:
 ```
-user1$ oc get pods
+oc get pods
+```
+```
 NAME                        READY   STATUS             RESTARTS   AGE
 mariadb-bd54cc664-4hr6t     0/1     Error              0          17s
 ```
 What's the problem? Let's take a look at the logs:
 ```
-user1$ oc logs mariadb-bd54cc664-4hr6t
+oc logs mariadb-bd54cc664-4hr6t
 ```
 From the output:
 ```
@@ -43,18 +45,18 @@ _A Secret is an object that contains a small amount of sensitive data such as a 
 
 Let's create the secret from a literal value, setting _password_ as the root password:
 ```
-user1:~$ oc create secret generic mariadb-secret --from-literal=password=password
+oc create secret generic mariadb-secret --from-literal=password=password
 ```
 
 Now, we need to tell the _deployment_ to use the value defined by our _secret_ as an environment variable:
 ```
-user1:~$ oc set env deployment/mariadb --from=secret/mariadb-secret --prefix=MARIADB_ROOT_
+oc set env deployment/mariadb --from=secret/mariadb-secret --prefix=MARIADB_ROOT_
 ```
 How did we do that? Well, we said we want to set an environment variable in the deployment _mariadb_ from the secret _mariadb-secret_ using a prefix, which means the environment variable will be called MARIADB_ROOT_PASSWORD and its value will be _password_.
 
 There is another password to be set: we need to provide a value for MARIADB_PASSWORD as well. We can use the same password, how convenient :)  So we'll use the same secret with another prefix to set the variable:
 ```
-user1$ oc set env deployment/mariadb --from=secret/mariadb-secret --prefix=MARIADB_
+oc set env deployment/mariadb --from=secret/mariadb-secret --prefix=MARIADB_
 ```
 If we list the running pods again, now we'll see the pod started correctly.
 
@@ -66,24 +68,28 @@ _A ConfigMap is an object used to store non-confidential data in key-value pairs
 
 Let's create the configmap:
 ```
-user1$ oc create configmap mariadb-config --from-literal=user=bn_wordpress --from-literal=database=bitnami_wordpress
+oc create configmap mariadb-config --from-literal=user=bn_wordpress --from-literal=database=bitnami_wordpress
 ```
 
 And now let's mount it, in the same way we did before with the secret:
 ```
-user1:~$ oc set env deployment/mariadb --from=configmap/mariadb-config --prefix=MARIADB_
+oc set env deployment/mariadb --from=configmap/mariadb-config --prefix=MARIADB_
 ```
 
 We need the list of running pods to get the pod's name:
 ```
-user1$ oc get pods
+oc get pods
+```
+```
 NAME                         READY   STATUS    RESTARTS   AGE
 mariadb-7c64cff894-pzl7s     1/1     Running   0          20m
 ```
 
 Let's go inside the running container and take a look to make sure all environment variables are indeed there:
 ```
-user1$ oc exec -it mariadb-7c64cff894-pzl7s -- /bin/bash
+oc exec -it mariadb-7c64cff894-pzl7s -- /bin/bash
+```
+```
 1001@mariadb-7c64cff894-pzl7s:/$ env |grep MARIADB_
 ...
 MARIADB_USER=bn_wordpress
@@ -105,13 +111,13 @@ _WordPress is a free and open-source content management system (CMS) written in 
 
 Let's create a new application from an existing image:
 ```
-user1:~$ oc new-app --name wordpress --docker-image bitnami/wordpress
+oc new-app --name wordpress --docker-image bitnami/wordpress
 ```
 This is not going to work yet, since the wordpress application needs a bunch of environment variables to be set in order to work properly. 
 
 So let's create a new configmap:
 ```
-user1$ oc create configmap wordpress-config --from-literal=host=mariadb --from-literal=port_number=3306 --from-literal=user=bn_wordpress --from-literal=name=bitnami_wordpress
+oc create configmap wordpress-config --from-literal=host=mariadb --from-literal=port_number=3306 --from-literal=user=bn_wordpress --from-literal=name=bitnami_wordpress
 ```
 Important to notice here are following values:
  * The _host_ points to the mariadb deployment, using _mariadb_ as database host. This is the name of the pod, which matches the DNS name inside the pod network, so the wordpress deployment will be able to resolve this hostname to the IP of the mariadb application
@@ -120,18 +126,20 @@ Important to notice here are following values:
 
 Let's set the configmap as we did before:
 ```
-user1$ oc set env deployment/wordpress --from=configmap/wordpress-config --prefix=WORDPRESS_DATABASE_
+oc set env deployment/wordpress --from=configmap/wordpress-config --prefix=WORDPRESS_DATABASE_
 ```
 
 The prefix indicates that the variables will be in the form WORDPRESS_DATABASE_xyz, for example WORDPRESS_DATABASE_HOST.
 
 In addition to the environment variables we just set, wordpress needs a password, stored in the environment variable WORDPRESS_DATABASE_PASSWORD. For this, we'll use the same password as for the mariadb application before, that means we can use the same secret:
 ```
-user1$ oc set env deployment/wordpress --from=secret/mariadb-secret --prefix=WORDPRESS_DATABASE_
+oc set env deployment/wordpress --from=secret/mariadb-secret --prefix=WORDPRESS_DATABASE_
 ```
 Let's go inside the wordpress running container and take a look at the environment variables:
 ```
-user1$ oc exec -it wordpress-5b9dfb44d-x2m8r -- /bin/bash
+oc exec -it wordpress-5b9dfb44d-x2m8r -- /bin/bash
+```
+```
 1001@wordpress-759c4dfd96-9cnfm:/$ env |grep WORDPRESS_DATABASE_
 WORDPRESS_DATABASE_HOST=mariadb
 WORDPRESS_DATABASE_USER=bn_wordpress
@@ -145,11 +153,13 @@ Before we try out the application, we need to create a route to expose the servi
 
 First, let's create an insecure route, same as we did in previous exercises:
 ```
-user1$ oc expose service/wordpress
+oc expose service/wordpress
 ```
 To get the URL, we describe the route we just created:
 ```
-user1$ oc describe route wordpress
+oc describe route wordpress
+```
+```
 Name:			wordpress
 Namespace:		microservices
 Created:		6 minutes ago
@@ -184,17 +194,38 @@ To see how to access our application via HTTPS, we are going to create a secure 
 
 To create an edge route, use the following command:
 ```
-user1:~$ oc create route edge wordpress-secure --service=wordpress
+oc create route edge wordpress-secure --service=wordpress
 ```
 Now if we describe the avaiable routes, we'll see two of them - an insecure one and a secure one with edge termination:
 ```
-user1:~$ oc get routes
+oc get routes
+```
+```
 NAME               HOST/PORT                                                                                                            PATH   SERVICES    PORT       TERMINATION   WILDCARD
 wordpress          wordpress-microservices.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud                 wordpress   8080-tcp                 None
 wordpress-secure   wordpress-secure-microservices.externaldemo-5115c94768819e85b5dd426c66340439-0000.eu-de.containers.appdomain.cloud          wordpress   8080-tcp   edge          None
 ```
 
 On your browser, try to access "https://" followed by the path of the secure route, which is part of the output of the last command.
+
+You can also login into the Wordpress site. 
+```
+User: user and Password: bitnami
+```
+
+On the Wordpress pod you can connect into the pod containing the database and use the following SQL commands to see posts inside the database.
+
+```
+oc exec -it mariadb-7c64cff894-pzl7s -- /bin/bash
+
+mysql -uroot -ppassword
+```
+```
+use bitnami_wordpress;
+show tables;
+select * from wp_posts;
+
+```
 
 ![Alt text](secure.png?raw=true "Wordpress")
 
@@ -208,7 +239,7 @@ _Let's Encrypt is a non-profit certificate authority run by Internet Security Re
 
 If you want to get rid of the insecure route after creating the edge route, to make the application more secure, you can just delete the old route:
 ```
-user1:~$ oc delete route wordpress
+oc delete route wordpress
 ```
 After this, if you try to go to the first URL again, you'll see it's not working anymore.
 
@@ -221,17 +252,17 @@ And that's it :) Even if this is a very simple example, you see how we abided by
 
 Now let's clean up. Instead of deleting the whole project, let's try something new this time. When you create a new application using _oc new app_, all generated resources get a label with key "app" and value the name of the application. So let's delete first all resources belonging to the wordpress application:
 ```
-user1:~$ oc delete all -l app=wordpress
+oc delete all -l app=wordpress
 ```
 Now we delete all resources belonging to the mariadb application:
 ```
-user1:~$ oc delete all -l app=mariadb
+oc delete all -l app=mariadb
 ```
 That would be handy if we wanted to delete an application without deleting the whole project. Or if we wanted to delete one application but not the other. 
 
 Truth is we don't need the project anymore, so let's delete it anyway:
 ```
-user1:~$ oc delete project microservices 
+oc delete project microservices 
 ```
 
 This concludes this exercise.
