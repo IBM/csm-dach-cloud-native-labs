@@ -1,4 +1,4 @@
-## Create Custom Images
+![image](https://github.com/user-attachments/assets/27b941f0-0e16-4de4-83ee-ca8fdf79845e)## Create Custom Images
 
 In this lab we are going to see how an image is built:
 
@@ -48,8 +48,9 @@ Explanations to the different commands are included in the file as comments.
 
 Our Containerfile is ready - Let's build the image with _podman build_:
 ```
-user1$ podman build -t myapache:0.1 .
-
+podman build -t myapache:0.1 .
+```
+```
 STEP 1: FROM redhat/ubi8-minimal
 ✔ docker.io/redhat/ubi8-minimal:latest
 Trying to pull docker.io/redhat/ubi8-minimal:latest...
@@ -62,8 +63,9 @@ __Please don't miss the dot (.)__ since it indicates the location of the source,
 
 In the list of images, we see both the image we created and the base image:
 ```
-user1:~$ podman images
-
+podman images
+```
+```
 REPOSITORY             TAG         IMAGE ID      CREATED        SIZE
 localhost/myapache     0.1         8997b9661025  2 minutes ago  292 MB
 docker.io/redhat/ubi8  latest      cc0656847854  3 weeks ago    235 MB
@@ -71,8 +73,9 @@ docker.io/redhat/ubi8  latest      cc0656847854  3 weeks ago    235 MB
 
 Run a container from this image:
 ```
-user1:~$ podman run --name myapache -d -p 8081:80 myapache:0.1
-
+podman run --name myapache -d -p 8081:80 myapache:0.1
+```
+```
 278e7d99275e981315f06c5517847d810e80b6153eaed30a29134106771129b7
 user1:cloud-native-labs$ podman ps 
 CONTAINER ID  IMAGE                   COMMAND        CREATED        STATUS            PORTS                 NAMES
@@ -83,6 +86,9 @@ _NOTE: in order to avoid port conflicts, please use as the local port (the one o
 We created a new container based on our custom image, with name _myapache_, in dettached mode and forwarding port 8080 on the host to port 80 on the container. 
 
 Should we try it?
+```
+curl localhost:8081
+```
 ```
 user1:cloud-native-labs$ curl localhost:8081
 
@@ -103,16 +109,18 @@ We saw in the Containerfile that there is an ENTRYPOINT and a CMD commands. Both
 
 Let's try overriding CMD:
 ```
-user1:~$ podman run --name override myapache:0.1 -v
-
+podman run --name override myapache:0.1 -v
+```
+```
 Server version: Apache/2.4.37 (Red Hat Enterprise Linux)
 Server built:   Oct 26 2021 14:18:06
 ```
 
 What did we do? Instead starting the web server by executing _httpd -d foreground_ we printed out the apache version by calling _httpd -v_. The version was printed and the container finished, so the container is not running anymore:
 ```
-user1:~$ podman ps -a
-
+podman ps -a
+```
+```
 CONTAINER ID  IMAGE                   COMMAND        CREATED         STATUS                    PORTS                 NAMES
 ...
 e42a2930ed34  localhost/myapache:0.1  -v             2 minutes ago   Exited (0) 2 minutes ago  0.0.0.0:8081->80/tcp  override
@@ -120,16 +128,22 @@ e42a2930ed34  localhost/myapache:0.1  -v             2 minutes ago   Exited (0) 
 
 To finish a little housekeeping:
 ```
-user1:~$ podman stop --all
+podman stop --all
+```
+```
+ac05d949910abc9ffe04ed8d34d2a4c2024de13ae234dc16233a92b2c3c9250f
+```
+```
+podman rm --all
+```
+```
 
 ac05d949910abc9ffe04ed8d34d2a4c2024de13ae234dc16233a92b2c3c9250f
-
-user1:~$ cloud-native-labs$ podman rm --all
-
-ac05d949910abc9ffe04ed8d34d2a4c2024de13ae234dc16233a92b2c3c9250f
-
-user1:~$ podman rmi --all
-
+```
+```
+podman rmi --all
+```
+```
 Untagged: docker.io/redhat/ubi8:latest
 Untagged: localhost/myapache:0.1
 Deleted: ec600407b590f735212f408bf86a7cfd460e6480f0e8319b19620f1b3c8349cd
