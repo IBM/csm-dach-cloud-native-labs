@@ -17,14 +17,15 @@ _OpenShift is an enterprise-grade, certified Kubernetes distribution with additi
 
 The OpenShift cluster was already provisioned for you. Log in using the _oc_ command line tool:
 ```
-user1:~$ oc login --token=$TOKEN --server=$URL
+oc login --token=$TOKEN --server=$URL
 ```
 _NOTE: either set the environment variables TOKEN and URL or replace their values on the command. The values have to be provided by the teacher or environment owner_
 
 Let's explore the CLI help a little bit:
 ```
-user1:~$ oc --help
-
+oc --help
+```
+```
 OpenShift Client
 
 This client helps you develop, build, deploy, and run your applications on any
@@ -50,7 +51,7 @@ __Exercise__: create your project using the oc CLI
 Create your namespace/project:
 __(Replace the 1 with your user number)__
 ```
-user1:~$ oc new-project user1
+oc new-project user1
 ```
 
 The output of the command looks like this:
@@ -68,7 +69,7 @@ to build a new example application in Ruby. Or use kubectl to deploy a simple Ku
 
 Use the following command to see the list all available projects:
 ```
-user1:~$ oc projects
+oc projects
 ```
 The project you just created has a * next to its name. That means that's the current project in use.
 
@@ -94,8 +95,9 @@ In the first two labs - containers, images, podman and custom images - we used i
 
 Let's see how the command looks like:
 ```
-user1:~$ oc new-app --name myhttpd registry.access.redhat.com/rhscl/httpd-24-rhel7
-
+oc new-app --name myhttpd registry.access.redhat.com/rhscl/httpd-24-rhel7
+```
+```
 --> Found container image a8d6d7d (11 days old) from registry.access.redhat.com for "registry.access.redhat.com/rhscl/httpd-24-rhel7"
 
     Apache httpd 2.4 
@@ -123,8 +125,9 @@ It's actually quite simple:
 
 Let's see what happened:
 ```
-user1:~$ oc get all
-
+oc get all
+```
+```
 NAME                          READY   STATUS    RESTARTS   AGE
 pod/myhttpd-c95cb9dd7-zdznk   1/1     Running   0          37s
 
@@ -154,18 +157,18 @@ _A Service serves as an internal load balancer. It identifies a set of replicate
 
 The created deployment has 1 replica (1 pod), since that is the default for the _oc new-app_ command. If you want to scale your application to have 2 pods, you can do the following:
 ```
-user1:~$ oc scale --replicas=2 deployment/myhttpd
+oc scale --replicas=2 deployment/myhttpd
 ```
 Now if you execute _oc get all_ again, you will see that there is now two _pod-myhttpd-xyz_ running.
 
 If we want to see the details of the deployment, we can do it like this:
 ```
-user1:~$ oc describe deployment myhttpd
+oc describe deployment myhttpd
 ```
 
 Or alternatively, we can see the declarative form of the deployment in yaml format:
 ```
-user1:~$ oc get deployment myhttpd -o yaml
+oc get deployment myhttpd -o yaml
 ```
 
 We can find among other information:
@@ -186,23 +189,24 @@ __Exercise:__ create the route using the CLI
 
 Create the route exposing the service:
 ```
-user1:~$ oc expose service myhttpd
-
+oc expose service myhttpd
+```
+```
 route.route.openshift.io/myhttpd exposed
 ```
 
 Find out the URL to access the service externally, examining the output of the following comand:
 ```
-user1:~$ oc describe route myhttpd
+oc describe route myhttpd
 ```
 In the output, you'll find the host name indicated by _Request Host_. Put it in an environment variable:
 ```
-user1:~$ export HOST=<write here the URL you got>
+export HOST=<write here the URL you got>
 ```
 
 Test that it's working, issuing a curl command:
 ```
-user1:~$ curl $HOST
+curl $HOST
 ```
 
 _Alternatively, you can copy the URL on your browser_
