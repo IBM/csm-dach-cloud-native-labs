@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/27b941f0-0e16-4de4-83ee-ca8fdf79845e)## Create Custom Images
+## Create Custom Images
 
 In this lab we are going to see how an image is built:
 
