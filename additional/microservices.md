@@ -113,7 +113,7 @@ _WordPress is a free and open-source content management system (CMS) written in 
 
 Let's create a new application from an existing image:
 ```
-oc new-app --name wordpress --docker-image bitnami/wordpress
+oc new-app --name wordpress --docker-image quay.io/rhettibm/wordpress
 ```
 This is not going to work yet, since the wordpress application needs a bunch of environment variables to be set in order to work properly. 
 
