@@ -19,7 +19,7 @@ _Note: replace the 1 in user1 through your own user number._
 
 Now we deploy a MariaDB database from an image:
 ```
-oc new-app --name mariadb --docker-image bitnami/mariadb
+oc new-app --name mariadb --docker-image quay.io/rhettibm/mariadb
 ```
 If we take a look at the pods, we'll see the pod is not starting:
 ```
