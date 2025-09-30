@@ -10,7 +10,7 @@ In this lab we are going to see how an image is built:
 
 This is an example of a Containerfile:
 ```
-FROM redhat/ubi8
+FROM docker.io/redhat/ubi8
 # The FROM command tell us which is the base image. We are using a dockerhub image published by RedHat. 
 # https://hub.docker.com/r/redhat/ubi8
 
