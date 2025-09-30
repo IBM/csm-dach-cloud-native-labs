@@ -68,7 +68,7 @@ spec:
         deployment: mariadb
     spec:
       containers:
-      - image: docker.io/bitnami/mariadb
+      - image: quay.io/rhettibm/mariadb
         name: mariadb
         ports:
         - containerPort: 3306
