@@ -30,7 +30,7 @@ _Nginx is an open-source web application server_
 
 We are pulling the bitnami/nginx image from docker.io:
 ```
-podman pull docker.io/bitnami/nginx
+podman pull quay.io/rhettibm/nginx
 ```
 ```
 Trying to pull docker.io/bitnami/nginx:latest...
@@ -53,7 +53,7 @@ We just pulled the image, we did not create any container yet.
 
 Run the image as a container:
 ```
-podman run -d --name mynginx bitnami/nginx
+podman run -d --name mynginx rhettibm/nginx
 ```
 ```
 097ee94c96e5e6e1655ed688fbe043a14d769248bf907effc64bc740f8acfe49
@@ -109,7 +109,7 @@ This time it worked.
 
 Now we'll run a new container from the same image, this time performing a port forwarding of a port on our host machine to a port in the container:
 ```
-podman run -d --name mynginx -p 8081:8080 docker.io/bitnami/nginx
+podman run -d --name mynginx -p 8081:8080 quay.io/rhettibm/nginx
 ```
 _NOTE: in order to avoid port conflicts, please use as the local port (the one on the left of the ':') your user number + 8000. For example, user 1 will use 8001._
 
@@ -153,7 +153,7 @@ _MariaDB is an open-source database server based on MySQL_
 
 We want to create a new container from a MariaDB image:
 ```
-podman run --name mymariadb -d -p 3307:3306 docker.io/bitnami/mariadb
+podman run --name mymariadb -d -p 3307:3306 quay.io/rhettibm/mariadb
 ```
 ```
 ✔ docker.io/bitnami/mariadb:latest
@@ -203,7 +203,7 @@ c8e968144f861cfba12c8d1238029a6ffe129be1fe90181f15a6838e771b4565
 
 Then we run a new container from the same image, this time providing the required environment variable:
 ```
-podman run -d --name mymariadb -p 3307:3306 -e MARIADB_ROOT_PASSWORD=passw0rd bitnami/mariadb
+podman run -d --name mymariadb -p 3307:3306 -e MARIADB_ROOT_PASSWORD=passw0rd rhettibm/mariadb
 ```
 ```
 de035cd79b5461ec102d7cb2fa7c47672a8585e5a71a44796741ab5ae618c984
