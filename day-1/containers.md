@@ -140,7 +140,7 @@ podman rm mynginx
 0718b4a9411235a561d0d2a8dfab78750c91f7c2094b58521a0bd4963c24398a
 ```
 ```
-podman rmi bitnami/nginx
+podman rmi quay.io/rhettibm/nginx
 ```
 ```
 Untagged: docker.io/bitnami/nginx:latest
